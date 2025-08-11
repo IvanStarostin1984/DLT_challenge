@@ -94,6 +94,15 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-11  PR #10
 
+- **Summary**: `.codex/setup.sh` now provisions `.venv` with black and ruff so
+  `make lint` runs.
+- **Stage**: implementation
+- **Motivation / Decision**: lint step failed due to missing virtual
+  environment; installing tools in `.venv` isolates dependencies.
+- **Next step**: run CI to confirm lint and tests pass.
+
+## 2025-08-11  PR #11
+
 - **Summary**: Enabled live GitHub calls with pagination and incremental state.
 - **Stage**: implementation
 - **Motivation / Decision**: Needed real data; used Link headers and stored the

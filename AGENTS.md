@@ -31,6 +31,9 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 
 ## 2 · Bootstrap (first‑run) checklist
 
+
+1. Run `.codex/setup.sh` (or `./setup.sh`) once after cloning & whenever dependencies change.
+   *The script creates `.venv/` and installs runtime, lint & test dependencies.*
 1. Create `.venv` (`python -m venv .venv`) and install deps:
    `.venv/bin/pip install -r requirements.txt`.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
