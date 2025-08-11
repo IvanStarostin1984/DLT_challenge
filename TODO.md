@@ -23,9 +23,9 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
 - [ ] Analyse source‑of‑truth docs; define acceptance criteria for
       **GitHub commits pipeline**
-- [ ] Document assumptions / edge‑cases for GitHub commits pipeline in
-       `/docs` or README
-- [ ] Implement GitHub commits pipeline
+  - [x] Document assumptions / edge‑cases for GitHub commits pipeline in
+    `/docs` or README
+  - [x] Implement GitHub commits pipeline
 - [x] Add unit / integration tests for GitHub commits pipeline
 - [ ] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
       exits 1 on regression
@@ -59,7 +59,8 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 ### Add new items below this line  
 *(append only; keep earlier history intact)*
 - [x] Add `.gitignore` for DLT state, DuckDB, venv, caches (2025-08-11)
-- [ ] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
-- [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
 - [x] Require `make test` to fail when no tests are collected (2025-08-11)
 - [x] Ensure `.codex/setup.sh` creates `.venv` with lint tools (2025-08-11)
+- [x] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
+- [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
+- [ ] Add DuckDB destination and post-load SQL for leaderboard
