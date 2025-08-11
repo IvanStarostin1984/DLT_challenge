@@ -1,0 +1,5 @@
+.dlt/state*
+*.duckdb
+.venv/
+__pycache__/
+.pytest_cache/
