@@ -160,3 +160,8 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: align pipeline with dlt best practices and make
   leaderboard queries reproducible.
 - **Next step**: allow Makefile to forward pytest flags like `--offline`.
+
+- 2025-08-11: Wrapped lint and test commands in `AGENTS.md` with a bash code
+  block to remove a stray fence. Reason: keep contributor guide rendering clean
+  and lint instructions accurate. Decisions: prefer explicit fenced block over
+  omitting commands.

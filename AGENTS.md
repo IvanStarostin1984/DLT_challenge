@@ -56,6 +56,7 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    * `make test` fails when no tests are collected; ensure at least one exists.
    * Pass flags to pytest via `PYTEST_ARGS`, e.g. `make test PYTEST_ARGS="--offline"`.
 
+   ```bash
    make lint                      # all format / static‑analysis steps
    pytest --cov=src --cov-fail-under=80  # unit/integration tests w/ coverage
    ```
