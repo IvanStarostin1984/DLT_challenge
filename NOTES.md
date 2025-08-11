@@ -111,6 +111,13 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-11  PR #12
 
+- **Summary**: Pinned `requests` dependency and documented ordered list style.
+- **Stage**: maintenance
+- **Motivation / Decision**: ensure stable HTTP client; clarify list numbering to satisfy markdownlint.
+- **Next step**: apply `requests` in future pipeline features.
+
+## 2025-08-11  PR #13
+
 - **Summary**: Ran setup, fixed AGENTS numbering, and executed lint and tests offline/online.
 - **Stage**: testing
 - **Motivation / Decision**: verify tooling and document results; preparing for green CI.
