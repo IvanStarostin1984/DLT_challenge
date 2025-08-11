@@ -58,5 +58,6 @@
 
 ### Add new items below this line  
 *(append only; keep earlier history intact)*
+- [x] Add `.gitignore` for DLT state, DuckDB, venv, caches (2025-08-11)
 - [ ] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
 - [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
