@@ -132,20 +132,27 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-11  PR #15
 
+- **Summary**: Forwarded pytest flags via `PYTEST_ARGS` and documented usage.
+- **Stage**: implementation
+- **Motivation / Decision**: allow offline runs from Makefile, closing TODO item.
+- **Next step**: revisit if more pytest options are needed.
+
+## 2025-08-11  PR #16
+
 - **Summary**: Added coverage config and CI run with 80% threshold.
 - **Stage**: maintenance
 - **Motivation / Decision**: ensure tests measure code paths while excluding
   generated and test files.
 - **Next step**: monitor coverage as features expand.
 
-## 2025-08-11  PR #16
+## 2025-08-11  PR #17
 
 - **Summary**: Documented pipeline acceptance criteria and linked from README.
 - **Stage**: documentation
 - **Motivation / Decision**: clarify goals and close related TODO item.
 - **Next step**: add DuckDB destination and post-load SQL for leaderboard.
 
-## 2025-08-12  PR #17
+## 2025-08-12  PR #18
 
 - **Summary**: Added dlt source with incremental pagination and post-load SQL
   to materialise `leaderboard_daily` in DuckDB; updated tests and README.

@@ -81,10 +81,14 @@ results are stored in `gh_leaderboard.duckdb` with tables `commits`,
 Run unit and end-to-end tests:
 
 ```bash
-pytest -q
+make test
 ```
 
-Add `--offline` to skip network tests when the environment has no internet.
+Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
+
+```bash
+make test PYTEST_ARGS="--offline"
+```
 
 ## Incremental loads
 
