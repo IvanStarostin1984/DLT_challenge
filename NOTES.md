@@ -67,3 +67,12 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: implementation
 - **Motivation / Decision**: ensure consistent environment.
 - **Next step**: configure lint and test commands.
+
+## 2025-08-11  PR #7
+
+- **Summary**: Documented that `make test` fails when no tests are collected and
+  added a placeholder test.
+- **Stage**: documentation
+- **Motivation / Decision**: avoid false positives so contributors supply at
+  least one test.
+- **Next step**: expand test coverage for the GitHub leaderboard pipeline.

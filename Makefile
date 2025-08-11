@@ -13,4 +13,4 @@ lint-markdown:
 	npx --yes markdownlint-cli '**/*.md'
 
 test:
-	$(VENV)/bin/pytest || [ $$? -eq 5 ]
+	$(VENV)/bin/pytest

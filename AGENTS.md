@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.2 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.3 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -48,11 +48,12 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    make test                  # project’s unit‑/integration tests
    ```
    Markdown lint rules live in `.markdownlint.json` for now.
-3. **Style rules** – keep code formatted (`black`, `prettier`, `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one blank line** separates log entries.  
-4. **Exit‑code conventions** – scripts must exit ≠ 0 on failure so CI catches regressions (e.g. fail fast when quality gates or metric thresholds aren’t met).  
-5. **Version‑pin policy** – pin *major*/*minor* versions for critical runtimes & actions (e.g. `actions/checkout@v4`, `node@20`, `python~=3.11`).  
-6. **When docs change, update them everywhere** – if ambiguity arises, `/docs` overrides this file.
-7. **Log discipline** – when a TODO item is ticked you **must** add the matching
+3. **Test collection** – `make test` must fail if no tests are collected.
+4. **Style rules** – keep code formatted (`black`, `prettier`, `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one blank line** separates log entries.  
+5. **Exit‑code conventions** – scripts must exit ≠ 0 on failure so CI catches regressions (e.g. fail fast when quality gates or metric thresholds aren’t met).  
+6. **Version‑pin policy** – pin *major*/*minor* versions for critical runtimes & actions (e.g. `actions/checkout@v4`, `node@20`, `python~=3.11`).  
+7. **When docs change, update them everywhere** – if ambiguity arises, `/docs` overrides this file.
+8. **Log discipline** – when a TODO item is ticked you **must** add the matching
    section in `NOTES.md` *in the same PR*; this keeps roadmap and log in‑sync.  
 
 ---
