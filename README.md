@@ -49,10 +49,14 @@ Each row has `author_identity`, `commit_day`, and `commit_count`. Use
 Run unit and end-to-end tests:
 
 ```bash
-pytest -q
+make test
 ```
 
-Add `--offline` to skip network tests when the environment has no internet.
+Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
+
+```bash
+make test PYTEST_ARGS="--offline"
+```
 
 ## Incremental loads
 

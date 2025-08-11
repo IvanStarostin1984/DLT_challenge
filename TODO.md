@@ -65,5 +65,5 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Fix markdownlint errors across docs to make `lint-docs` job pass
 - [ ] Add DuckDB destination and post-load SQL for leaderboard
 - [x] Pin `requests` dependency for HTTP calls (2025-08-11)
-- [ ] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
+- [x] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
 - [ ] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)

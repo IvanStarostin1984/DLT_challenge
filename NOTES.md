@@ -129,3 +129,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: documentation
 - **Motivation / Decision**: centralise dlt practices using shared guide.
 - **Next step**: follow guide when extending dlt pipelines.
+
+## 2025-08-11  PR #15
+
+- **Summary**: Forwarded pytest flags via `PYTEST_ARGS` and documented usage.
+- **Stage**: implementation
+- **Motivation / Decision**: allow offline runs from Makefile, closing TODO item.
+- **Next step**: revisit if more pytest options are needed.
