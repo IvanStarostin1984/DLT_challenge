@@ -3,7 +3,9 @@
 This project is a small [dlt](https://dlthub.com/) pipeline that loads recent
 GitHub commits into DuckDB and builds a daily leaderboard of contributors.
 
-See [docs/specs.txt](docs/specs.txt) for the master specification.
+See [docs/specs.txt](docs/specs.txt) for the master specification and
+[docs/acceptance_criteria.md](docs/acceptance_criteria.md) for goals and
+edge cases.
 
 It creates three tables:
 
@@ -18,6 +20,15 @@ It creates three tables:
 3. `. .\\.venv\\Scripts\\Activate.ps1`
 4. `pip install -r requirements.txt`
 5. `python -m src.gh_leaderboard.pipeline`
+6. Inspect results:
+
+   ```python
+   import dlt
+
+   p = dlt.pipeline("gh_leaderboard")
+   with p.sql_client() as sql:
+       print(sql.execute_sql("select * from leaderboard_daily"))
+   ```
 
 ## Quick start (Linux / macOS / WSL)
 
@@ -26,6 +37,15 @@ It creates three tables:
 3. `source .venv/bin/activate`
 4. `pip install -r requirements.txt`
 5. `python -m src.gh_leaderboard.pipeline`
+6. Inspect results:
+
+   ```python
+   import dlt
+
+   p = dlt.pipeline("gh_leaderboard")
+   with p.sql_client() as sql:
+       print(sql.execute_sql("select * from leaderboard_daily"))
+   ```
 
 Set `GITHUB_TOKEN` to raise rate limits if needed.
 
@@ -33,16 +53,28 @@ Set `GITHUB_TOKEN` to raise rate limits if needed.
 
 ```python
 from src.gh_leaderboard import pipeline
+import dlt
 
 rows = pipeline.run(
     repo="octocat/Hello-World",
     since="2012-03-06T00:00:00Z",
     until="2012-03-07T00:00:00Z",
 )
+p = dlt.pipeline(
+    "gh_leaderboard", destination="duckdb", dataset_name="gh_leaderboard"
+)
+with p.sql_client() as sql:
+    print(
+        sql.execute_sql(
+            "select * from leaderboard_daily order by author_identity"
+        )
+    )
 ```
 
 Each row has `author_identity`, `commit_day`, and `commit_count`. Use
-`offline=True` to read the bundled fixture instead of hitting GitHub.
+`offline=True` to read the bundled fixture instead of hitting GitHub. The
+results are stored in `gh_leaderboard.duckdb` with tables `commits`,
+`commits_flat`, and `leaderboard_daily`.
 
 ## Tests
 

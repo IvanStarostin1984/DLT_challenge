@@ -137,3 +137,19 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: ensure tests measure code paths while excluding
   generated and test files.
 - **Next step**: monitor coverage as features expand.
+
+## 2025-08-11  PR #16
+
+- **Summary**: Documented pipeline acceptance criteria and linked from README.
+- **Stage**: documentation
+- **Motivation / Decision**: clarify goals and close related TODO item.
+- **Next step**: add DuckDB destination and post-load SQL for leaderboard.
+
+## 2025-08-12  PR #17
+
+- **Summary**: Added dlt source with incremental pagination and post-load SQL
+  to materialise `leaderboard_daily` in DuckDB; updated tests and README.
+- **Stage**: implementation
+- **Motivation / Decision**: align pipeline with dlt best practices and make
+  leaderboard queries reproducible.
+- **Next step**: allow Makefile to forward pytest flags like `--offline`.

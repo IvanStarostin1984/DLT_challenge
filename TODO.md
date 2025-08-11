@@ -21,7 +21,7 @@
 
 Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
-- [ ] Analyse source‑of‑truth docs; define acceptance criteria for
+- [x] Analyse source‑of‑truth docs; define acceptance criteria for
       **GitHub commits pipeline**
   - [x] Document assumptions / edge‑cases for GitHub commits pipeline in
     `/docs` or README
@@ -63,7 +63,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Ensure `.codex/setup.sh` creates `.venv` with lint tools (2025-08-11)
 - [x] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
 - [x] Fix markdownlint errors across docs to make `lint-docs` job pass
-- [ ] Add DuckDB destination and post-load SQL for leaderboard
+- [x] Add DuckDB destination and post-load SQL for leaderboard
 - [x] Pin `requests` dependency for HTTP calls (2025-08-11)
 - [ ] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
-- [ ] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)
+- [x] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)

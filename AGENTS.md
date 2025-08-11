@@ -141,6 +141,9 @@ jobs:
 
 * Any work involving dlt must consult `docs/dlt_guide_for_codex_2025.txt` for
   pipeline, resource, incremental-loading and pagination practices.
+* Run `python -m src.gh_leaderboard.pipeline` to load commits into DuckDB and
+  execute `post_load.sql` producing tables `commits`, `commits_flat`, and
+  `leaderboard_daily`.
 
 Code quality:
 Clear, modular structure
