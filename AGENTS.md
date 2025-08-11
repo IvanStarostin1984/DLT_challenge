@@ -6,12 +6,17 @@
 
 ---
 Always follow single source of truth (/docs/specs.txt).
-Always do as specified in signle source of truth (unless unable to implement).
+Do as specified in signle source of truth (unless unable to implement).
+There are 2 sections in single source of truth (/docs/specs.txt):
+1. # Client specifications (not to be changed, read only).
+2. #Detailed specifications (may be wrong, maybe changed as last resort).
 If something is not specified in single source of truth - choose simplest safest options.
 Update TODO.md with what to do based on /docs/specs.txt.
 Implement project as specified in TODO.md. Reflect on progress in NOTES.md.
-When any issue in codex environment happens, always suggest additions/modifications to this AGENTS.md to prevent such issues in future.
-Maintain and develop the project so that after each new feature user will be able to download github repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
+When any issue in codex environment happens, always suggest additions/modifications 
+to this AGENTS.md to prevent such issues in future.
+Maintain and develop the project so that after each new feature user will be able to download github
+repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 
 ## 1 · File‑ownership & merge‑conflict safety
 
