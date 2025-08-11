@@ -8,7 +8,7 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## TEMPLATE  (copy → fill → append)
 
-### YYYY‑MM‑DD  PR #<number or draft>
+### YYYY‑MM‑DD  PR #\<number or draft\>
 
 - **Summary**: one‑sentence description of what changed.
 - **Stage**: planning / implementation / testing / maintenance / release
@@ -17,11 +17,19 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ---
 
-## 2025‑01‑01  PR #0  🌱 _file created_
+## 2025‑01‑01  PR #0  🌱 *file created*
 
 - **Summary**: Seeded repository with starter templates (`AGENTS.md`, `TODO.md`,
   `NOTES.md`) and minimal CI workflow.
 - **Stage**: planning
 - **Motivation / Decision**: establish collaboration conventions before code.
 - **Next step**: set up lint/test commands and begin core feature A.
+
+## 2025-08-11  PR #1
+
+- **Summary**: Added setup script, CI workflow, requirements, Makefile and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: bootstrap project per specs; placeholder
+  lint/test keep CI green.
+- **Next step**: implement GitHub commits pipeline.
 

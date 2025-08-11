@@ -1,0 +1,47 @@
+name: CI
+on:
+  pull_request:
+  push:
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      md_only: ${{ steps.filter.outputs.md_only }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            md_only:
+              - '**/*.md'
+
+  # --- helper step: detect secrets without using them in `if:` ---
+  secret-check:
+    runs-on: ubuntu-latest
+    outputs:
+      has_pages_token: ${{ steps.echo.outputs.has_pages }}
+    steps:
+      - id: echo         # returns 'true' / 'false'
+        run: echo "has_pages=${{ secrets.GH_PAGES_TOKEN != '' }}" >> $GITHUB_OUTPUT
+
+  lint-docs:
+    needs: [changes]
+    if: needs.changes.outputs.md_only == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npx --yes markdownlint-cli '**/*.md'
+          grep -R --line-number -E '<<<<<<<|=======|>>>>>>>' . && exit 1 || echo "No conflict markers"
+
+  test:
+    needs: [changes]
+    if: needs.changes.outputs.md_only != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap
+        run: ./.codex/setup.sh   # idempotent; safe when absent
+      - run: make lint
+      - run: make test

@@ -1,4 +1,4 @@
-# TODO – Road‑map  (last updated: YYYY‑MM‑DD)
+# TODO – Road‑map  (last updated: 2025-08-11)
 
 > *Record only high‑level milestones here; break micro‑tasks out into Issues.*  
 > **When you finish a task, tick it and append a short NOTE entry
@@ -6,13 +6,13 @@
 > Keep this list ordered by topic and **never reorder past items**.
 
 ## 0 · Project bootstrap
-- [ ] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
+- [x] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
       minimal CI)
-- [ ] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
-- [ ] Configure `make lint` and `make test` (cover every language tool‑chain)
-- [ ] Audit repository & docs; identify the single source of truth
+- [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
+- [x] Configure `make lint` and `make test` (cover every language tool‑chain)
+- [x] Audit repository & docs; identify the single source of truth
       (spec, assignment …) and reference it in README
-- [ ] Generate initial dependency manifests (`requirements.txt`,
+- [x] Generate initial dependency manifests (`requirements.txt`,
       `package.json`, `pubspec.yaml`, …) with pinned versions
 - [ ] Define ownership of all generated code in `/generated/**` and record the
       regeneration command in `AGENTS.md`
@@ -52,3 +52,4 @@
 
 ### Add new items below this line  
 *(append only; keep earlier history intact)*
+- [ ] Implement GitHub commits pipeline as per docs/specs.txt
