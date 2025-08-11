@@ -47,7 +47,7 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 ## 3 · What every contributor must know up‑front
 
 1. **Branch & PR flow** – fork → `feat/<topic>` → PR into `main` (one reviewer required).  
-2. **Pre‑commit commands** (also run by CI):  
+2. **Pre‑commit commands** (also run by CI):
    ```bash
    make lint                  # all format / static‑analysis steps
    make test [PYTEST_ARGS=...]# project’s unit-/integration tests
@@ -55,6 +55,14 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 
    * `make test` fails when no tests are collected; ensure at least one exists.
    * Pass flags to pytest via `PYTEST_ARGS`, e.g. `make test PYTEST_ARGS="--offline"`.
+
+   make lint                      # all format / static‑analysis steps
+   pytest --cov=src --cov-fail-under=80  # unit/integration tests w/ coverage
+   ```
+
+   * Coverage excludes `tests/**` and `generated/**` via `.coveragerc`.
+   * `pytest` fails when no tests are collected; ensure at least one exists.
+
    Markdown lint rules live in `.markdownlint.json` for now.
 3. **Test collection** – `make test` must fail if no tests are collected.
 4. **Style rules** – keep code formatted (`black`, `prettier`, `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one blank line** separates log entries.  
@@ -117,7 +125,7 @@ jobs:
       - name: Bootstrap
         run: ./.codex/setup.sh   # idempotent; safe when absent
       - run: make lint
-      - run: make test
+      - run: .venv/bin/pytest --cov=src --cov-fail-under=80
 ```
 
 * **Docs‑only changes** run in seconds (`lint-docs`).  
@@ -141,6 +149,9 @@ jobs:
 
 * Any work involving dlt must consult `docs/dlt_guide_for_codex_2025.txt` for
   pipeline, resource, incremental-loading and pagination practices.
+* Run `python -m src.gh_leaderboard.pipeline` to load commits into DuckDB and
+  execute `post_load.sql` producing tables `commits`, `commits_flat`, and
+  `leaderboard_daily`.
 
 Code quality:
 Clear, modular structure

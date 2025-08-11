@@ -1,14 +1,15 @@
-"""GitHub commit leaderboard pipeline."""
+"""GitHub commit leaderboard pipeline using dlt."""
 
 from __future__ import annotations
 
 import json
 import os
-from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
-import requests
+import dlt
+from dlt.sources.helpers.rest_client import RESTClient
+from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 
 
 def normalize_author(
@@ -33,6 +34,86 @@ def normalize_author(
     return "unknown"
 
 
+def flatten_commit(commit: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Map commit JSON to a skinny row for aggregation."""
+
+    login = (commit.get("author") or {}).get("login")
+    author = commit.get("commit", {}).get("author") or {}
+    email = author.get("email")
+    name = author.get("name")
+    date = commit.get("commit", {}).get("committer", {}).get("date") or author.get(
+        "date"
+    )
+    if not date:
+        return None
+    return {
+        "sha": commit.get("sha"),
+        "author_identity": normalize_author(login, email, name),
+        "commit_timestamp": date,
+        "commit_day": date[:10],
+    }
+
+
+@dlt.source
+def github_commits_source(
+    repo: str = "octocat/Hello-World",
+    branch: Optional[str] = None,
+    since: Optional[str] = None,
+    until: Optional[str] = None,
+):
+    """GitHub commits source with incremental pagination."""
+
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    params: Dict[str, Any] = {"per_page": 100}
+    if branch:
+        params["sha"] = branch
+    if until:
+        params["until"] = until
+
+    client = RESTClient(
+        base_url=f"https://api.github.com/repos/{repo}",
+        headers=headers,
+    )
+
+    @dlt.resource(
+        name="commits",
+        primary_key="sha",
+        write_disposition="append",
+    )
+    def commits(
+        cursor=dlt.sources.incremental("commit.committer.date", initial_value=since),
+    ):
+        page_params = params.copy()
+        if cursor.last_value:
+            page_params["since"] = cursor.last_value
+        elif cursor.initial_value:
+            page_params["since"] = cursor.initial_value
+        for page in client.paginate(
+            "/commits", params=page_params, paginator=HeaderLinkPaginator()
+        ):
+            yield from page
+
+    @dlt.transformer(
+        data_from=commits,
+        name="commits_flat",
+        primary_key="sha",
+        write_disposition="append",
+    )
+    def commits_flat(commit: Dict[str, Any]):
+        row = flatten_commit(commit)
+        if row:
+            yield row
+
+    return commits, commits_flat
+
+
 def run(
     offline: bool = False,
     fixture_path: Optional[str | Path] = None,
@@ -40,98 +121,43 @@ def run(
     branch: Optional[str] = None,
     since: Optional[str] = None,
     until: Optional[str] = None,
-    state_path: Optional[str | Path] = Path(".dlt/state.json"),
+    pipelines_dir: Optional[str | Path] = None,
 ) -> List[Dict[str, Any]]:
-    """Run the pipeline.
+    """Run the dlt pipeline and return the leaderboard rows."""
 
-    When ``offline`` is true, commits are read from ``fixture_path`` and
-    aggregated into a simple leaderboard.
-
-    In live mode commits are fetched from GitHub. Pagination, incremental
-    loading and author normalisation follow ``docs/specs.txt``.
-    """
+    db_path = (
+        Path(pipelines_dir) / "leaderboard.duckdb"
+        if pipelines_dir
+        else Path("leaderboard.duckdb")
+    )
+    pipeline = dlt.pipeline(
+        pipeline_name="gh_leaderboard",
+        destination=dlt.destinations.duckdb(str(db_path)),
+        dataset_name="gh_leaderboard",
+        pipelines_dir=str(pipelines_dir) if pipelines_dir else None,
+    )
 
     if offline:
         path = Path(fixture_path or Path(__file__).with_name("commits_fixture.json"))
-        with path.open() as f:
-            commits = json.load(f)
+        commits: Iterable[Dict[str, Any]] = json.loads(path.read_text())
+        pipeline.run(commits, table_name="commits")
+        pipeline.run(
+            (row for row in (flatten_commit(c) for c in commits) if row),
+            table_name="commits_flat",
+        )
     else:
-        token = os.environ.get("GITHUB_TOKEN")
+        source = github_commits_source(
+            repo=repo, branch=branch, since=since, until=until
+        )
+        pipeline.run(source)
 
-        # derive since from state when not provided
-        if state_path and since is None:
-            try:
-                state = json.loads(Path(state_path).read_text())
-                since = state.get(repo)
-            except FileNotFoundError:
-                pass
-
-        params = {"per_page": 100}
-        if branch:
-            params["sha"] = branch
-        if since:
-            params["since"] = since
-        if until:
-            params["until"] = until
-
-        headers = {
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-        }
-        if token:
-            headers["Authorization"] = f"Bearer {token}"
-
-        url = f"https://api.github.com/repos/{repo}/commits"
-        commits: List[Dict[str, Any]] = []
-        while url:
-            try:
-                resp = requests.get(url, params=params, headers=headers, timeout=30)
-                resp.raise_for_status()
-            except requests.RequestException as exc:  # pragma: no cover - network
-                raise RuntimeError("GitHub API request failed") from exc
-            data = resp.json()
-            if not isinstance(data, list):
-                break
-            commits.extend(data)
-            link = resp.headers.get("Link", "")
-            next_url = None
-            for part in link.split(","):
-                if 'rel="next"' in part:
-                    next_url = part[part.find("<") + 1 : part.find(">")]
-                    break
-            url = next_url
-            params = None
-
-    counts: Dict[tuple[str, str], int] = defaultdict(int)
-    max_cursor = since
-    for commit in commits:
-        login = (commit.get("author") or {}).get("login")
-        author_info = commit.get("commit", {}).get("author") or {}
-        email = author_info.get("email")
-        name = author_info.get("name")
-        date = author_info.get("date") or commit.get("commit", {}).get(
-            "committer", {}
-        ).get("date")
-        if not date:
-            continue
-        if max_cursor is None or date > max_cursor:
-            max_cursor = date
-        day = date[:10]
-        identity = normalize_author(login, email, name)
-        counts[(identity, day)] += 1
-
-    if state_path and max_cursor:
-        path = Path(state_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            state = json.loads(path.read_text())
-        except FileNotFoundError:
-            state = {}
-        state[repo] = max_cursor
-        path.write_text(json.dumps(state))
-
-    leaderboard = [
-        {"author_identity": author, "commit_day": day, "commit_count": count}
-        for (author, day), count in sorted(counts.items())
+    sql_path = Path(__file__).with_name("post_load.sql")
+    with pipeline.sql_client() as sql:
+        sql.execute_sql(sql_path.read_text())
+        rows = sql.execute_sql(
+            "select author_identity, commit_day, commit_count from "
+            "leaderboard_daily order by author_identity, commit_day"
+        )
+    return [
+        dict(zip(["author_identity", "commit_day", "commit_count"], r)) for r in rows
     ]
-    return leaderboard

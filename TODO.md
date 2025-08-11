@@ -21,13 +21,13 @@
 
 Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
-- [ ] Analyse source‑of‑truth docs; define acceptance criteria for
+- [x] Analyse source‑of‑truth docs; define acceptance criteria for
       **GitHub commits pipeline**
   - [x] Document assumptions / edge‑cases for GitHub commits pipeline in
     `/docs` or README
   - [x] Implement GitHub commits pipeline
 - [x] Add unit / integration tests for GitHub commits pipeline
-- [ ] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
+- [x] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
       exits 1 on regression
 
 ## 2 · Documentation & CI
@@ -42,7 +42,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 ## 3 · Quality & automation
 
 - [ ] Add pre‑commit hooks (formatters, linters, markdownlint, actionlint)
-- [ ] Enforce coverage threshold (≥ 80 % branch, exclude `/generated/**`)
+- [x] Enforce coverage threshold (≥ 80 % branch, exclude `/generated/**`)
 - [ ] Add linters for conflict markers, trailing spaces and NOTES ordering
 - [ ] Introduce dependabot / Renovate with the version‑pin policy from
       `AGENTS.md`
@@ -63,7 +63,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Ensure `.codex/setup.sh` creates `.venv` with lint tools (2025-08-11)
 - [x] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
 - [x] Fix markdownlint errors across docs to make `lint-docs` job pass
-- [ ] Add DuckDB destination and post-load SQL for leaderboard
+- [x] Add DuckDB destination and post-load SQL for leaderboard
 - [x] Pin `requests` dependency for HTTP calls (2025-08-11)
 - [x] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
-- [ ] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)
+- [x] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)
