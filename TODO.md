@@ -52,3 +52,4 @@
 
 ### Add new items below this line  
 *(append only; keep earlier history intact)*
+- [ ] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
