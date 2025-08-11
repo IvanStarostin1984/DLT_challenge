@@ -108,3 +108,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: Needed real data; used Link headers and stored the
   last cursor in a state file.
 - **Next step**: Load results into DuckDB and build SQL leaderboard.
+
+## 2025-08-11  PR #12
+
+- **Summary**: Pinned `requests` dependency and documented ordered list style.
+- **Stage**: maintenance
+- **Motivation / Decision**: ensure stable HTTP client; clarify list numbering to satisfy markdownlint.
+- **Next step**: apply `requests` in future pipeline features.
+

@@ -64,3 +64,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
 - [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
 - [ ] Add DuckDB destination and post-load SQL for leaderboard
+- [x] Pin `requests` dependency for HTTP calls (2025-08-11)

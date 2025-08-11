@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.4 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.5 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -38,9 +38,9 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    `.venv/bin/pip install -r requirements.txt`.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
    *The script installs language tool‑chains, pins versions and injects secrets.*
-2. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
-3. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
-4. On the first PR, update README badges to point at your fork (owner/repo).
+1. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
+1. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
+1. On the first PR, update README badges to point at your fork (owner/repo).
 
 ---
 
@@ -130,6 +130,7 @@ jobs:
 * 4‑space indent (or 2‑spaces for JS/TS when enforced by the linter).  
 * ≤ 20 logical LOC per function, ≤ 2 nesting levels.  
 * Surround headings / lists / fenced code with a blank line (markdownlint MD022, MD032).  
+* Use `1.` for every item in ordered lists (markdownlint MD029).
 * **No trailing spaces.** Run `git diff --check` or `make lint-docs`.  
 * Wrap identifiers like `__init__` in back‑ticks to avoid MD050.  
 * Each public API carries a short doc‑comment.  
