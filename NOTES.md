@@ -67,3 +67,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: implementation
 - **Motivation / Decision**: ensure consistent environment.
 - **Next step**: configure lint and test commands.
+
+## 2025-08-11  PR #7
+
+- **Summary**: Replaced placeholder repo path and linked master spec.
+- **Stage**: documentation
+- **Motivation / Decision**: keep instructions accurate and reference single source
+  of truth.
+- **Next step**: implement GitHub commits pipeline.

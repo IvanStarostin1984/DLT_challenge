@@ -249,10 +249,10 @@ Copy
 pytest -q -k e2e --offline
 Query the DuckDB file produced (e.g., gh_leaderboard.duckdb) to show leaderboard_daily.
 
-B) Local (Windows 11 PowerShell)
+ B) Local (Windows 11 PowerShell)
 powershell
 Copy
-cd gh-leaderboard
+cd DLT_challenge
 py -m venv .venv
 . .\.venv\Scripts\Activate.ps1
 pip install --upgrade pip
@@ -267,7 +267,7 @@ pytest -q
 C) Local (Linux/macOS / WSL)
 bash
 Copy
-cd gh-leaderboard
+cd DLT_challenge
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
