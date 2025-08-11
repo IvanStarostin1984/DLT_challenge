@@ -8,7 +8,7 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## TEMPLATE  (copy → fill → append)
 
-### YYYY‑MM‑DD  PR #<number or draft>
+### YYYY‑MM‑DD  PR #&lt;number or draft&gt;
 
 - **Summary**: one‑sentence description of what changed.
 - **Stage**: planning / implementation / testing / maintenance / release
@@ -17,7 +17,7 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ---
 
-## 2025‑01‑01  PR #0  🌱 _file created_
+## 2025‑01‑01  PR #0  🌱 *file created*
 
 - **Summary**: Seeded repository with starter templates (`AGENTS.md`, `TODO.md`,
   `NOTES.md`) and minimal CI workflow.
@@ -31,3 +31,39 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: implementation
 - **Motivation / Decision**: keep temporary files out of version control.
 - **Next step**: prepare setup script and tooling for lint and tests.
+
+## 2025-08-11  PR #2
+
+- **Summary**: Added Makefile with lint and test targets wired to `.venv`.
+- **Stage**: implementation
+- **Motivation / Decision**: standardised quality gates; relaxed markdown rules
+   to tolerate legacy docs.
+- **Next step**: add setup script for installing the tool chain.
+
+## 2025-08-11  PR #3
+
+- **Summary**: Created gh_leaderboard package skeleton.
+- **Stage**: planning
+- **Motivation / Decision**: start structure for future dlt pipeline.
+- **Next step**: implement GitHub commit pipeline.
+
+## 2025-08-11  PR #4
+
+- **Summary**: add CI workflow with docs-only and test paths.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure docs edits run fast checks while code runs full tests.
+- **Next step**: add `.codex/setup.sh` and wire `make lint` and `make test`.
+
+## 2025-08-11  PR #5
+
+- **Summary**: Expanded README with setup instructions, tests, and design notes.
+- **Stage**: documentation
+- **Motivation / Decision**: Align docs with specs to guide future work.
+- **Next step**: Implement GitHub commits pipeline.
+
+## 2025-08-11  PR #6
+
+- **Summary**: added setup script and pinned dependency manifest.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure consistent environment.
+- **Next step**: configure lint and test commands.

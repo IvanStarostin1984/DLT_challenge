@@ -1,1 +1,48 @@
-# DLT_challenge
+# GitHub commit leaderboard pipeline
+
+This project is a small [dlt](https://dlthub.com/) pipeline that loads recent
+GitHub commits into DuckDB and builds a daily leaderboard of contributors.
+
+It creates three tables:
+
+* `commits_raw`
+* `commits_flat`
+* `leaderboard_daily`
+
+## Quick start (Windows PowerShell)
+
+1. `cd gh-leaderboard`
+2. `py -m venv .venv`
+3. `. .\\.venv\\Scripts\\Activate.ps1`
+4. `pip install -r requirements.txt`
+5. `python -m src.gh_leaderboard.pipeline`
+
+## Quick start (Linux / macOS / WSL)
+
+1. `cd gh-leaderboard`
+2. `python3 -m venv .venv`
+3. `source .venv/bin/activate`
+4. `pip install -r requirements.txt`
+5. `python -m src.gh_leaderboard.pipeline`
+
+Set `GITHUB_TOKEN` to raise rate limits if needed.
+
+## Tests
+
+Run unit and end-to-end tests:
+
+```bash
+pytest -q
+```
+
+## Incremental loads
+
+The resource uses `commit.committer.date` as the cursor and falls back to the
+author date. dlt stores the last cursor so pass `--since` on the next run.
+
+## Design decisions
+
+* Local DuckDB keeps dependencies minimal.
+* Link header pagination walks through commit pages.
+* The cursor uses commit times to enable incremental syncs.
+* Author identity falls back from login to email to name.
