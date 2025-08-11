@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.2 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.3 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -47,6 +47,8 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    make lint                  # all format / static‑analysis steps
    make test                  # project’s unit‑/integration tests
    ```
+
+   * `make test` fails when no tests are collected; ensure at least one exists.
    Markdown lint rules live in `.markdownlint.json` for now.
 3. **Style rules** – keep code formatted (`black`, `prettier`, `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one blank line** separates log entries.  
 4. **Exit‑code conventions** – scripts must exit ≠ 0 on failure so CI catches regressions (e.g. fail fast when quality gates or metric thresholds aren’t met).  

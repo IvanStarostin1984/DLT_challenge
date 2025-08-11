@@ -26,7 +26,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Document assumptions / edge‑cases for GitHub commits pipeline in
        `/docs` or README
 - [ ] Implement GitHub commits pipeline
-- [ ] Add unit / integration tests for GitHub commits pipeline
+- [x] Add unit / integration tests for GitHub commits pipeline
 - [ ] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
       exits 1 on regression
 

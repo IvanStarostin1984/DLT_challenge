@@ -1,0 +1,38 @@
+[
+  {
+    "sha": "1",
+    "author": {"login": "alice"},
+    "commit": {
+      "author": {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "date": "2024-01-01T10:00:00Z"
+      },
+      "committer": {"date": "2024-01-01T10:00:00Z"}
+    }
+  },
+  {
+    "sha": "2",
+    "author": {"login": "alice"},
+    "commit": {
+      "author": {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "date": "2024-01-01T11:00:00Z"
+      },
+      "committer": {"date": "2024-01-01T11:00:00Z"}
+    }
+  },
+  {
+    "sha": "3",
+    "author": null,
+    "commit": {
+      "author": {
+        "name": "Bob Smith",
+        "email": "bob+spam@example.com",
+        "date": "2024-01-02T09:00:00Z"
+      },
+      "committer": {"date": "2024-01-02T09:00:00Z"}
+    }
+  }
+]
