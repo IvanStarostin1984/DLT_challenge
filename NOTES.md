@@ -25,14 +25,22 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: establish collaboration conventions before code.
 - **Next step**: set up lint/test commands and begin core feature A.
 
+
 ## 2025-08-11  PR #1
+
+- **Summary**: add CI workflow with docs-only and test paths.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure docs edits run fast checks while code runs full tests.
+- **Next step**: add `.codex/setup.sh` and wire `make lint` and `make test`.
+
+## 2025-08-11  PR #2
 
 - **Summary**: Expanded README with setup instructions, tests, and design notes.
 - **Stage**: documentation
 - **Motivation / Decision**: Align docs with specs to guide future work.
 - **Next step**: Implement GitHub commits pipeline.
 
-## 2025-08-11  PR #2
+## 2025-08-11  PR #3
 
 - **Summary**: added setup script and pinned dependency manifest.
 - **Stage**: implementation

@@ -5,10 +5,8 @@
 > (see NOTES.md).**
 > Keep this list ordered by topic and **never reorder past items**.
 
-## 0 · Project bootstrap
-
-- [ ] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
-      minimal CI)
+## 0 · Project bootstrap
+- [x] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
 - [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
 - [ ] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [ ] Audit repository & docs; identify the single source of truth
@@ -57,6 +55,10 @@
 - [ ] Add optional load‑testing / performance CI stage
 
 ---
+
+### Add new items below this line  
+*(append only; keep earlier history intact)*
+- [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
 
 ### Add new items below this line
 
