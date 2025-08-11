@@ -1,0 +1,345 @@
+# Client specifications (not to be changed, read only):
+Step 2: Demonstrate how you would structure, reason about, and deliver a small data-loading project using a dlt pipeline. Implement it the way you think is right, just explain your choices. Using LLM tools is permitted, but keep in mind that less is more - you will need to be able to explain your code in depth. What we look for:
+
+Code quality:
+Clear, modular structure
+Consistent formatting
+Meaningful docstrings and comments
+dlt usage:
+Proper usage of dlt entities, such as sources, resources, transformers, etc.
+Use of incremental loading
+Correct handling of pagination
+Tests:
+One well-written unit test for an individual function or small component
+One comprehensive test that runs your dlt pipeline end to end (you decide which invariants must hold and why)
+Documentation:
+A README.md that explains how to set up, run, and test the project
+A short design decisions section (why this API, how you chose incremental fields, what you’d do next with more time)
+Reproducibility:
+We should be able to clone your repo and run the pipeline end to end
+Using a public API is recommended
+Pin your dependencies
+Just to give you an idea: You could use GitHub as the source and build a dlt pipeline that loads data from a public repository incrementally and produces a daily leaderboard table of the top contributors by commit count (or some other metric), updated once a day.
+
+We suggest aiming for a max 4-6h effort, keeping things simple, and showcasing your best. Please create a private GitHub repository for your project, add burnash and anuunchin as collaborators and reply to this email with the link within one week. If you need more time, just let us know.
+
+For this work, we will compensate you with a 35€ Amazon voucher. This task is similar to the early work you might do in this role. It will help us evaluate your understanding of dlt and the problem we are solving, your coding style, and your interest in creating an excellent product for our data users.
+
+Here are some places you can learn more about dlt:
+
+https://github.com/dlt-hub/
+https://dlthub.com/docs/intro
+https://dlthub.com/docs/getting-started
+https://dlthub.com/docs/walkthroughs/create-a-pipeline
+
+#Detailed specifications (may be wrong, maybe changed as last resort):
+0) Decision summary (safe defaults)
+Source API: GitHub REST v3 — List commits.
+Use since and until to bound time windows, per_page=100, pagination via Link header. Send Accept: application/vnd.github+json and (optionally) X‑GitHub‑Api‑Version: 2022‑11‑28. 
+GitHub Docs
++1
+
+Destination: DuckDB (local file, zero external services). 
+DuckDB
+
+Scope: Single public repo (configurable), default branch only, recent time window.
+
+dlt entities: one source, one resource (commits), HeaderLinkPaginator, cursor‑based incremental, one transformer (author normalization), and one post‑load SQL step for the leaderboard.
+
+Reproducibility: pinned deps (dlt[duckdb], duckdb, pytest), .dlt/ state on disk, no cloud, works on Windows & Linux. dlt supports Python 3.9–3.14. 
+dltHub
+PyPI
+
+CI: none (run locally).
+
+Two run modes:
+
+Live (local): hits GitHub API (token optional).
+
+Offline (Codex/Code‑Interpreter): uses bundled fixture JSON (no HTTP).
+
+1) What the pipeline does (Input → Process → Output)
+Input
+GET /repos/{owner}/{repo}/commits?sha={branch}&since=…&until=…&per_page=100 (default branch if sha omitted). Rate‑limit: 60/h unauthenticated, 5,000/h authenticated PAT. 
+GitHub Docs
++2
+GitHub Docs
++2
+
+Process
+
+Pagination: follow Link: <…>; rel="next" until exhausted (HeaderLink paginator). 
+GitHub Docs
+dltHub
+
+Incremental: cursor = commit.committer.date (ISO‑8601). If missing, fallback commit.author.date. Pass since on requests; dlt keeps max cursor in state to avoid re‑pulling. 
+dltHub
+
+Transform (normalize): compute:
+
+author_identity: prefer author.login; else local‑part of author.email (drop +tag); else normalized author.name (lower‑case, strip whitespace).
+
+commit_timestamp (UTC) and commit_day = DATE(commit_timestamp) (UTC).
+
+Keep skinny fields for a reviewer‑friendly table.
+
+Post‑load SQL (DuckDB in same dataset): aggregate
+leaderboard_daily(author_identity, commit_day, commit_count).
+
+Output
+
+Raw, auto‑normalized table(s) from dlt (commits_raw).
+
+commits_flat: skinny, deduped by sha.
+
+leaderboard_daily: daily counts per author.
+
+Optional VIEW leaderboard_latest = last 1–2 calendar days.
+
+2) Data model (minimal, explicit)
+commits_raw (as inferred by dlt): GitHub commit JSON (metadata only).
+
+commits_flat (transformer):
+
+sha (PK)
+
+commit_timestamp (UTC)
+
+author_login (nullable)
+
+author_email (nullable)
+
+author_name (nullable)
+
+author_identity (derived, non‑null)
+
+message_short (first line of message)
+
+leaderboard_daily:
+
+commit_day (DATE, UTC), author_identity, commit_count (INT)
+
+leaderboard_latest (VIEW, optional): last 1–2 days for quick inspection.
+
+3) dlt entities & key choices (why these are “safe”)
+Source: github_commits_source(repo, branch) → returns the commits resource.
+
+Resource: commits (REST client + HeaderLink paginator).
+
+Paginator: HeaderLinkPaginator (uses Link: … rel="next"; canonical for GitHub). 
+dltHub
+GitHub Docs
+
+Primary key: sha (immutable commit id).
+
+Write disposition: append (commits immutable).
+
+Incremental cursor: commit.committer.date (fallback commit.author.date) passed as since on request; state kept by dlt. 
+dltHub
+
+Request shaping: sha={branch}, per_page=100, since={cursor.start}, and for tests also until={end_value} to fully close the window at the source. 
+GitHub Docs
+
+Transformer: flatten_commit → skinny row + stable author_identity.
+
+Post‑load SQL: create/refresh leaderboard_daily in the same DuckDB file (no extra tools).
+
+4) Incremental loading plan (correctness first)
+Cursor field: commit.committer.date (fallback noted above).
+
+Initial range: configurable; default “14 days ago → now” to keep first run small.
+
+Dedupe: PK=sha ensures idempotency (API overlaps possible around the cursor).
+
+Backfill option: use initial_value + end_value for a closed, historical slice (deterministic tests) without touching live incremental state. 
+dltHub
+
+Ordering: do not rely on row order; pagination + cursor handle correctness.
+
+5) Pagination & rate‑limit safety
+Pagination: via Link headers (rel="next"). 
+GitHub Docs
+
+Rate limits: 60 req/h unauthenticated; token raises limit (5,000 req/h). Use per_page=100 + narrow windows → far below limits for one repo. 
+GitHub Docs
+
+Retries: use dlt defaults (backoff); no custom logic unless needed.
+
+Headers: include Accept: application/vnd.github+json; optionally X‑GitHub‑Api‑Version: 2022‑11‑28. 
+GitHub Docs
+
+6) Tests (invariants; one unit + one end‑to‑end)
+Unit: normalize_author(login, email, name) -> author_identity
+Invariants
+
+Prefers login if present; else lower‑cased email local‑part (ignores +tag); else lower‑cased name stripped of whitespace.
+
+Returns non‑empty string if any of the inputs are non‑empty.
+
+Deterministic for same inputs (pure).
+
+E2E: run over a fixed past 24‑h window on a known‑active repo and branch, using both since and until (closed interval) so counts don’t drift if new commits land mid‑run.
+Invariants
+
+commits_flat exists and COUNT(*) = COUNT(DISTINCT sha) (dedupe).
+
+leaderboard_daily exists; all commit_day within the window; each commit_count ≥ 1.
+
+Idempotency: immediate re‑run without changing state → row counts do not decrease; sha distinctness holds.
+
+Codex/Code‑Interpreter demo: run the same E2E against the bundled fixture (fixtures/commits_sample.json) to exercise transform + load + SQL without HTTP (sandbox has no outbound network). 
+OpenAI Help Center
+
+7) Repository layout
+ruby
+Copy
+gh-leaderboard/
+├─ src/gh_leaderboard/
+│  ├─ pipeline.py            # build & run dlt pipeline; optional CLI args
+│  ├─ source_github.py       # @dlt.source + @dlt.resource (REST+HeaderLink+incremental)
+│  ├─ transforms.py          # normalize_author + flatten_commit transformer
+│  ├─ postload.sql           # CREATE/REPLACE leaderboard_daily + optional VIEW latest
+│  ├─ config.py              # load repo/branch/window from .dlt/config.toml or env/CLI
+├─ tests/
+│  ├─ test_normalize_author.py
+│  ├─ test_e2e_pipeline.py   # parametrized: live vs offline fixture
+├─ fixtures/
+│  └─ commits_sample.json    # small JSON for offline demo/tests
+├─ .dlt/
+│  ├─ config.toml            # repo, branch, initial window (safe to commit)
+│  └─ secrets.toml           # optional github_token (NEVER commit)
+├─ .gitignore                # .duckdb files, .dlt/state, .venv, __pycache__
+├─ requirements.txt          # pinned deps
+├─ pyproject.toml            # black/ruff + pytest config (optional but nice)
+└─ README.md
+8) Configuration (dlt + environment)
+.dlt/config.toml (checked in):
+
+toml
+Copy
+[gh]
+repo = "homebrew/homebrew-core"  # default: high-activity public repo
+branch = "master"                # or "main"
+window_days = 14                 # initial window for first run
+.dlt/secrets.toml (not committed):
+
+toml
+Copy
+[github]
+token = "ghp_************************"
+Env overrides: GH_REPO, GH_BRANCH, GH_SINCE_ISO, GH_UNTIL_ISO. CLI flags may override both.
+
+9) Commands (Codex demo + Local Windows/Linux)
+A) Codex / Code‑Interpreter (offline demo)
+Why offline? The environment cannot make outbound network requests; use the bundled fixture.
+
+Open the repo in Codex/Code‑Interpreter.
+
+(If pip install is allowed in your session) run:
+
+nginx
+Copy
+pip install "dlt[duckdb]==1.15.0" duckdb==1.3.2 pytest==8.4.1
+If package install isn’t available, keep the demo to transform + SQL using whatever is preinstalled.
+
+Run the offline E2E test:
+
+css
+Copy
+pytest -q -k e2e --offline
+Query the DuckDB file produced (e.g., gh_leaderboard.duckdb) to show leaderboard_daily.
+
+B) Local (Windows 11 PowerShell)
+powershell
+Copy
+cd gh-leaderboard
+py -m venv .venv
+. .\.venv\Scripts\Activate.ps1
+pip install --upgrade pip
+pip install -r requirements.txt
+# (optional) set token to raise rate limits
+$env:GITHUB_TOKEN="ghp_************************"
+# quick run over last 14 days on default repo/branch
+python -m src.gh_leaderboard.pipeline
+# closed window E2E (example: yesterday)
+python -m src.gh_leaderboard.pipeline --since "2025-08-10T00:00:00Z" --until "2025-08-11T00:00:00Z"
+pytest -q
+C) Local (Linux/macOS / WSL)
+bash
+Copy
+cd gh-leaderboard
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+export GITHUB_TOKEN=ghp_************************  # optional
+python -m src.gh_leaderboard.pipeline
+pytest -q
+Python/dlt versions: use Python 3.9–3.14; install dlt[duckdb] per docs.
+
+10) README content (checklist)
+What this is (one paragraph): a tiny dlt pipeline that loads GitHub commits into DuckDB and builds a daily contributors leaderboard.
+
+What you get: tables commits_raw, commits_flat, leaderboard_daily (+ optional leaderboard_latest).
+
+How to run (5 steps) for Windows & Linux (commands above).
+
+How incremental works (1 paragraph; cursor = commit.committer.date, fallback author date; dlt stores last cursor, you pass since on next run).
+
+Design decisions (bulleted, short): DuckDB local; cursor choice; Link‑header pagination; author identity fallback.
+
+Tests: unit + E2E invariants; offline fixture for sandbox demo.
+
+Troubleshooting:
+
+403 or pagination stalls → add GITHUB_TOKEN; confirm per_page=100.
+
+Empty results → adjust since/until, confirm branch.
+
+Codex: no internet → use --offline or run locally.
+
+11) Reproducibility & formatting
+Pin deps (example requirements.txt):
+
+makefile
+Copy
+dlt[duckdb]==1.15.0
+duckdb==1.3.2
+pytest==8.4.1
+(dlt and DuckDB pins reflect current published versions.)
+
+State: leave .dlt/ state on disk (default), document full refresh (--since far‑past + drop tables if needed).
+
+Formatting: black/ruff defaults; docstrings for public fns; type hints for non‑trivial fns.
+
+12) Risks & mitigations
+Rate‑limit (Low): narrow window + per_page=100; set token to lift to 5,000/h if needed.
+
+Author identity nulls (Low): deterministic fallback + unit test.
+
+Live data drift during tests (Low): E2E uses closed window (since + until).
+
+Codex sandbox (Medium): no outbound HTTP; use offline fixture; run live E2E locally.
+
+14) Minimal implementation sketch (function‑level)
+normalize_author(login: Optional[str], email: Optional[str], name: Optional[str]) -> str
+
+flatten_commit(commit_json: dict) -> dict → emits one row with fields listed above.
+
+@dlt.source def github_commits_source(repo: str, branch: str, since: str | None, until: str | None)
+
+@dlt.resource using RESTClient(base_url="https://api.github.com", paginator=HeaderLinkPaginator()) with headers and query params wired; incremental via dlt.sources.incremental(cursor_path="commit.committer.date", ...).
+
+pipeline.py: create dlt.pipeline(destination="duckdb", dataset_name="github_leaderboard"), run resource (offline uses fixture), then run postload.sql.
+
+15) Reviewer UX (what they will see in DuckDB)
+SELECT * FROM commits_flat LIMIT 10;
+
+SELECT * FROM leaderboard_daily ORDER BY commit_day DESC, commit_count DESC LIMIT 20;
+
+Optional: CREATE VIEW leaderboard_latest AS … WHERE commit_day >= current_date - INTERVAL 1 DAY;
+
+16) Security
+Do not commit .dlt/secrets.toml.
+
+Add .gitignore: .dlt/state*, *.duckdb, .venv, __pycache__/, .pytest_cache/.
+
