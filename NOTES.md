@@ -108,3 +108,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: Needed real data; used Link headers and stored the
   last cursor in a state file.
 - **Next step**: Load results into DuckDB and build SQL leaderboard.
+
+## 2025-08-11  PR #12
+
+- **Summary**: Ran setup, fixed AGENTS numbering, and executed lint and tests offline/online.
+- **Stage**: testing
+- **Motivation / Decision**: verify tooling and document results; preparing for green CI.
+- **Next step**: update Makefile to forward pytest flags.
