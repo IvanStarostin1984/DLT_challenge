@@ -67,3 +67,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: implementation
 - **Motivation / Decision**: ensure consistent environment.
 - **Next step**: configure lint and test commands.
+
+## 2025-08-11  PR #7
+
+- **Summary**: Added unit and offline pipeline tests and tightened test target.
+- **Stage**: testing
+- **Motivation / Decision**: ensure pipeline can run on fixture and fail fast.
+- **Next step**: implement live GitHub pipeline.
