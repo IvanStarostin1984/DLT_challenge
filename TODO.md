@@ -6,9 +6,9 @@
 > Keep this list ordered by topic and **never reorder past items**.
 
 ## 0 · Project bootstrap
+- [x] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [x] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
 - [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
-- [ ] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [ ] Audit repository & docs; identify the single source of truth
       (spec, assignment …) and reference it in README
 - [x] Generate initial dependency manifests (`requirements.txt`,
