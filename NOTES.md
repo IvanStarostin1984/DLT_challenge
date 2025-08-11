@@ -165,3 +165,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
   block to remove a stray fence. Reason: keep contributor guide rendering clean
   and lint instructions accurate. Decisions: prefer explicit fenced block over
   omitting commands.
+
+## 2025-08-11  PR #19
+
+- **Summary**: Anchored conflict check with `git grep` and updated docs.
+- **Stage**: maintenance
+- **Motivation / Decision**: ensure conflict markers are caught while ignoring
+  untracked files.
+- **Next step**: consider adding pre-commit hooks for conflict markers.
