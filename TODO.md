@@ -9,11 +9,11 @@
 
 - [ ] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
       minimal CI)
-- [ ] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
+- [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
 - [ ] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [ ] Audit repository & docs; identify the single source of truth
       (spec, assignment …) and reference it in README
-- [ ] Generate initial dependency manifests (`requirements.txt`,
+- [x] Generate initial dependency manifests (`requirements.txt`,
       `package.json`, `pubspec.yaml`, …) with pinned versions
 - [ ] Define ownership of all generated code in `/generated/**` and record the
       regeneration command in `AGENTS.md`

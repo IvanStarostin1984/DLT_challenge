@@ -31,3 +31,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: documentation
 - **Motivation / Decision**: Align docs with specs to guide future work.
 - **Next step**: Implement GitHub commits pipeline.
+
+## 2025-08-11  PR #2
+
+- **Summary**: added setup script and pinned dependency manifest.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure consistent environment.
+- **Next step**: configure lint and test commands.
