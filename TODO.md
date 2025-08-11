@@ -68,3 +68,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
 - [x] Review dlt pipelines per `docs/dlt_guide_for_codex_2025.txt` (2025-08-11)
 - [x] Wrap lint and test commands in `AGENTS.md` code fence (2025-08-11)
+- [x] Replace `grep` with anchored `git grep` for conflict checks (2025-08-11)

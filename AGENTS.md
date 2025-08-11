@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.7 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.8 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -25,7 +25,7 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 | **Distinct‑files rule** | Every concurrent task **must** edit a unique list of non‑markdown files.<br>_Shared exceptions:_ anyone may **append** (never rewrite) `AGENTS.md`, `TODO.md`, `NOTES.md`. |
 | **Append‑only logs** | `TODO.md` & `NOTES.md` are linear logs—**never delete or reorder entries**.<br>Add new items **at the end of the file**. |
 | **Generated‑files rule** | Anything under `generated/**` or `openapi/**` is **code‑generated** – never hand‑edit; instead rerun the generator. |
-| **Search for conflict markers before every commit** | `git grep -n '<<<<<<<\\|=======\\|>>>>>>>'` must return nothing. |
+| **Search for conflict markers before every commit** | `git grep -nE '^<<<<<<< |^=======|^>>>>>>>' --` must return nothing. |
 
 ---
 
@@ -115,7 +115,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           npx --yes markdownlint-cli '**/*.md'
-          grep -R --line-number -E '<<<<<<<|=======|>>>>>>>' . && exit 1 || echo "No conflict markers"
+          git grep -nE '^<<<<<<< |^=======|^>>>>>>>' -- && exit 1 || echo "No conflict markers"
 
   test:
     needs: [changes]
