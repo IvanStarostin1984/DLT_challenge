@@ -9,8 +9,8 @@
 - [x] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [x] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
 - [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
-- [ ] Audit repository & docs; identify the single source of truth
-      (spec, assignment …) and reference it in README
+- [x] Audit repository & docs; identify the single source of truth
+       (spec, assignment …) and reference it in README
 - [x] Generate initial dependency manifests (`requirements.txt`,
       `package.json`, `pubspec.yaml`, …) with pinned versions
 - [ ] Define ownership of all generated code in `/generated/**` and record the
@@ -19,7 +19,7 @@
 
 ## 1 · Core functionality
 
-*Repeat the five‑bullet block below for every MVP feature A, B, C, …*
+Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
 - [ ] Analyse source‑of‑truth docs; define acceptance criteria for
       **GitHub commits pipeline**
