@@ -29,6 +29,21 @@ It creates three tables:
 
 Set `GITHUB_TOKEN` to raise rate limits if needed.
 
+## Usage
+
+```python
+from src.gh_leaderboard import pipeline
+
+rows = pipeline.run(
+    repo="octocat/Hello-World",
+    since="2012-03-06T00:00:00Z",
+    until="2012-03-07T00:00:00Z",
+)
+```
+
+Each row has `author_identity`, `commit_day`, and `commit_count`. Use
+`offline=True` to read the bundled fixture instead of hitting GitHub.
+
 ## Tests
 
 Run unit and end-to-end tests:
@@ -36,6 +51,8 @@ Run unit and end-to-end tests:
 ```bash
 pytest -q
 ```
+
+Add `--offline` to skip network tests when the environment has no internet.
 
 ## Incremental loads
 

@@ -91,3 +91,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: keep instructions accurate and reference single source
   of truth.
 - **Next step**: implement GitHub commits pipeline.
+
+## 2025-08-11  PR #10
+
+- **Summary**: Enabled live GitHub calls with pagination and incremental state.
+- **Stage**: implementation
+- **Motivation / Decision**: Needed real data; used Link headers and stored the
+  last cursor in a state file.
+- **Next step**: Load results into DuckDB and build SQL leaderboard.
