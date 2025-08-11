@@ -25,3 +25,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: establish collaboration conventions before code.
 - **Next step**: set up lint/test commands and begin core feature A.
 
+
+## 2025-08-11  PR #1
+
+- **Summary**: added setup script and pinned dependency manifest.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure consistent environment.
+- **Next step**: configure lint and test commands.
+
