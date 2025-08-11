@@ -91,3 +91,12 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: keep instructions accurate and reference single source
   of truth.
 - **Next step**: implement GitHub commits pipeline.
+
+## 2025-08-11  PR #10
+
+- **Summary**: `.codex/setup.sh` now provisions `.venv` with black and ruff so
+  `make lint` runs.
+- **Stage**: implementation
+- **Motivation / Decision**: lint step failed due to missing virtual
+  environment; installing tools in `.venv` isolates dependencies.
+- **Next step**: run CI to confirm lint and tests pass.

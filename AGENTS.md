@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.3 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.4 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -31,8 +31,8 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 
 ## 2 · Bootstrap (first‑run) checklist
 
-1. Run `.codex/setup.sh` (or `./setup.sh`) once after cloning & whenever dependencies change.  
-   *The script installs language tool‑chains, pins versions and injects secrets.*  
+1. Run `.codex/setup.sh` (or `./setup.sh`) once after cloning & whenever dependencies change.
+   *The script creates `.venv/` and installs runtime, lint & test dependencies.*
 2. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
 3. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
 4. On the first PR, update README badges to point at your fork (owner/repo).
