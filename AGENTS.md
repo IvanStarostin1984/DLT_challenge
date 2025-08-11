@@ -38,9 +38,9 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    `.venv/bin/pip install -r requirements.txt`.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
    *The script installs language tool‑chains, pins versions and injects secrets.*
-2. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
-3. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
-4. On the first PR, update README badges to point at your fork (owner/repo).
+1. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.
+1. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.
+1. On the first PR, update README badges to point at your fork (owner/repo).
 
 ---
 

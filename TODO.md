@@ -15,7 +15,7 @@
       `package.json`, `pubspec.yaml`, …) with pinned versions
 - [ ] Define ownership of all generated code in `/generated/**` and record the
       regeneration command in `AGENTS.md`
-- [ ] Push the first green CI run (docs‑only + full‑tests job)
+- [x] Push the first green CI run (docs‑only + full‑tests job)
 
 ## 1 · Core functionality
 
@@ -62,5 +62,6 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Require `make test` to fail when no tests are collected (2025-08-11)
 - [x] Ensure `.codex/setup.sh` creates `.venv` with lint tools (2025-08-11)
 - [x] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
-- [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
+- [x] Fix markdownlint errors across docs to make `lint-docs` job pass
 - [ ] Add DuckDB destination and post-load SQL for leaderboard
+- [ ] Allow `make test` to forward flags like `--offline` to pytest (2025-08-11)
