@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.5 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.6 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -137,6 +137,9 @@ jobs:
 * Keep Markdown lines ≤ 80 chars to improve diff readability (tables may exceed if unavoidable).
 
 ### 5.1 Additional instructions:
+
+* Any work involving dlt must consult `docs/dlt_guide_for_codex_2025.txt` for
+  pipeline, resource, incremental-loading and pagination practices.
 
 Code quality:
 Clear, modular structure

@@ -122,3 +122,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: testing
 - **Motivation / Decision**: verify tooling and document results; preparing for green CI.
 - **Next step**: update Makefile to forward pytest flags.
+
+## 2025-08-11  PR #14
+
+- **Summary**: Bumped AGENTS guide to v1.6 and added dlt reference.
+- **Stage**: documentation
+- **Motivation / Decision**: centralise dlt practices using shared guide.
+- **Next step**: follow guide when extending dlt pipelines.
