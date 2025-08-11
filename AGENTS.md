@@ -47,6 +47,8 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
    make lint                  # all format / static‑analysis steps
    make test                  # project’s unit‑/integration tests
    ```
+
+   * `make test` fails when no tests are collected; ensure at least one exists.
    Markdown lint rules live in `.markdownlint.json` for now.
 3. **Test collection** – `make test` must fail if no tests are collected.
 4. **Style rules** – keep code formatted (`black`, `prettier`, `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one blank line** separates log entries.  

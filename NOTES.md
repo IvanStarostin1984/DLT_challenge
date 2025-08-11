@@ -76,3 +76,18 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: avoid false positives so contributors supply at
   least one test.
 - **Next step**: expand test coverage for the GitHub leaderboard pipeline.
+
+## 2025-08-11  PR #8
+
+- **Summary**: Added unit and offline pipeline tests and tightened test target.
+- **Stage**: testing
+- **Motivation / Decision**: ensure pipeline can run on fixture and fail fast.
+- **Next step**: implement live GitHub pipeline.
+
+## 2025-08-11  PR #9
+
+- **Summary**: Replaced placeholder repo path and linked master spec.
+- **Stage**: documentation
+- **Motivation / Decision**: keep instructions accurate and reference single source
+  of truth.
+- **Next step**: implement GitHub commits pipeline.

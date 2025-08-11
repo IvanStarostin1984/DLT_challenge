@@ -3,6 +3,8 @@
 This project is a small [dlt](https://dlthub.com/) pipeline that loads recent
 GitHub commits into DuckDB and builds a daily leaderboard of contributors.
 
+See [docs/specs.txt](docs/specs.txt) for the master specification.
+
 It creates three tables:
 
 * `commits_raw`
@@ -11,7 +13,7 @@ It creates three tables:
 
 ## Quick start (Windows PowerShell)
 
-1. `cd gh-leaderboard`
+1. `cd DLT_challenge`
 2. `py -m venv .venv`
 3. `. .\\.venv\\Scripts\\Activate.ps1`
 4. `pip install -r requirements.txt`
@@ -19,7 +21,7 @@ It creates three tables:
 
 ## Quick start (Linux / macOS / WSL)
 
-1. `cd gh-leaderboard`
+1. `cd DLT_challenge`
 2. `python3 -m venv .venv`
 3. `source .venv/bin/activate`
 4. `pip install -r requirements.txt`

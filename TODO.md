@@ -9,8 +9,8 @@
 - [x] Configure `make lint` and `make test` (cover every language tool‑chain)
 - [x] Commit starter governance files (`AGENTS.md`, `TODO.md`, `NOTES.md`,
 - [x] Add `.codex/setup.sh`; ensure it is idempotent and exits 0
-- [ ] Audit repository & docs; identify the single source of truth
-      (spec, assignment …) and reference it in README
+- [x] Audit repository & docs; identify the single source of truth
+       (spec, assignment …) and reference it in README
 - [x] Generate initial dependency manifests (`requirements.txt`,
       `package.json`, `pubspec.yaml`, …) with pinned versions
 - [ ] Define ownership of all generated code in `/generated/**` and record the
@@ -26,7 +26,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Document assumptions / edge‑cases for GitHub commits pipeline in
        `/docs` or README
 - [ ] Implement GitHub commits pipeline
-- [ ] Add unit / integration tests for GitHub commits pipeline
+- [x] Add unit / integration tests for GitHub commits pipeline
 - [ ] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
       exits 1 on regression
 
