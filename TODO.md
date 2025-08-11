@@ -61,3 +61,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Add `.gitignore` for DLT state, DuckDB, venv, caches (2025-08-11)
 - [ ] Implement GitHub leaderboard pipeline in `src/gh_leaderboard`
 - [ ] Fix markdownlint errors across docs to make `lint-docs` job pass
+- [x] Require `make test` to fail when no tests are collected (2025-08-11)
