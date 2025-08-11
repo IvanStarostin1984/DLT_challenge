@@ -1,0 +1,4 @@
+dlt[duckdb]==1.15.0
+duckdb==1.3.2
+pytest==8.4.1
+
