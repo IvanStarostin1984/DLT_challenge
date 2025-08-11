@@ -1,0 +1,6 @@
+[run]
+omit =
+    tests/*
+    tests/*/*
+    generated/*
+    generated/*/*

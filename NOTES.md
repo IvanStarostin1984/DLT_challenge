@@ -129,3 +129,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: documentation
 - **Motivation / Decision**: centralise dlt practices using shared guide.
 - **Next step**: follow guide when extending dlt pipelines.
+
+## 2025-08-11  PR #15
+
+- **Summary**: Added coverage config and CI run with 80% threshold.
+- **Stage**: maintenance
+- **Motivation / Decision**: ensure tests measure code paths while excluding
+  generated and test files.
+- **Next step**: monitor coverage as features expand.

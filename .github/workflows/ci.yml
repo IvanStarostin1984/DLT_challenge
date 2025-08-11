@@ -54,4 +54,4 @@ jobs:
       - name: Bootstrap
         run: ./.codex/setup.sh   # idempotent; safe when absent
       - run: make lint
-      - run: make test
+      - run: .venv/bin/pytest --cov=src --cov-fail-under=80

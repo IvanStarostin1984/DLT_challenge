@@ -27,7 +27,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
     `/docs` or README
   - [x] Implement GitHub commits pipeline
 - [x] Add unit / integration tests for GitHub commits pipeline
-- [ ] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
+- [x] Wire CI quality gate (coverage ≥ 80 %, metric thresholds, etc.) that
       exits 1 on regression
 
 ## 2 · Documentation & CI
@@ -42,7 +42,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 ## 3 · Quality & automation
 
 - [ ] Add pre‑commit hooks (formatters, linters, markdownlint, actionlint)
-- [ ] Enforce coverage threshold (≥ 80 % branch, exclude `/generated/**`)
+- [x] Enforce coverage threshold (≥ 80 % branch, exclude `/generated/**`)
 - [ ] Add linters for conflict markers, trailing spaces and NOTES ordering
 - [ ] Introduce dependabot / Renovate with the version‑pin policy from
       `AGENTS.md`
