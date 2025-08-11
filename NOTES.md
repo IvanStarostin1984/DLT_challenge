@@ -129,3 +129,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: documentation
 - **Motivation / Decision**: centralise dlt practices using shared guide.
 - **Next step**: follow guide when extending dlt pipelines.
+
+## 2025-08-11  PR #15
+
+- **Summary**: Documented pipeline acceptance criteria and linked from README.
+- **Stage**: documentation
+- **Motivation / Decision**: clarify goals and close related TODO item.
+- **Next step**: add DuckDB destination and post-load SQL for leaderboard.

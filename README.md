@@ -3,7 +3,9 @@
 This project is a small [dlt](https://dlthub.com/) pipeline that loads recent
 GitHub commits into DuckDB and builds a daily leaderboard of contributors.
 
-See [docs/specs.txt](docs/specs.txt) for the master specification.
+See [docs/specs.txt](docs/specs.txt) for the master specification and
+[docs/acceptance_criteria.md](docs/acceptance_criteria.md) for goals and
+edge cases.
 
 It creates three tables:
 

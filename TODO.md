@@ -21,7 +21,7 @@
 
 Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
-- [ ] Analyse source‑of‑truth docs; define acceptance criteria for
+- [x] Analyse source‑of‑truth docs; define acceptance criteria for
       **GitHub commits pipeline**
   - [x] Document assumptions / edge‑cases for GitHub commits pipeline in
     `/docs` or README
