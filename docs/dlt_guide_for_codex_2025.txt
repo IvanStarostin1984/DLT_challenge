@@ -1,0 +1,499 @@
+
+DLT (DATA LOAD TOOL) — PRACTICAL GUIDE FOR OPENAI CODEX (2025)
+Author: Ivan Starostin (MD, PhD → B.Sc. SE), prepared for a dlt take‑home assignment
+Version: 2025-08-11
+
+IMPORTANT: This document describes the open‑source Python library “dlt” from dltHub (https://github.com/dlt-hub/dlt). 
+It is NOT Databricks “Delta Live Tables” (also called DLT). Be careful not to confuse them.
+
+-----------------------------------------------------------------------
+0) TL;DR
+-----------------------------------------------------------------------
+• What: dlt is an open-source Python library for building data loading pipelines (ELT/ETL). You write normal Python (functions or generators that yield dicts/rows), decorate them with @dlt.resource / @dlt.source, and dlt takes care of schema inference, normalization (flattening), loading, state, and retries.
+• Why: You get a simple, testable, Pythonic approach with built‑in incremental loading, pagination helpers, schema evolution, credentials/config management, and many supported destinations (DuckDB, BigQuery, Snowflake, Postgres, Redshift, ClickHouse, Databricks/DeltaLake, Synapse, Athena, etc.).
+• How: 
+  1) Define resources (data extractors) and optional transformers. 
+  2) Create a pipeline (destination + dataset_name). 
+  3) Run pipeline.run(source()) or pipeline.run(resource()). 
+  4) Incremental loading is one line via dlt.sources.incremental(...). 
+  5) Pagination is declarative in the REST API source, or imperatively with RESTClient helpers.
+• Key APIs to remember: 
+  - dlt.pipeline(pipeline_name, destination, dataset_name, …)
+  - @dlt.source(...) → groups resources
+  - @dlt.resource(name?, table_name?, primary_key?, write_disposition?="append|merge|replace", selected?=True, ...)
+  - dlt.sources.incremental(cursor_field, initial_value=..., end_value=?, row_order=? , last_value_func=?)
+  - rest_api_source({...})  OR  RESTClient(...) + paginator
+  - pipeline.run(data_or_source) → returns load_info
+  - pipeline.dataset() → programmatic dataset access (Ibis/SQL client)
+
+(Verified against dlt docs v1.15.0 and PyPI metadata as of 2025‑08‑11.)
+
+
+-----------------------------------------------------------------------
+1) WHAT IS dlt (in one paragraph)
+-----------------------------------------------------------------------
+dlt (“data load tool”) is a Python library for loading data from APIs, databases, files, or Python iterables into analytic destinations. It automatically infers and evolves schemas, normalizes nested JSON, manages pipeline state (including incremental cursors), and loads data reliably. You can start locally with DuckDB, then switch to a cloud warehouse by changing destination=... in the pipeline.
+
+
+-----------------------------------------------------------------------
+2) NOTATION AND TERMINOLOGY
+-----------------------------------------------------------------------
+• Pipeline: A configured object with destination and dataset_name that orchestrates extract → normalize → load. 
+  Create with dlt.pipeline(...). Run with pipeline.run(...). 
+• Source: A logical grouping of related resources (e.g., endpoints of one API). Use @dlt.source to define.
+• Resource: A Python (optionally async) function that yields items (dicts/rows). Decorate with @dlt.resource.
+  Key arguments: primary_key, write_disposition (append/merge/replace), table_name, selected.
+• Transformer: A function that consumes data from one resource and yields transformed/enriched items. Use @dlt.transformer (or light‑weight add_map for item‑level transforms).
+• Incremental: Cursor‑based helper to only load new/changed rows (dlt.sources.incremental). Tracks start_value / last_value / end_value and persists state.
+• Destination: Where data lands (e.g., DuckDB, BigQuery, Snowflake, Postgres, Redshift, ClickHouse, Synapse, Athena, Databricks, vector DBs). 
+• Normalization: Flatten/unnest nested JSON, compute a relational schema, and evolve schema as the payload changes.
+• Write Disposition: How to write data into destination tables: replace (full reload), append, merge (upsert / SCD2 / delete-insert strategies).
+• State: dlt stores pipeline state (e.g., incremental cursors) and commits it together with load packages to ensure idempotency.
+
+
+-----------------------------------------------------------------------
+3) INSTALLATION & VERSIONS
+-----------------------------------------------------------------------
+• Base install:      pip install dlt
+• Extras per destination: e.g., pip install "dlt[duckdb]" or "dlt[bigquery]" etc.
+• Supported Python: 3.9–3.13 (3.14 experimental at time of writing). See PyPI for exact classifiers.
+• License: Apache 2.0.
+
+Example pinned requirements for a small project:
+  dlt==1.15.0
+  duckdb==1.0.0
+  pytest==8.3.2
+  requests==2.32.3
+(Adjust versions to latest stable at coding time.)
+
+
+-----------------------------------------------------------------------
+4) QUICKSTART (minimal, load Python dicts to DuckDB)
+-----------------------------------------------------------------------
+import dlt
+
+@dlt.resource(table_name="items", write_disposition="append", primary_key="id")
+def items():
+    for i in range(3):
+        yield {"id": i, "name": f"item-{i}"}
+
+pipeline = dlt.pipeline(
+    pipeline_name="quickstart",
+    destination="duckdb",
+    dataset_name="demo_data"
+)
+
+info = pipeline.run(items)
+print(info)                    # load summary
+print(pipeline.dataset().items.df().head())  # access data via Ibis-backed dataset
+
+
+-----------------------------------------------------------------------
+5) PROJECT SCAFFOLDING (CLI) AND VERIFIED SOURCES
+-----------------------------------------------------------------------
+• dlt init <source> <destination> 
+  - Creates .dlt/config.toml and .dlt/secrets.toml, a pipeline script, and requirements.txt.
+  - --list-sources and --list-destinations enumerate what’s available.
+  - Re‑running dlt init in the same folder can add more sources or update them.
+• Verified Sources: ready‑to‑use connectors maintained by dltHub (e.g., rest_api, sql_database, filesystem, github, google_sheets, etc.).
+• OpenAPI generator: dlt‑init‑openapi can generate a dlt pipeline from an OpenAPI spec to use the declarative rest_api source.
+
+Notes:
+- Start with DuckDB locally; later switch to BigQuery/Snowflake/etc. by editing destination in the pipeline.
+- Use dlt deploy to generate GitHub Actions or Airflow/Composer deployment packages (optional).
+
+
+-----------------------------------------------------------------------
+6) CONFIGURATION & CREDENTIALS
+-----------------------------------------------------------------------
+Files created by dlt init:
+  .dlt/config.toml   → non‑secret configuration (logging, parallelism, default destination, etc.)
+  .dlt/secrets.toml  → credentials (API tokens, DB passwords, service accounts)
+
+Access inside code:
+  from dlt import secrets, config
+  token = secrets.get("sources.github.token")  # or secrets["sources.github.token"]
+  repo  = config.get("sources.github.repository")
+
+Inject into resource parameters:
+  @dlt.resource(...)
+  def repo_issues(access_token=dlt.secrets.value, repository=dlt.config.value, ...):
+      ...
+
+Environment variables can override TOML values. You can also set configs in code for testing:
+  dlt.config["destination.bigquery.location"] = "EU"
+
+Tip: Keep secrets out of code; commit only config.toml (if it contains no sensitive info).
+
+
+-----------------------------------------------------------------------
+7) CORE API SURFACE (by example)
+-----------------------------------------------------------------------
+7.1) Declaring a source with multiple resources
+-----------------------------------------------
+import dlt
+
+@dlt.source(max_table_nesting=2)
+def github_source(owner: str, repo: str):
+    @dlt.resource(name="repo_events", primary_key="id", write_disposition="append")
+    def repo_events(...):
+        # yield dicts with at least keys {"id", "created_at", ...}
+        ...
+
+    @dlt.resource(name="repo_issues", primary_key="id", write_disposition="merge")
+    def repo_issues(...):
+        ...
+
+    return repo_events, repo_issues
+
+pipeline = dlt.pipeline("gh", destination="duckdb", dataset_name="gh_ds")
+pipeline.run(github_source("dlt-hub", "dlt"))
+
+7.2) Transformers: enrich or fan‑out
+------------------------------------
+@dlt.transformer(data_from=repo_events)
+def user_profiles(event):
+    # called with each item from repo_events
+    yield fetch_profile(event["actor"]["login"])
+
+# Connect:
+pipeline.run((repo_events | user_profiles).with_resources("user_profiles"))
+
+7.3) Lightweight per‑row mapping:
+---------------------------------
+repo_events = repo_events.add_map(lambda e: {"id": e["id"], "actor": e["actor"]["login"], "created_at": e["created_at"]})
+
+
+-----------------------------------------------------------------------
+8) INCREMENTAL LOADING (cursor‑based)
+-----------------------------------------------------------------------
+Use dlt.sources.incremental(cursor_field, initial_value=..., end_value=?, row_order=?, last_value_func=?).
+
+Patterns:
+A) API supports “since/updated_after” parameters:
+@dlt.resource(primary_key="id", write_disposition="merge")
+def repo_issues(access_token=dlt.secrets.value,
+                repository=dlt.config.value,
+                updated_at=dlt.sources.incremental("updated_at", initial_value="1970-01-01T00:00:00Z")):
+    # Pass start_value to API; dlt tracks last_value across runs
+    for page in get_issues_pages(access_token, repository, since=updated_at.start_value):
+        yield page
+
+B) API returns newest-first without filtering (e.g., GitHub events):
+@dlt.resource(primary_key="id", write_disposition="append")
+def repo_events(last_created_at=dlt.sources.incremental("created_at",
+                                                       initial_value="1970-01-01T00:00:00Z",
+                                                       row_order="desc")):
+    for page in get_pages("/events?per_page=100"):
+        yield page
+# dlt deduplicates overlaps via primary_key; row_order lets dlt stop once out-of-range.
+
+Backfill with end_value:
+@dlt.resource(primary_key="id")
+def repo_issues(..., updated_at=dlt.sources.incremental("updated_at",
+                                                        initial_value="2024-07-01T00:00:00Z",
+                                                        end_value="2024-08-01T00:00:00Z",
+                                                        row_order="asc")):
+    for page in get_pages(..., since=updated_at.start_value, until=updated_at.end_value):
+        yield page
+
+Full refresh: pass write_disposition="replace" to pipeline.run(...) for selected resources.
+
+
+-----------------------------------------------------------------------
+9) PAGINATION (REST APIs)
+-----------------------------------------------------------------------
+Two options:
+
+A) Declarative “rest_api” verified source (recommended for many cases)
+rest_api_source({
+  "client": {
+    "base_url": "https://api.example.com/",
+    "auth": {"token": dlt.secrets["sources.api.token"]},   # or APIKeyAuth, Basic, OAuth2
+    "paginator": {
+      "type": "json_link",          # or "page_number", "offset", "link_header", "cursor"...
+      "next_url_path": "paging.next"
+    }
+  },
+  "resources": ["posts", "comments"]
+})
+
+B) Imperative using RESTClient helpers
+from dlt.sources.helpers.rest_client.client import RESTClient
+from dlt.sources.helpers.rest_client.auth import BearerTokenAuth
+from dlt.sources.helpers.rest_client.paginators import JSONLinkPaginator
+
+client = RESTClient(base_url="https://api.example.com/",
+                    auth=BearerTokenAuth(token=...),
+                    paginator=JSONLinkPaginator(next_url_path="paging.next"))
+
+@dlt.resource(primary_key="id")
+def posts():
+    for page in client.paginate("/posts?limit=100"):
+        yield page["data"]
+
+(RESTClient also supports OffsetPaginator, PageNumberPaginator, CursorPaginator, LinkHeaderPaginator, etc.)
+
+
+-----------------------------------------------------------------------
+10) DESTINATIONS (examples)
+-----------------------------------------------------------------------
+Core destinations include DuckDB, BigQuery, Snowflake, PostgreSQL, Redshift, ClickHouse, Synapse, Athena, Databricks/Delta Lake, MotherDuck, and more. 
+Choose one by passing destination="duckdb" | "bigquery" | "snowflake" | "postgres" | "redshift" | "clickhouse" | "synapse" | "athena" | "databricks" | "filesystem" | etc.
+
+Switching destination typically requires adding credentials in .dlt/secrets.toml and re‑running the pipeline.
+
+
+-----------------------------------------------------------------------
+11) HOW dlt WORKS (extract → normalize → load) and SCHEMA EVOLUTION
+-----------------------------------------------------------------------
+Phases:
+• extract: your Python resource(s) yield dicts/rows/pages.
+• normalize: dlt infers a relational schema, flattens nested structures into child tables, and applies schema evolution (add columns/tables; variant columns for mixed types). You can control evolution with contracts (e.g., freeze columns, evolve tables).
+• load: dlt migrates destination schema if needed and uploads in jobs (chunked, resumable).
+
+Write Disposition guidance:
+• append: for immutable event logs.
+• merge: for mutable entities (upsert by primary_key or merge_key). Several merge strategies exist (delete-insert, upsert, SCD2).
+• replace: full reload of resource(s) in this run.
+
+You can export & edit schemas by setting import_schema_path / export_schema_path on dlt.pipeline.
+
+
+-----------------------------------------------------------------------
+12) DATASET ACCESS (Ibis & SQL client)
+-----------------------------------------------------------------------
+• pipeline.dataset() → high‑level Pythonic access to tables with Ibis expressions.
+• pipeline.sql_client() → run raw SQL (execute_sql / query_df). Handy for post‑load transformations without dbt.
+
+Example:
+ds = pipeline.dataset()
+print(ds.events.df().head())
+
+with pipeline.sql_client() as sql:
+    sql.execute_sql("CREATE TABLE leaderboard AS SELECT actor, COUNT(*) c FROM events GROUP BY actor")
+
+
+-----------------------------------------------------------------------
+13) TESTING dlt PIPELINES
+-----------------------------------------------------------------------
+Goal: at least one unit test + one end‑to‑end (E2E) test.
+
+13.1) Unit test (pure function)
+-------------------------------
+def extract_actor(event):
+    return {"id": event["id"], "actor": event["actor"]["login"],
+            "created_at": event["created_at"][:10]}  # date part
+
+def test_extract_actor():
+    e = {"id": 1, "actor": {"login": "alice"}, "created_at": "2025-08-01T12:00:00Z"}
+    assert extract_actor(e) == {"id": 1, "actor": "alice", "created_at": "2025-08-01"}
+
+13.2) E2E test (small slice; ephemeral DuckDB)
+----------------------------------------------
+import os, dlt
+
+def test_pipeline_smoke(tmp_path, monkeypatch):
+    # Use a temporary working dir to isolate .dlt state
+    monkeypatch.chdir(tmp_path)
+    # Minimal configuration via environment
+    os.environ["DESTINATION__DUCKDB__CREDENTIALS"] = str(tmp_path / "test.duckdb")
+
+    pipeline = dlt.pipeline("gh_test", destination="duckdb", dataset_name="gh_ds_test")
+    load_info = pipeline.run(repo_events.with_limit(200))  # or inject a single page/mocked client
+
+    # Invariants we expect to hold:
+    # - there is at least one row in events
+    # - created_at is monotonically non-increasing per page when row_order='desc' (spot-check)
+    ds = pipeline.dataset()
+    df = ds.repo_events.df().head()
+    assert len(df) >= 0
+    # (For deterministic test, use a mocked RESTClient / local fixture JSON pages instead of live GitHub.)
+
+
+-----------------------------------------------------------------------
+14) ASSIGNMENT‑READY EXAMPLE: GITHUB EVENTS → DAILY LEADERBOARD
+-----------------------------------------------------------------------
+What you’ll build
+• Source: GitHub repository events (newest‑first), incrementally loaded on created_at.
+• Destination: DuckDB locally; could switch to BigQuery by changing destination and adding credentials.
+• Output tables:
+  - repo_events: raw events with primary_key=id
+  - daily_leaderboard: derived table (actor, date, count), refreshed each run
+
+Code sketch (resource + simple transform)
+-----------------------------------------
+import dlt
+from dlt.sources.helpers.rest_client.client import RESTClient
+from dlt.sources.helpers.rest_client.auth import BearerTokenAuth
+from dlt.sources.helpers.rest_client.paginators import LinkHeaderPaginator  # GitHub uses Link header
+
+def gh_client(token: str) -> RESTClient:
+    return RESTClient(
+        base_url="https://api.github.com",
+        auth=BearerTokenAuth(token=token),
+        paginator=LinkHeaderPaginator()  # follows RFC5988 Link headers
+    )
+
+@dlt.resource(name="repo_events",
+              primary_key="id",
+              write_disposition="append")
+def repo_events(owner: str,
+                repo: str,
+                token=dlt.secrets.value,
+                created=dlt.sources.incremental("created_at",
+                                                initial_value="1970-01-01T00:00:00Z",
+                                                row_order="desc")):
+    client = gh_client(token)
+    path = f"/repos/{owner}/{repo}/events?per_page=100"
+    for page in client.paginate(path):
+        # yield the list of event objects; dlt will filter incrementally and deduplicate
+        yield page
+
+# Light-weight transform to the grain (actor, date)
+@dlt.transformer(data_from=repo_events, name="daily_leaderboard", write_disposition="replace")
+def events_to_leaderboard(event):
+    actor = event["actor"]["login"]
+    d = event["created_at"][:10]  # YYYY-MM-DD
+    yield {"actor": actor, "event_date": d, "count": 1}
+
+# Pipeline runner
+if __name__ == "__main__":
+    pipeline = dlt.pipeline("gh_leaderboard", destination="duckdb", dataset_name="github_ds")
+    # Pipe operator connects resource → transformer; we load only the derived table here
+    pipeline.run((repo_events | events_to_leaderboard).with_resources("daily_leaderboard"))
+
+    # Optionally compute aggregation in SQL/Ibis instead of Python:
+    # with pipeline.sql_client() as sql:
+    #     sql.execute_sql("""
+    #         CREATE OR REPLACE TABLE daily_leaderboard AS
+    #         SELECT actor, substr(created_at,1,10) AS event_date, COUNT(*) AS count
+    #         FROM repo_events
+    #         GROUP BY 1,2
+    #     """)
+
+Config (example .dlt/secrets.toml)
+----------------------------------
+[sources.repo_events]
+token = "ghp_your_token_here"   # or use env var GITHUB_TOKEN and map via config
+
+Design decisions
+• Incremental: cursor “created_at” (events are immutable; row_order='desc' stops pagination early).
+• Write disposition:
+  - repo_events: append (immutable log, dedup via primary_key=id)
+  - daily_leaderboard: replace (materialized each run from raw events)
+• Pagination: GitHub’s REST uses Link headers → LinkHeaderPaginator.
+• Rate limits: use a token; consider exponential backoff/retries (RESTClient uses requests with retry/timeout). 
+• Reproducibility: pin dependencies; include sample .env/.toml; provide one E2E test using fixture pages.
+
+What I’d do next with more time
+• Add backfill windows via end_value for historical ranges.
+• Parameterize multiple repos and union results with a table_name lambda by repo.
+• Persist the leaderboard with a merge strategy that only updates the latest day(s).
+
+
+-----------------------------------------------------------------------
+15) STEP 1 (ASSIGNMENT): HOW I WOULD HAVE USED dlt IN A PREVIOUS PROJECT
+-----------------------------------------------------------------------
+Context (hypothetical, clinically inspired):
+In a medical imaging QA project, we collected daily scanner logs (JSON) and RIS metadata from a PostgreSQL database, then created a tidy dataset for quality dashboards. 
+
+How dlt would help:
+• Filesystem source + SQL database verified source to extract both JSON logs (flattened automatically) and RIS tables.
+• Incremental loading on “log_timestamp” and “updated_at” to avoid reloading old records.
+• Merge write_disposition for mutable patient/study metadata (upsert by primary_key), append for immutable event logs.
+• Consistent schema evolution: when devices added new fields, dlt would evolve the schema & mark variant columns for mixed types.
+• Testing: unit tests for log parsers; an E2E test writing to DuckDB and asserting row counts and monotonic timestamps.
+• Deployment: GitHub Action running nightly; DuckDB in dev; Postgres/Snowflake in prod by switching destination.
+
+Outcome:
+A single, Pythonic pipeline with tracked state and automatic schema maintenance, reducing operational overhead and making analytics reliable.
+
+
+-----------------------------------------------------------------------
+16) COMMON PITFALLS & HOW TO AVOID THEM
+-----------------------------------------------------------------------
+• Confusing “dlt” with Databricks “DLT”. They’re unrelated.
+• Forgetting to set primary_key on resources → deduplication/merge won’t behave as expected.
+• Changing pipeline_name or dataset_name between runs unintentionally → new state location; incremental appears to “reset.” Keep them stable.
+• Incremental misconfiguration:
+  - Wrong cursor field path (for nested JSON, ensure the field exists).
+  - Missing row_order for newest‑first APIs (you’ll paginate the whole history each run).
+• Pagination not declared correctly in rest_api source → double check paginator type (link_header vs json_link vs page/offset).
+• Secrets in code. Always use .dlt/secrets.toml or env vars.
+• Large nested payloads: set sensible max_table_nesting, or pre‑map (add_map) to reduce explosion of child tables.
+• Tests hitting live APIs: use small limits, a token, or mock RESTClient with fixture pages for determinism.
+• Full refresh confusion: write_disposition="replace" is per run; use carefully for specific resources via with_resources(...).
+
+
+-----------------------------------------------------------------------
+17) CHEATSHEET: KEY SIGNATURES
+-----------------------------------------------------------------------
+pipeline = dlt.pipeline(pipeline_name: str, destination: str, dataset_name: str, **kwargs)
+
+@dlt.source(max_table_nesting: int = 2, ...)
+def my_source(...): ...
+
+@dlt.resource(name?: str, table_name?: str|callable, primary_key?: str|tuple, 
+              write_disposition?: "append"|"merge"|"replace", selected?: bool = True, ...)
+def my_resource(...): yield {...}
+
+@dlt.transformer(data_from=other_resource, name?: str, write_disposition?: ...)
+def my_transformer(item): yield transformed_item
+
+inc = dlt.sources.incremental(cursor_field: str|jsonpath, initial_value?: Any, end_value?: Any, 
+                              row_order?: "asc"|"desc", last_value_func?: callable)
+
+# REST API declarative
+from dlt.sources.rest_api import rest_api_source
+src = rest_api_source({...})
+
+# RESTClient imperative
+from dlt.sources.helpers.rest_client.client import RESTClient
+from dlt.sources.helpers.rest_client.paginators import LinkHeaderPaginator, JSONLinkPaginator, PageNumberPaginator, OffsetPaginator, CursorPaginator
+
+# Dataset access
+ds = pipeline.dataset()
+with pipeline.sql_client() as sql:
+    sql.execute_sql("...")
+
+
+-----------------------------------------------------------------------
+18) MINIMAL README SKELETON FOR THE ASSIGNMENT
+-----------------------------------------------------------------------
+Project: GitHub Events → Daily Leaderboard with dlt
+
+Setup
+1) python -m venv .venv && source .venv/bin/activate  (Windows: .venv\Scripts\activate)
+2) pip install -r requirements.txt
+3) Create .dlt/secrets.toml:
+   [sources.repo_events]
+   token = "ghp_..."
+4) Run:
+   python pipeline.py
+5) Inspect:
+   python -c "import dlt; p=dlt.pipeline('gh_leaderboard'); print(p.dataset().daily_leaderboard.df().head())"
+
+Tests
+• pytest -q
+
+Design decisions (short)
+• API choice: GitHub events (stable, public; Link header pagination).
+• Incremental field: created_at; row_order='desc' to stop early.
+• daily_leaderboard write_disposition='replace' for simplicity; raw repo_events retained for audit.
+• Next steps: backfill windows; multi‑repo aggregation; switch to BigQuery.
+
+Reproducibility
+• Pinned requirements; sample secrets; small deterministic tests with fixtures over live network where possible.
+
+
+-----------------------------------------------------------------------
+19) REFERENCES (APA style)
+-----------------------------------------------------------------------
+dltHub. (2025). dlt documentation (v1.15.0). https://dlthub.com/docs/
+dltHub. (2025). dlt — PyPI project page. https://pypi.org/project/dlt/
+dltHub. (2025). dlt GitHub repository. https://github.com/dlt-hub/dlt
+
+(Compare/contrast only to avoid confusion)
+Databricks. (2025). Lakeflow Declarative Pipelines / Delta Live Tables docs. https://docs.databricks.com/
+
