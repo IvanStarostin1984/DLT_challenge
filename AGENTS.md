@@ -34,13 +34,13 @@ repo and run in local IDE ()Visual Studion 2022 on Win 11) to test manually.
 
 1. Run `.codex/setup.sh` (or `./setup.sh`) once after cloning & whenever dependencies change.
    *The script creates `.venv/` and installs runtime, lint & test dependencies.*
-1. Create `.venv` (`python -m venv .venv`) and install deps:
+2. Create `.venv` (`python -m venv .venv`) and install deps:
    `.venv/bin/pip install -r requirements.txt`.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
    *The script installs language tool‑chains, pins versions and injects secrets.*
-1. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
-1. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
-1. On the first PR, update README badges to point at your fork (owner/repo).
+3. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in the repository/organisation **Secrets** console.  
+4. Verify the **secret‑detection helper step** in `.github/workflows/ci.yml` (see § 4) so forks without secrets still pass.  
+5. On the first PR, update README badges to point at your fork (owner/repo).
 
 ---
 
