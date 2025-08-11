@@ -25,3 +25,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: establish collaboration conventions before code.
 - **Next step**: set up lint/test commands and begin core feature A.
 
+## 2025-08-11  PR #1
+
+- **Summary**: Added Makefile with lint and test targets wired to `.venv`.
+- **Stage**: implementation
+- **Motivation / Decision**: standardised quality gates; relaxed markdown rules
+   to tolerate legacy docs.
+- **Next step**: add setup script for installing the tool chain.
+
