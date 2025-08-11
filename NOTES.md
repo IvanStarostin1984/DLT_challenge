@@ -91,3 +91,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: keep instructions accurate and reference single source
   of truth.
 - **Next step**: implement GitHub commits pipeline.
+
+## 2025-08-11  PR #10
+
+- **Summary**: Rewrote pipeline test to import via `src` package and removed path tweaks.
+- **Stage**: testing
+- **Motivation / Decision**: avoid `sys.path` hacks and document rule in AGENTS.
+- **Next step**: implement GitHub commits pipeline.

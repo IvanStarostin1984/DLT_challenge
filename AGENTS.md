@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.3 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.4 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and CI in‑sync.  
@@ -126,9 +126,10 @@ jobs:
 * ≤ 20 logical LOC per function, ≤ 2 nesting levels.  
 * Surround headings / lists / fenced code with a blank line (markdownlint MD022, MD032).  
 * **No trailing spaces.** Run `git diff --check` or `make lint-docs`.  
-* Wrap identifiers like `__init__` in back‑ticks to avoid MD050.  
-* Each public API carries a short doc‑comment.  
+* Wrap identifiers like `__init__` in back‑ticks to avoid MD050.
+* Each public API carries a short doc‑comment.
 * Keep Markdown lines ≤ 80 chars to improve diff readability (tables may exceed if unavoidable).
+* Import project modules via the `src` package and never modify `sys.path` in tests.
 
 ### 5.1 Additional instructions:
 
