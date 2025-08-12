@@ -322,6 +322,14 @@ to avoid polluting repo root.
 
 ## 2025-08-12  PR #38
 
+- **Summary**: Guarded `flatten_commit` against `None` committers and unknown authors.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent crashes from `None` in nested API responses;
+  default missing author data to "unknown".
+- **Next step**: audit other API fields for similar `None` checks.
+
+## 2025-08-12  PR #39
+
 - **Summary**: Added test ensuring initial cursor value sets `since` and omits auth header; fixed default DuckDB path.
 - **Stage**: testing
 - **Motivation / Decision**: verify pipeline uses `initial_value` when state is

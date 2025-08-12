@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.14 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.15 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -181,6 +181,7 @@ jobs:
 * Keep Markdown lines ≤ 80 chars to improve diff readability (tables
   may exceed if unavoidable).
 * Tests should avoid real network calls; mock requests or use offline fixtures.
+* Guard against `None` when traversing nested API responses.
 
 ### 5.1 Additional instructions:
 

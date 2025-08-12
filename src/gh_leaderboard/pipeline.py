@@ -41,9 +41,10 @@ def flatten_commit(commit: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     author = commit.get("commit", {}).get("author") or {}
     email = author.get("email")
     name = author.get("name")
-    date = commit.get("commit", {}).get("committer", {}).get("date") or author.get(
-        "date"
-    )
+    committer = commit.get("commit", {}).get("committer")
+    date = committer.get("date") if isinstance(committer, dict) else None
+    if not date:
+        date = author.get("date")
     if not date:
         return None
     return {

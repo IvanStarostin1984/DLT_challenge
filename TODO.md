@@ -91,5 +91,6 @@ when token missing (2025-08-12)
 - [x] Add test verifying author date fallback when committer date is missing
       (2025-08-12)
 - [ ] Log or surface skipped commits lacking timestamps (2025-08-12)
+- [x] Guard `flatten_commit` against `None` committer blocks and add tests (2025-08-12)
 - [x] Test incremental cursor uses initial_value when state is empty (2025-08-12)
 - [x] Ensure `pipeline.run` writes DuckDB to current directory when `pipelines_dir` is omitted (2025-08-12)
