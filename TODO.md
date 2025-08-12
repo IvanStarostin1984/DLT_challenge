@@ -80,6 +80,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
 - [ ] Audit other normalization helpers for whitespace handling (2025-08-12)
 - [x] Add tests for `flatten_commit` missing commit date (2025-08-12)
+- [x] Add unit test for `commits_flat` transformer (2025-08-12)
 - [x] Test incremental cursor uses last_value and omits auth header
 when token missing (2025-08-12)
 - [x] Increase coverage threshold to ≥ 90 % (2025-08-12)

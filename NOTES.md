@@ -248,6 +248,13 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-12  PR #29
 
+- **Summary**: Added unit test for `commits_flat` transformer.
+- **Stage**: testing
+- **Motivation / Decision**: ensure transformer yields expected rows using a stub client.
+- **Next step**: broaden commit scenarios for `commits_flat`.
+
+## 2025-08-12  PR #30
+
 - **Summary**: Added test ensuring cursor last_value is used,
 auth header omitted without token, and `HeaderLinkPaginator` is invoked.
 - **Stage**: testing
@@ -255,14 +262,14 @@ auth header omitted without token, and `HeaderLinkPaginator` is invoked.
 handling for commit source using a stub REST client.
 - **Next step**: continue auditing tests for network mocking.
 
-## 2025-08-12  PR #30
+## 2025-08-12  PR #31
 
 - **Summary**: Raised coverage gate to 90% and synced CI docs.
 - **Stage**: maintenance
 - **Motivation / Decision**: align workflow with higher quality bar.
 - **Next step**: monitor coverage as code expands.
 
-## 2025-08-12  PR #31
+## 2025-08-12  PR #32
 
 - **Summary**: Extended `flatten_commit` tests and noted `python` alias
   requirement in `AGENTS.md`.
@@ -271,7 +278,7 @@ handling for commit source using a stub REST client.
   commits, and avoid setup failures when only `python3` exists.
 - **Next step**: audit tests for other commit variants.
 
-## 2025-08-12  PR #32
+## 2025-08-12  PR #33
 
 - **Summary**: Added test ensuring pipeline writes DuckDB
 to CWD when `pipelines_dir` is omitted.
