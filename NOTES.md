@@ -248,6 +248,13 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-12  PR #29
 
+- **Summary**: Raised coverage gate to 90% and synced CI docs.
+- **Stage**: maintenance
+- **Motivation / Decision**: align workflow with higher quality bar.
+- **Next step**: monitor coverage as code expands.
+
+## 2025-08-12  PR #30
+
 - **Summary**: Extended `flatten_commit` tests and noted `python` alias
   requirement in `AGENTS.md`.
 - **Stage**: testing
@@ -255,7 +262,7 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
   commits, and avoid setup failures when only `python3` exists.
 - **Next step**: audit tests for other commit variants.
 
-## 2025-08-12  PR #30
+## 2025-08-12  PR #31
 
 - **Summary**: Added test ensuring pipeline writes DuckDB to CWD when `pipelines_dir` is omitted.
 - **Stage**: testing
