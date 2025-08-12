@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.15 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.16 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -182,6 +182,7 @@ jobs:
   may exceed if unavoidable).
 * Tests should avoid real network calls; mock requests or use offline fixtures.
 * Guard against `None` when traversing nested API responses.
+* Validate external API responses and skip or log malformed records.
 
 ### 5.1 Additional instructions:
 

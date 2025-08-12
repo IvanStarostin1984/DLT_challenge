@@ -361,3 +361,17 @@ to avoid polluting repo root.
 - **Motivation / Decision**: verify leaderboard aggregates commits per day
   for one author.
 - **Next step**: monitor for more grouping edge cases.
+
+## 2025-08-12  PR #43
+
+- **Summary**: Guarded commit flattening against non-dicts and logged missing timestamps.
+- **Stage**: implementation
+- **Motivation / Decision**: handle malformed API data and satisfy logging TODO.
+- **Next step**: audit other pipeline stages for defensive parsing.
+
+## 2025-08-12  PR #44
+
+- **Summary**: Added test ensuring `run` forwards params and skipped live pipeline.
+- **Stage**: testing
+- **Motivation / Decision**: cover argument forwarding and remove network dependency for CI stability.
+- **Next step**: audit other normalization helpers for whitespace handling.
