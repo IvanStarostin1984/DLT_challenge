@@ -77,8 +77,8 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Add tests for offline edge cases and handle empty commit fixtures
       (2025-08-12)
 - [x] Add tests for GitHub commits source headers and params (2025-08-12)
-- [ ] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
 - [x] Audit other normalization helpers for whitespace handling (2025-08-12)
+- [x] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
 - [x] Add tests for `flatten_commit` missing commit date (2025-08-12)
 - [x] Add unit test for `commits_flat` transformer (2025-08-12)
 - [x] Test incremental cursor uses last_value and omits auth header
@@ -90,9 +90,10 @@ when token missing (2025-08-12)
 - [x] Handle missing or invalid fixture file gracefully in pipeline run (2025-08-12)
 - [x] Add test verifying author date fallback when committer date is missing
       (2025-08-12)
-- [ ] Log or surface skipped commits lacking timestamps (2025-08-12)
+- [x] Log or surface skipped commits lacking timestamps (2025-08-12)
 - [x] Add tests for `normalize_author` handling blank email cases (2025-08-12)
 - [x] Ensure pipeline ignores fixture files that aren't lists (2025-08-12)
 - [x] Guard `flatten_commit` against `None` committer blocks and add tests (2025-08-12)
 - [x] Test incremental cursor uses initial_value when state is empty (2025-08-12)
 - [x] Ensure `pipeline.run` writes DuckDB to current directory when `pipelines_dir` is omitted (2025-08-12)
+- [x] Add multi-day commit fixture and post-load grouping test (2025-08-12)
