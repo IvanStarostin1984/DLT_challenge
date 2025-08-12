@@ -319,3 +319,12 @@ to avoid polluting repo root.
 - **Motivation / Decision**: ensure leaderboard ignores commits missing
   timestamps.
 - **Next step**: surface skipped commits in future runs.
+
+## 2025-08-12  PR #38
+
+- **Summary**: Added test ensuring initial cursor value sets `since` and omits auth header; fixed default DuckDB path.
+- **Stage**: testing
+- **Motivation / Decision**: verify pipeline uses `initial_value` when state is
+  empty and avoids sending tokens; ensure `pipeline.run` writes database to the
+  current directory.
+- **Next step**: review other incremental scenarios.

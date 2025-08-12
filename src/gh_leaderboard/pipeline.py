@@ -128,7 +128,7 @@ def run(
     db_path = (
         Path(pipelines_dir) / "leaderboard.duckdb"
         if pipelines_dir
-        else Path("leaderboard.duckdb")
+        else Path.cwd() / "leaderboard.duckdb"
     )
     pipeline = dlt.pipeline(
         pipeline_name="gh_leaderboard",
