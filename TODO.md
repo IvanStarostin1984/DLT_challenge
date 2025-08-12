@@ -80,4 +80,5 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
 - [ ] Audit other normalization helpers for whitespace handling (2025-08-12)
 - [x] Add tests for `flatten_commit` missing commit date (2025-08-12)
+- [x] Extend `flatten_commit` tests for missing login and commit key (2025-08-12)
 - [x] Add test for pipeline default DuckDB path when `pipelines_dir` is omitted (2025-08-12)

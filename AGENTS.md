@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.13 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.14 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -54,6 +54,7 @@ Studion 2022 on Win 11) to test manually.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
    *The script installs language tool‑chains, pins versions and
    injects secrets.*
+   Ensure the `python` command is available (alias to Python 3 if needed).
 3. Export **required secrets** (`GIT_TOKEN`, `GH_PAGES_TOKEN`, …) in
    the repository/organisation **Secrets** console.
 4. Verify the **secret‑detection helper step** in

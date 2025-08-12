@@ -248,6 +248,15 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-12  PR #29
 
+- **Summary**: Extended `flatten_commit` tests and noted `python` alias
+  requirement in `AGENTS.md`.
+- **Stage**: testing
+- **Motivation / Decision**: verify author fallback to email, handle malformed
+  commits, and avoid setup failures when only `python3` exists.
+- **Next step**: audit tests for other commit variants.
+
+## 2025-08-12  PR #30
+
 - **Summary**: Added test ensuring pipeline writes DuckDB to CWD when `pipelines_dir` is omitted.
 - **Stage**: testing
 - **Motivation / Decision**: verify default path behavior to avoid polluting repo root.
