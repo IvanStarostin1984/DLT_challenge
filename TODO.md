@@ -91,3 +91,4 @@ when token missing (2025-08-12)
 - [x] Add test verifying author date fallback when committer date is missing
       (2025-08-12)
 - [ ] Log or surface skipped commits lacking timestamps (2025-08-12)
+- [x] Guard `flatten_commit` against `None` committer blocks and add tests (2025-08-12)

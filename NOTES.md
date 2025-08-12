@@ -319,3 +319,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: ensure leaderboard ignores commits missing
   timestamps.
 - **Next step**: surface skipped commits in future runs.
+
+## 2025-08-12  PR #38
+
+- **Summary**: Guarded `flatten_commit` against `None` committers and unknown authors.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent crashes from `None` in nested API responses;
+  default missing author data to "unknown".
+- **Next step**: audit other API fields for similar `None` checks.
