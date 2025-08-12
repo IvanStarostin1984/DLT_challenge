@@ -206,3 +206,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: catch conflict markers early with
   `check-merge-conflict` hook.
 - **Next step**: monitor and extend hooks like markdownlint next.
+
+## 2025-08-12  PR #24
+
+- **Summary**: Added tests for offline edge cases and handled empty data.
+- **Stage**: testing
+- **Motivation / Decision**: Ensure pipeline handles missing dates and
+  empty fixtures.
+- **Next step**: watch for further edge cases.
