@@ -289,6 +289,14 @@ to avoid polluting repo root.
 
 ## 2025-08-12  PR #34
 
+- **Summary**: Added test verifying REST client base URL and default `per_page`.
+- **Stage**: testing
+- **Motivation / Decision**: ensure commits source hits repo endpoint and
+  uses 100 items per page by default.
+- **Next step**: audit tests for remaining REST client defaults.
+
+## 2025-08-12  PR #35
+
 - **Summary**: Wrapped fixture loading in error handling and added tests for
   missing or malformed JSON.
 - **Stage**: implementation
@@ -296,14 +304,14 @@ to avoid polluting repo root.
   or corrupt.
 - **Next step**: review network mocking across remaining tests.
 
-## 2025-08-12  PR #35
+## 2025-08-12  PR #36
 
 - **Summary**: Added test for author date fallback when committer date is missing.
 - **Stage**: testing
 - **Motivation / Decision**: confirm commits still flatten using author timestamp.
 - **Next step**: review remaining commit variants for coverage.
 
-## 2025-08-12  PR #36
+## 2025-08-12  PR #37
 
 - **Summary**: Added test for mixed commit timestamps so only dated commits
   aggregate.

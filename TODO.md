@@ -86,6 +86,7 @@ when token missing (2025-08-12)
 - [x] Increase coverage threshold to ≥ 90 % (2025-08-12)
 - [x] Extend `flatten_commit` tests for missing login and commit key (2025-08-12)
 - [x] Add test for pipeline default DuckDB path when `pipelines_dir` is omitted (2025-08-12)
+- [x] Test `github_commits_source` base URL and per_page=100 (2025-08-12)
 - [x] Handle missing or invalid fixture file gracefully in pipeline run (2025-08-12)
 - [x] Add test verifying author date fallback when committer date is missing
       (2025-08-12)
