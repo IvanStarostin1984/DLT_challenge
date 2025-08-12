@@ -206,3 +206,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: catch conflict markers early with
   `check-merge-conflict` hook.
 - **Next step**: monitor and extend hooks like markdownlint next.
+
+## 2025-08-12  PR #24
+
+- **Summary**: Added unit tests for `flatten_commit` covering missing dates.
+- **Stage**: testing
+- **Motivation / Decision**: ensure commits without timestamps return `None`.
+- **Next step**: broaden commit test scenarios.
