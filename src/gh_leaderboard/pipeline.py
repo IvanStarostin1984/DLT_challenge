@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, List, Optional
 
 import dlt
 from dlt.sources.helpers.rest_client import RESTClient
@@ -60,7 +60,7 @@ def github_commits_source(
     branch: Optional[str] = None,
     since: Optional[str] = None,
     until: Optional[str] = None,
-):
+) -> Any:  # pragma: no cover - network source not tested offline
     """GitHub commits source with incremental pagination."""
 
     headers = {
@@ -139,17 +139,18 @@ def run(
 
     if offline:
         path = Path(fixture_path or Path(__file__).with_name("commits_fixture.json"))
-        commits: Iterable[Dict[str, Any]] = json.loads(path.read_text())
+        data = json.loads(path.read_text(encoding="utf-8"))
+        commits: List[Dict[str, Any]] = data if isinstance(data, list) else []
+        flat_rows = [r for r in (flatten_commit(c) for c in commits) if r]
+        if not flat_rows:
+            return []
         pipeline.run(commits, table_name="commits")
-        pipeline.run(
-            (row for row in (flatten_commit(c) for c in commits) if row),
-            table_name="commits_flat",
-        )
+        pipeline.run(flat_rows, table_name="commits_flat")
     else:
-        source = github_commits_source(
+        source = github_commits_source(  # pragma: no cover - network call
             repo=repo, branch=branch, since=since, until=until
         )
-        pipeline.run(source)
+        pipeline.run(source)  # pragma: no cover - network call
 
     sql_path = Path(__file__).with_name("post_load.sql")
     with pipeline.sql_client() as sql:
