@@ -245,3 +245,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: testing
 - **Motivation / Decision**: ensure commits without timestamps return `None`.
 - **Next step**: broaden commit test scenarios.
+
+## 2025-08-12  PR #29
+
+- **Summary**: Added test ensuring cursor last_value is used, auth header omitted without token, and `HeaderLinkPaginator` is invoked.
+- **Stage**: testing
+- **Motivation / Decision**: verify incremental state and header handling for commit source using a stub REST client.
+- **Next step**: continue auditing tests for network mocking.
