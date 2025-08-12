@@ -286,3 +286,10 @@ to CWD when `pipelines_dir` is omitted.
 - **Motivation / Decision**: verify default path behavior
 to avoid polluting repo root.
 - **Next step**: add online test for default path handling.
+
+## 2025-08-12  PR #34
+
+- **Summary**: Added test for author date fallback when committer date is missing.
+- **Stage**: testing
+- **Motivation / Decision**: confirm commits still flatten using author timestamp.
+- **Next step**: review remaining commit variants for coverage.
