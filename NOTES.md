@@ -245,3 +245,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: testing
 - **Motivation / Decision**: ensure commits without timestamps return `None`.
 - **Next step**: broaden commit test scenarios.
+
+## 2025-08-12  PR #29
+
+- **Summary**: Raised coverage gate to 90% and synced CI docs.
+- **Stage**: maintenance
+- **Motivation / Decision**: align workflow with higher quality bar.
+- **Next step**: monitor coverage as code expands.

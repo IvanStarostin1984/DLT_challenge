@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.13 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.14 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -79,7 +79,7 @@ Studion 2022 on Win 11) to test manually.
 
    ```bash
    pre-commit run --all-files
-   .venv/bin/pytest --cov=src --cov-fail-under=80
+   .venv/bin/pytest --cov=src --cov-fail-under=90
    ```
 
    * Coverage excludes `tests/**` and `generated/**` via `.coveragerc`.
@@ -157,7 +157,7 @@ jobs:
       - name: Bootstrap
         run: ./.codex/setup.sh   # idempotent; safe when absent
       - run: .venv/bin/pre-commit run --all-files
-      - run: .venv/bin/pytest --cov=src --cov-fail-under=80
+      - run: .venv/bin/pytest --cov=src --cov-fail-under=90
 ```
 
 * **Docs‑only changes** run in seconds (`lint-docs`).
