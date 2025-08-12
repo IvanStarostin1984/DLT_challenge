@@ -8,7 +8,7 @@
 Always follow single source of truth (/docs/specs.txt).
 Do as specified in signle source of truth (unless unable to implement).
 There are 2 sections in single source of truth (/docs/specs.txt):
-1. # Client specifications (not to be changed, read only).
+1. #Client specifications (not to be changed, read only).
 2. #Detailed specifications (may be wrong, maybe changed as last resort).
 If something is not specified in single source of truth - choose simplest safest options.
 Update TODO.md with what to do based on /docs/specs.txt.
