@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.11 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.12 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -34,8 +34,9 @@ Studion 2022 on Win 11) to test manually.
 | | file. |
 | **Generated‑files rule** | Anything under `generated/**` or `openapi/**` |
 | | is **code‑generated** – never hand‑edit; instead rerun the generator. |
-| **Search for conflict markers** | Run `git grep -nE '^<{7}|^={7}|^>{7}' --` |
-| | before every commit and make sure it finds nothing. |
+| **Search for conflict markers** | Run `git grep -nE '^<{7}|^={7}|^>{7}' --` before |
+| | every commit.<br>Pre-commit's `check-merge-conflict` hook also fails when |
+| | markers slip in. |
 | | Never write the conflict markers verbatim; use `<{7}`, `={7}`, or `>{7}` |
 | | when referencing them. |
 

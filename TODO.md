@@ -73,3 +73,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Add markdownlint and actionlint to pre-commit config (2025-08-12)
 - [x] Run pre-commit hooks via `pre-commit run --all-files` in Makefile and CI
       (2025-08-12)
+- [x] Add `check-merge-conflict` hook to pre-commit config (2025-08-12)
