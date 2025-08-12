@@ -286,3 +286,12 @@ to CWD when `pipelines_dir` is omitted.
 - **Motivation / Decision**: verify default path behavior
 to avoid polluting repo root.
 - **Next step**: add online test for default path handling.
+
+## 2025-08-12  PR #34
+
+- **Summary**: Added test for mixed commit timestamps so only dated commits
+  aggregate.
+- **Stage**: testing
+- **Motivation / Decision**: ensure leaderboard ignores commits missing
+  timestamps.
+- **Next step**: surface skipped commits in future runs.
