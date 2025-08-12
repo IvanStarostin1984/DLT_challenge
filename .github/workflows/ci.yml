@@ -53,5 +53,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Bootstrap
         run: ./.codex/setup.sh   # idempotent; safe when absent
-      - run: make lint
+      - run: .venv/bin/pre-commit run --all-files
       - run: .venv/bin/pytest --cov=src --cov-fail-under=80

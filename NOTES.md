@@ -190,3 +190,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: centralise formatting and linting to keep diffs
   small and catch whitespace issues early.
 - **Next step**: add markdownlint and actionlint hooks.
+
+## 2025-08-12  PR #22
+
+- **Summary**: Linting now runs `pre-commit run --all-files` in Makefile and CI.
+- **Stage**: maintenance
+- **Motivation / Decision**: ensure all hooks run consistently across local
+  and CI environments.
+- **Next step**: extend pre-commit config with markdownlint and actionlint.
