@@ -9,4 +9,9 @@ fi
 
 "${REPO_ROOT}/.venv/bin/pip" install -r "${REPO_ROOT}/requirements.txt"
 
+# install git hooks when configuration is present
+if [ -f "${REPO_ROOT}/.pre-commit-config.yaml" ]; then
+    "${REPO_ROOT}/.venv/bin/pre-commit" install
+fi
+
 exit 0

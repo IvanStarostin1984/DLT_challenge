@@ -1,6 +1,6 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.9 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.10 -->
 
-> **Read this file first** before opening a pull‑request.  
+> **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
 > CI in‑sync.
 > If you change *any* rule below, **bump the version number in this heading**.
@@ -46,8 +46,9 @@ Studion 2022 on Win 11) to test manually.
 
 1. Run `.codex/setup.sh` (or `./setup.sh`) once after cloning &
    whenever dependencies change.
-   *The script creates `.venv/` and installs runtime, lint & test
-   dependencies.*
+   *The script creates `.venv/`, installs runtime, lint & test
+   dependencies, and installs git hooks when `.pre-commit-config.yaml`
+   is present.*
 2. Create `.venv` (`python -m venv .venv`) and install deps:
    `.venv/bin/pip install -r requirements.txt`.
    Run `.codex/setup.sh` after activating; the Makefile uses `.venv/bin`.
@@ -159,8 +160,8 @@ jobs:
       - run: .venv/bin/pytest --cov=src --cov-fail-under=80
 ```
 
-* **Docs‑only changes** run in seconds (`lint-docs`).  
-* **Code changes** run full lint + tests (`test`).  
+* **Docs‑only changes** run in seconds (`lint-docs`).
+* **Code changes** run full lint + tests (`test`).
 * Add job matrices (multi‑language), action‑lint, or deployment later—
   guardrails above already catch the 90 % most common issues.
 
@@ -168,14 +169,14 @@ jobs:
 
 ## 5 · Coding & documentation style
 
-* 4‑space indent (or 2‑spaces for JS/TS when enforced by the linter).  
-* ≤ 20 logical LOC per function, ≤ 2 nesting levels.  
+* 4‑space indent (or 2‑spaces for JS/TS when enforced by the linter).
+* ≤ 20 logical LOC per function, ≤ 2 nesting levels.
 * Surround headings / lists / fenced code with a blank line
   (markdownlint MD022, MD032).
 * Use `1.` for every item in ordered lists (markdownlint MD029).
-* **No trailing spaces.** Run `git diff --check` or `make lint-docs`.  
-* Wrap identifiers like `__init__` in back‑ticks to avoid MD050.  
-* Each public API carries a short doc‑comment.  
+* **No trailing spaces.** Run `git diff --check` or `make lint-docs`.
+* Wrap identifiers like `__init__` in back‑ticks to avoid MD050.
+* Each public API carries a short doc‑comment.
 * Keep Markdown lines ≤ 80 chars to improve diff readability (tables
   may exceed if unavoidable).
 
