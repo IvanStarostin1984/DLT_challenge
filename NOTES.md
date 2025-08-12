@@ -353,3 +353,12 @@ to avoid polluting repo root.
   empty and avoids sending tokens; ensure `pipeline.run` writes database to the
   current directory.
 - **Next step**: review other incremental scenarios.
+
+## 2025-08-12  PR #42
+
+- **Summary**: Added test for blank author name and made `normalize_author`
+  return "unknown".
+- **Stage**: testing
+- **Motivation / Decision**: ensure whitespace-only names fall back to
+  "unknown" per TODO.
+- **Next step**: none.

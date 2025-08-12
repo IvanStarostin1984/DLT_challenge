@@ -29,7 +29,7 @@ def normalize_author(
     if email:
         local = email.split("@")[0].split("+")[0]
         return local.lower()
-    if name:
+    if name and name.strip():
         return name.strip().lower()
     return "unknown"
 
