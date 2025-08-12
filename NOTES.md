@@ -206,3 +206,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: catch conflict markers early with
   `check-merge-conflict` hook.
 - **Next step**: monitor and extend hooks like markdownlint next.
+
+## 2025-08-12  PR #24
+
+- **Summary**: Added tests for `normalize_author` case handling and trimmed login.
+- **Stage**: testing
+- **Motivation / Decision**: ensure author identities ignore blank login and
+  case; chose simple strip-and-lower to avoid storing placeholders.
+- **Next step**: audit other normalization helpers for similar whitespace bugs.
