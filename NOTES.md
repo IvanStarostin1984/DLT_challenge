@@ -293,3 +293,12 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: confirm commits still flatten using author timestamp.
 - **Next step**: review remaining commit variants for coverage.
+
+## 2025-08-12  PR #35
+
+- **Summary**: Added test for mixed commit timestamps so only dated commits
+  aggregate.
+- **Stage**: testing
+- **Motivation / Decision**: ensure leaderboard ignores commits missing
+  timestamps.
+- **Next step**: surface skipped commits in future runs.
