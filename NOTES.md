@@ -245,3 +245,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: testing
 - **Motivation / Decision**: ensure commits without timestamps return `None`.
 - **Next step**: broaden commit test scenarios.
+
+## 2025-08-12  PR #29
+
+- **Summary**: Added unit test for `commits_flat` transformer.
+- **Stage**: testing
+- **Motivation / Decision**: ensure transformer yields expected rows using a stub client.
+- **Next step**: broaden commit scenarios for `commits_flat`.
