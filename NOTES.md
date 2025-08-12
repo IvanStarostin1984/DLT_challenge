@@ -353,3 +353,10 @@ to avoid polluting repo root.
   empty and avoids sending tokens; ensure `pipeline.run` writes database to the
   current directory.
 - **Next step**: review other incremental scenarios.
+
+## 2025-08-12  PR #42
+
+- **Summary**: Guarded commit flattening against non-dicts and logged missing timestamps.
+- **Stage**: implementation
+- **Motivation / Decision**: handle malformed API data and satisfy logging TODO.
+- **Next step**: audit other pipeline stages for defensive parsing.

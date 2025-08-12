@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -10,6 +11,8 @@ from typing import Any, Dict, List, Optional
 import dlt
 from dlt.sources.helpers.rest_client import RESTClient
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
+
+logger = logging.getLogger(__name__)
 
 
 def normalize_author(
@@ -34,18 +37,24 @@ def normalize_author(
     return "unknown"
 
 
-def flatten_commit(commit: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def flatten_commit(commit: Any) -> Optional[Dict[str, Any]]:
     """Map commit JSON to a skinny row for aggregation."""
 
+    if not isinstance(commit, dict):
+        return None
+    commit_block = commit.get("commit")
+    if not isinstance(commit_block, dict):
+        return None
     login = (commit.get("author") or {}).get("login")
-    author = commit.get("commit", {}).get("author") or {}
+    author = commit_block.get("author") or {}
     email = author.get("email")
     name = author.get("name")
-    committer = commit.get("commit", {}).get("committer")
+    committer = commit_block.get("committer")
     date = committer.get("date") if isinstance(committer, dict) else None
     if not date:
         date = author.get("date")
     if not date:
+        logger.info("commit missing timestamp: %s", commit.get("sha"))
         return None
     return {
         "sha": commit.get("sha"),
@@ -144,8 +153,14 @@ def run(
             data = json.loads(path.read_text(encoding="utf-8"))
         except (FileNotFoundError, json.JSONDecodeError):
             return []
-        commits: List[Dict[str, Any]] = data if isinstance(data, list) else []
-        flat_rows = [r for r in (flatten_commit(c) for c in commits) if r]
+        commits: List[Dict[str, Any]] = (
+            [c for c in data if isinstance(c, dict)] if isinstance(data, list) else []
+        )
+        flat_rows: List[Dict[str, Any]] = []
+        for c in commits:
+            row = flatten_commit(c)
+            if row:
+                flat_rows.append(row)
         if not flat_rows:
             return []
         pipeline.run(commits, table_name="commits")
