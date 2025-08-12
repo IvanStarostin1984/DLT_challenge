@@ -77,8 +77,8 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Add tests for offline edge cases and handle empty commit fixtures
       (2025-08-12)
 - [x] Add tests for GitHub commits source headers and params (2025-08-12)
+- [x] Audit other normalization helpers for whitespace handling (2025-08-12)
 - [x] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
-- [ ] Audit other normalization helpers for whitespace handling (2025-08-12)
 - [x] Add tests for `flatten_commit` missing commit date (2025-08-12)
 - [x] Add unit test for `commits_flat` transformer (2025-08-12)
 - [x] Test incremental cursor uses last_value and omits auth header

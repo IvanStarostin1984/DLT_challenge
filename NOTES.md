@@ -356,20 +356,29 @@ to avoid polluting repo root.
 
 ## 2025-08-12  PR #42
 
+- **Summary**: Added test for blank author name and made `normalize_author`
+  return "unknown".
+- **Stage**: testing
+- **Motivation / Decision**: ensure whitespace-only names fall back to
+  "unknown" per TODO.
+- **Next step**: none.
+
+## 2025-08-12  PR #43
+
 - **Summary**: Added multi-day commit fixture and post-load grouping test.
 - **Stage**: testing
 - **Motivation / Decision**: verify leaderboard aggregates commits per day
   for one author.
 - **Next step**: monitor for more grouping edge cases.
 
-## 2025-08-12  PR #43
+## 2025-08-12  PR #44
 
 - **Summary**: Guarded commit flattening against non-dicts and logged missing timestamps.
 - **Stage**: implementation
 - **Motivation / Decision**: handle malformed API data and satisfy logging TODO.
 - **Next step**: audit other pipeline stages for defensive parsing.
 
-## 2025-08-12  PR #44
+## 2025-08-12  PR #45
 
 - **Summary**: Added test ensuring `run` forwards params and skipped live pipeline.
 - **Stage**: testing
