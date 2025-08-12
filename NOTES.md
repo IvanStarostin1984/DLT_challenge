@@ -353,3 +353,10 @@ to avoid polluting repo root.
   empty and avoids sending tokens; ensure `pipeline.run` writes database to the
   current directory.
 - **Next step**: review other incremental scenarios.
+
+## 2025-08-12  PR #42
+
+- **Summary**: Added test ensuring `run` forwards params and skipped live pipeline.
+- **Stage**: testing
+- **Motivation / Decision**: cover argument forwarding and remove network dependency for CI stability.
+- **Next step**: audit other normalization helpers for whitespace handling.
