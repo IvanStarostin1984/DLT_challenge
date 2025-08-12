@@ -3,7 +3,7 @@ DLT (DATA LOAD TOOL) — PRACTICAL GUIDE FOR OPENAI CODEX (2025)
 Author: Ivan Starostin (MD, PhD → B.Sc. SE), prepared for a dlt take‑home assignment
 Version: 2025-08-11
 
-IMPORTANT: This document describes the open‑source Python library “dlt” from dltHub (https://github.com/dlt-hub/dlt). 
+IMPORTANT: This document describes the open‑source Python library “dlt” from dltHub (https://github.com/dlt-hub/dlt).
 It is NOT Databricks “Delta Live Tables” (also called DLT). Be careful not to confuse them.
 
 -----------------------------------------------------------------------
@@ -11,13 +11,13 @@ It is NOT Databricks “Delta Live Tables” (also called DLT). Be careful not t
 -----------------------------------------------------------------------
 • What: dlt is an open-source Python library for building data loading pipelines (ELT/ETL). You write normal Python (functions or generators that yield dicts/rows), decorate them with @dlt.resource / @dlt.source, and dlt takes care of schema inference, normalization (flattening), loading, state, and retries.
 • Why: You get a simple, testable, Pythonic approach with built‑in incremental loading, pagination helpers, schema evolution, credentials/config management, and many supported destinations (DuckDB, BigQuery, Snowflake, Postgres, Redshift, ClickHouse, Databricks/DeltaLake, Synapse, Athena, etc.).
-• How: 
-  1) Define resources (data extractors) and optional transformers. 
-  2) Create a pipeline (destination + dataset_name). 
-  3) Run pipeline.run(source()) or pipeline.run(resource()). 
-  4) Incremental loading is one line via dlt.sources.incremental(...). 
+• How:
+  1) Define resources (data extractors) and optional transformers.
+  2) Create a pipeline (destination + dataset_name).
+  3) Run pipeline.run(source()) or pipeline.run(resource()).
+  4) Incremental loading is one line via dlt.sources.incremental(...).
   5) Pagination is declarative in the REST API source, or imperatively with RESTClient helpers.
-• Key APIs to remember: 
+• Key APIs to remember:
   - dlt.pipeline(pipeline_name, destination, dataset_name, …)
   - @dlt.source(...) → groups resources
   - @dlt.resource(name?, table_name?, primary_key?, write_disposition?="append|merge|replace", selected?=True, ...)
@@ -38,14 +38,14 @@ dlt (“data load tool”) is a Python library for loading data from APIs, datab
 -----------------------------------------------------------------------
 2) NOTATION AND TERMINOLOGY
 -----------------------------------------------------------------------
-• Pipeline: A configured object with destination and dataset_name that orchestrates extract → normalize → load. 
-  Create with dlt.pipeline(...). Run with pipeline.run(...). 
+• Pipeline: A configured object with destination and dataset_name that orchestrates extract → normalize → load.
+  Create with dlt.pipeline(...). Run with pipeline.run(...).
 • Source: A logical grouping of related resources (e.g., endpoints of one API). Use @dlt.source to define.
 • Resource: A Python (optionally async) function that yields items (dicts/rows). Decorate with @dlt.resource.
   Key arguments: primary_key, write_disposition (append/merge/replace), table_name, selected.
 • Transformer: A function that consumes data from one resource and yields transformed/enriched items. Use @dlt.transformer (or light‑weight add_map for item‑level transforms).
 • Incremental: Cursor‑based helper to only load new/changed rows (dlt.sources.incremental). Tracks start_value / last_value / end_value and persists state.
-• Destination: Where data lands (e.g., DuckDB, BigQuery, Snowflake, Postgres, Redshift, ClickHouse, Synapse, Athena, Databricks, vector DBs). 
+• Destination: Where data lands (e.g., DuckDB, BigQuery, Snowflake, Postgres, Redshift, ClickHouse, Synapse, Athena, Databricks, vector DBs).
 • Normalization: Flatten/unnest nested JSON, compute a relational schema, and evolve schema as the payload changes.
 • Write Disposition: How to write data into destination tables: replace (full reload), append, merge (upsert / SCD2 / delete-insert strategies).
 • State: dlt stores pipeline state (e.g., incremental cursors) and commits it together with load packages to ensure idempotency.
@@ -91,7 +91,7 @@ print(pipeline.dataset().items.df().head())  # access data via Ibis-backed datas
 -----------------------------------------------------------------------
 5) PROJECT SCAFFOLDING (CLI) AND VERIFIED SOURCES
 -----------------------------------------------------------------------
-• dlt init <source> <destination> 
+• dlt init <source> <destination>
   - Creates .dlt/config.toml and .dlt/secrets.toml, a pipeline script, and requirements.txt.
   - --list-sources and --list-destinations enumerate what’s available.
   - Re‑running dlt init in the same folder can add more sources or update them.
@@ -238,7 +238,7 @@ def posts():
 -----------------------------------------------------------------------
 10) DESTINATIONS (examples)
 -----------------------------------------------------------------------
-Core destinations include DuckDB, BigQuery, Snowflake, PostgreSQL, Redshift, ClickHouse, Synapse, Athena, Databricks/Delta Lake, MotherDuck, and more. 
+Core destinations include DuckDB, BigQuery, Snowflake, PostgreSQL, Redshift, ClickHouse, Synapse, Athena, Databricks/Delta Lake, MotherDuck, and more.
 Choose one by passing destination="duckdb" | "bigquery" | "snowflake" | "postgres" | "redshift" | "clickhouse" | "synapse" | "athena" | "databricks" | "filesystem" | etc.
 
 Switching destination typically requires adding credentials in .dlt/secrets.toml and re‑running the pipeline.
@@ -383,7 +383,7 @@ Design decisions
   - repo_events: append (immutable log, dedup via primary_key=id)
   - daily_leaderboard: replace (materialized each run from raw events)
 • Pagination: GitHub’s REST uses Link headers → LinkHeaderPaginator.
-• Rate limits: use a token; consider exponential backoff/retries (RESTClient uses requests with retry/timeout). 
+• Rate limits: use a token; consider exponential backoff/retries (RESTClient uses requests with retry/timeout).
 • Reproducibility: pin dependencies; include sample .env/.toml; provide one E2E test using fixture pages.
 
 What I’d do next with more time
@@ -396,7 +396,7 @@ What I’d do next with more time
 15) STEP 1 (ASSIGNMENT): HOW I WOULD HAVE USED dlt IN A PREVIOUS PROJECT
 -----------------------------------------------------------------------
 Context (hypothetical, clinically inspired):
-In a medical imaging QA project, we collected daily scanner logs (JSON) and RIS metadata from a PostgreSQL database, then created a tidy dataset for quality dashboards. 
+In a medical imaging QA project, we collected daily scanner logs (JSON) and RIS metadata from a PostgreSQL database, then created a tidy dataset for quality dashboards.
 
 How dlt would help:
 • Filesystem source + SQL database verified source to extract both JSON logs (flattened automatically) and RIS tables.
@@ -434,14 +434,14 @@ pipeline = dlt.pipeline(pipeline_name: str, destination: str, dataset_name: str,
 @dlt.source(max_table_nesting: int = 2, ...)
 def my_source(...): ...
 
-@dlt.resource(name?: str, table_name?: str|callable, primary_key?: str|tuple, 
+@dlt.resource(name?: str, table_name?: str|callable, primary_key?: str|tuple,
               write_disposition?: "append"|"merge"|"replace", selected?: bool = True, ...)
 def my_resource(...): yield {...}
 
 @dlt.transformer(data_from=other_resource, name?: str, write_disposition?: ...)
 def my_transformer(item): yield transformed_item
 
-inc = dlt.sources.incremental(cursor_field: str|jsonpath, initial_value?: Any, end_value?: Any, 
+inc = dlt.sources.incremental(cursor_field: str|jsonpath, initial_value?: Any, end_value?: Any,
                               row_order?: "asc"|"desc", last_value_func?: callable)
 
 # REST API declarative
@@ -496,4 +496,3 @@ dltHub. (2025). dlt GitHub repository. https://github.com/dlt-hub/dlt
 
 (Compare/contrast only to avoid confusion)
 Databricks. (2025). Lakeflow Declarative Pipelines / Delta Live Tables docs. https://docs.databricks.com/
-

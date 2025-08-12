@@ -1,7 +1,7 @@
 # Engineering log  – append entries at **the end** (oldest → newest)
 
-Each pull‑request **adds one new section** using the fixed template below.  
-*Never modify or reorder previous entries.*  
+Each pull‑request **adds one new section** using the fixed template below.
+*Never modify or reorder previous entries.*
 Keep lines ≤ 80 chars and leave exactly **one blank line** between sections.
 
 ---
@@ -182,3 +182,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: prevent accidental markers and guide contributors
   to use placeholder regex.
 - **Next step**: explore a pre-commit hook for conflict checks.
+
+## 2025-08-12  PR #21
+
+- **Summary**: Added pre-commit config with black, ruff, and basic checks.
+- **Stage**: implementation
+- **Motivation / Decision**: centralise formatting and linting to keep diffs
+  small and catch whitespace issues early.
+- **Next step**: add markdownlint and actionlint hooks.

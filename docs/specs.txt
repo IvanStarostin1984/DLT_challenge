@@ -35,18 +35,18 @@ https://dlthub.com/docs/walkthroughs/create-a-pipeline
 #Detailed specifications (may be wrong, maybe changed as last resort):
 0) Decision summary (safe defaults)
 Source API: GitHub REST v3 — List commits.
-Use since and until to bound time windows, per_page=100, pagination via Link header. Send Accept: application/vnd.github+json and (optionally) X‑GitHub‑Api‑Version: 2022‑11‑28. 
+Use since and until to bound time windows, per_page=100, pagination via Link header. Send Accept: application/vnd.github+json and (optionally) X‑GitHub‑Api‑Version: 2022‑11‑28.
 GitHub Docs
 +1
 
-Destination: DuckDB (local file, zero external services). 
+Destination: DuckDB (local file, zero external services).
 DuckDB
 
 Scope: Single public repo (configurable), default branch only, recent time window.
 
 dlt entities: one source, one resource (commits), HeaderLinkPaginator, cursor‑based incremental, one transformer (author normalization), and one post‑load SQL step for the leaderboard.
 
-Reproducibility: pinned deps (dlt[duckdb], duckdb, pytest), .dlt/ state on disk, no cloud, works on Windows & Linux. dlt supports Python 3.9–3.14. 
+Reproducibility: pinned deps (dlt[duckdb], duckdb, pytest), .dlt/ state on disk, no cloud, works on Windows & Linux. dlt supports Python 3.9–3.14.
 dltHub
 PyPI
 
@@ -60,7 +60,7 @@ Offline (Codex/Code‑Interpreter): uses bundled fixture JSON (no HTTP).
 
 1) What the pipeline does (Input → Process → Output)
 Input
-GET /repos/{owner}/{repo}/commits?sha={branch}&since=…&until=…&per_page=100 (default branch if sha omitted). Rate‑limit: 60/h unauthenticated, 5,000/h authenticated PAT. 
+GET /repos/{owner}/{repo}/commits?sha={branch}&since=…&until=…&per_page=100 (default branch if sha omitted). Rate‑limit: 60/h unauthenticated, 5,000/h authenticated PAT.
 GitHub Docs
 +2
 GitHub Docs
@@ -68,11 +68,11 @@ GitHub Docs
 
 Process
 
-Pagination: follow Link: <…>; rel="next" until exhausted (HeaderLink paginator). 
+Pagination: follow Link: <…>; rel="next" until exhausted (HeaderLink paginator).
 GitHub Docs
 dltHub
 
-Incremental: cursor = commit.committer.date (ISO‑8601). If missing, fallback commit.author.date. Pass since on requests; dlt keeps max cursor in state to avoid re‑pulling. 
+Incremental: cursor = commit.committer.date (ISO‑8601). If missing, fallback commit.author.date. Pass since on requests; dlt keeps max cursor in state to avoid re‑pulling.
 dltHub
 
 Transform (normalize): compute:
@@ -126,7 +126,7 @@ Source: github_commits_source(repo, branch) → returns the commits resource.
 
 Resource: commits (REST client + HeaderLink paginator).
 
-Paginator: HeaderLinkPaginator (uses Link: … rel="next"; canonical for GitHub). 
+Paginator: HeaderLinkPaginator (uses Link: … rel="next"; canonical for GitHub).
 dltHub
 GitHub Docs
 
@@ -134,10 +134,10 @@ Primary key: sha (immutable commit id).
 
 Write disposition: append (commits immutable).
 
-Incremental cursor: commit.committer.date (fallback commit.author.date) passed as since on request; state kept by dlt. 
+Incremental cursor: commit.committer.date (fallback commit.author.date) passed as since on request; state kept by dlt.
 dltHub
 
-Request shaping: sha={branch}, per_page=100, since={cursor.start}, and for tests also until={end_value} to fully close the window at the source. 
+Request shaping: sha={branch}, per_page=100, since={cursor.start}, and for tests also until={end_value} to fully close the window at the source.
 GitHub Docs
 
 Transformer: flatten_commit → skinny row + stable author_identity.
@@ -151,21 +151,21 @@ Initial range: configurable; default “14 days ago → now” to keep first run
 
 Dedupe: PK=sha ensures idempotency (API overlaps possible around the cursor).
 
-Backfill option: use initial_value + end_value for a closed, historical slice (deterministic tests) without touching live incremental state. 
+Backfill option: use initial_value + end_value for a closed, historical slice (deterministic tests) without touching live incremental state.
 dltHub
 
 Ordering: do not rely on row order; pagination + cursor handle correctness.
 
 5) Pagination & rate‑limit safety
-Pagination: via Link headers (rel="next"). 
+Pagination: via Link headers (rel="next").
 GitHub Docs
 
-Rate limits: 60 req/h unauthenticated; token raises limit (5,000 req/h). Use per_page=100 + narrow windows → far below limits for one repo. 
+Rate limits: 60 req/h unauthenticated; token raises limit (5,000 req/h). Use per_page=100 + narrow windows → far below limits for one repo.
 GitHub Docs
 
 Retries: use dlt defaults (backoff); no custom logic unless needed.
 
-Headers: include Accept: application/vnd.github+json; optionally X‑GitHub‑Api‑Version: 2022‑11‑28. 
+Headers: include Accept: application/vnd.github+json; optionally X‑GitHub‑Api‑Version: 2022‑11‑28.
 GitHub Docs
 
 6) Tests (invariants; one unit + one end‑to‑end)
@@ -187,7 +187,7 @@ leaderboard_daily exists; all commit_day within the window; each commit_count �
 
 Idempotency: immediate re‑run without changing state → row counts do not decrease; sha distinctness holds.
 
-Codex/Code‑Interpreter demo: run the same E2E against the bundled fixture (fixtures/commits_sample.json) to exercise transform + load + SQL without HTTP (sandbox has no outbound network). 
+Codex/Code‑Interpreter demo: run the same E2E against the bundled fixture (fixtures/commits_sample.json) to exercise transform + load + SQL without HTTP (sandbox has no outbound network).
 OpenAI Help Center
 
 7) Repository layout
@@ -342,4 +342,3 @@ Optional: CREATE VIEW leaderboard_latest AS … WHERE commit_day >= current_date
 Do not commit .dlt/secrets.toml.
 
 Add .gitignore: .dlt/state*, *.duckdb, .venv, __pycache__/, .pytest_cache/.
-

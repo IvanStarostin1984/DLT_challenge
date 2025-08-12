@@ -4,5 +4,5 @@ pytest==8.4.1
 pytest-cov==6.2.1
 black==24.4.2
 ruff==0.5.4
+pre-commit==3.8.0
 requests==2.32.4
-
