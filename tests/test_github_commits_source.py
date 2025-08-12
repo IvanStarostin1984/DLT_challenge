@@ -59,3 +59,15 @@ def test_incremental_adds_since(rest_client: type[StubRESTClient]) -> None:
     commits = source.resources["commits"]
     list(commits())
     assert rest_client.last_instance.params["since"] == "2024-01-01"
+
+
+def test_client_base_url_and_per_page_default(
+    rest_client: type[StubRESTClient],
+) -> None:
+    source = github_commits_source(repo="owner/repo")
+    commits = source.resources["commits"]
+    list(commits())
+    assert rest_client.last_instance.base_url == (
+        "https://api.github.com/repos/owner/repo"
+    )
+    assert rest_client.last_instance.params["per_page"] == 100
