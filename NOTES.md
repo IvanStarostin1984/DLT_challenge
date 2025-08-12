@@ -245,3 +245,10 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Stage**: testing
 - **Motivation / Decision**: ensure commits without timestamps return `None`.
 - **Next step**: broaden commit test scenarios.
+
+## 2025-08-12  PR #29
+
+- **Summary**: Added test ensuring pipeline writes DuckDB to CWD when `pipelines_dir` is omitted.
+- **Stage**: testing
+- **Motivation / Decision**: verify default path behavior to avoid polluting repo root.
+- **Next step**: add online test for default path handling.
