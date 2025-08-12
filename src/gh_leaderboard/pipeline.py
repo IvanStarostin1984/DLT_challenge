@@ -139,7 +139,10 @@ def run(
 
     if offline:
         path = Path(fixture_path or Path(__file__).with_name("commits_fixture.json"))
-        data = json.loads(path.read_text(encoding="utf-8"))
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (FileNotFoundError, json.JSONDecodeError):
+            return []
         commits: List[Dict[str, Any]] = data if isinstance(data, list) else []
         flat_rows = [r for r in (flatten_commit(c) for c in commits) if r]
         if not flat_rows:
