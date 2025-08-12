@@ -322,13 +322,22 @@ to avoid polluting repo root.
 
 ## 2025-08-12  PR #38
 
+- **Summary**: Added test ensuring pipeline returns no rows and no DuckDB file
+  when fixture JSON is not a list.
+- **Stage**: testing
+- **Motivation / Decision**: prevent stray tables from malformed fixtures;
+  early exit keeps storage clean.
+- **Next step**: document fixture format expectations.
+
+## 2025-08-12  PR #39
+
 - **Summary**: Guarded `flatten_commit` against `None` committers and unknown authors.
 - **Stage**: implementation
 - **Motivation / Decision**: prevent crashes from `None` in nested API responses;
   default missing author data to "unknown".
 - **Next step**: audit other API fields for similar `None` checks.
 
-## 2025-08-12  PR #39
+## 2025-08-12  PR #40
 
 - **Summary**: Added test ensuring initial cursor value sets `since` and omits auth header; fixed default DuckDB path.
 - **Stage**: testing
