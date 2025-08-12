@@ -319,3 +319,12 @@ to avoid polluting repo root.
 - **Motivation / Decision**: ensure leaderboard ignores commits missing
   timestamps.
 - **Next step**: surface skipped commits in future runs.
+
+## 2025-08-12  PR #38
+
+- **Summary**: Added test ensuring pipeline returns no rows and no DuckDB file
+  when fixture JSON is not a list.
+- **Stage**: testing
+- **Motivation / Decision**: prevent stray tables from malformed fixtures;
+  early exit keeps storage clean.
+- **Next step**: document fixture format expectations.
