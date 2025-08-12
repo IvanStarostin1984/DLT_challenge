@@ -198,3 +198,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: ensure all hooks run consistently across local
   and CI environments.
 - **Next step**: extend pre-commit config with markdownlint and actionlint.
+
+## 2025-08-12  PR #23
+
+- **Summary**: Added merge-conflict check to pre-commit and updated guides.
+- **Stage**: maintenance
+- **Motivation / Decision**: catch conflict markers early with
+  `check-merge-conflict` hook.
+- **Next step**: monitor and extend hooks like markdownlint next.
