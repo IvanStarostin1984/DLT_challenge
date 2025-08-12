@@ -209,12 +209,21 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 
 ## 2025-08-12  PR #24
 
+- **Summary**: Added tests for GitHub commits source verifying headers and
+  query parameters.
+- **Stage**: testing
+- **Motivation / Decision**: ensure token and incremental arguments reach the
+  REST client; used monkeypatch with a stub for safety.
+- **Next step**: add markdownlint and actionlint hooks.
+
+## 2025-08-12  PR #25
+
 - **Summary**: Added guideline to mock network calls in tests and updated roadmap.
 - **Stage**: documentation
 - **Motivation / Decision**: avoid flaky tests by forbidding live network access.
 - **Next step**: audit tests for network mocking.
 
-## 2025-08-12  PR #25
+## 2025-08-12  PR #26
 
 - **Summary**: Added tests for `normalize_author` case handling and trimmed login.
 - **Stage**: testing
@@ -222,7 +231,7 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
   case; chose simple strip-and-lower to avoid storing placeholders.
 - **Next step**: audit other normalization helpers for similar whitespace bugs.
 
-## 2025-08-12  PR #26
+## 2025-08-12  PR #27
 
 - **Summary**: Added unit tests for `flatten_commit` covering missing dates.
 - **Stage**: testing

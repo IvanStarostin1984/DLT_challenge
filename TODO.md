@@ -74,6 +74,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Run pre-commit hooks via `pre-commit run --all-files` in Makefile and CI
       (2025-08-12)
 - [x] Add `check-merge-conflict` hook to pre-commit config (2025-08-12)
+- [x] Add tests for GitHub commits source headers and params (2025-08-12)
 - [ ] Audit tests to ensure network calls are mocked or use offline fixtures (2025-08-12)
 - [ ] Audit other normalization helpers for whitespace handling (2025-08-12)
 - [x] Add tests for `flatten_commit` missing commit date (2025-08-12)
