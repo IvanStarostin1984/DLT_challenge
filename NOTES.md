@@ -360,3 +360,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: handle malformed API data and satisfy logging TODO.
 - **Next step**: audit other pipeline stages for defensive parsing.
+
+## 2025-08-12  PR #43
+
+- **Summary**: Added test ensuring `run` forwards params and skipped live pipeline.
+- **Stage**: testing
+- **Motivation / Decision**: cover argument forwarding and remove network dependency for CI stability.
+- **Next step**: audit other normalization helpers for whitespace handling.
