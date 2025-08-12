@@ -24,8 +24,8 @@ def normalize_author(
     4. "unknown".
     """
 
-    if login:
-        return login.lower()
+    if login and login.strip():
+        return login.strip().lower()
     if email:
         local = email.split("@")[0].split("+")[0]
         return local.lower()
