@@ -214,3 +214,34 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: Ensure pipeline handles missing dates and
   empty fixtures.
 - **Next step**: watch for further edge cases.
+
+## 2025-08-12  PR #25
+
+- **Summary**: Added tests for GitHub commits source verifying headers and
+  query parameters.
+- **Stage**: testing
+- **Motivation / Decision**: ensure token and incremental arguments reach the
+  REST client; used monkeypatch with a stub for safety.
+- **Next step**: add markdownlint and actionlint hooks.
+
+## 2025-08-12  PR #26
+
+- **Summary**: Added guideline to mock network calls in tests and updated roadmap.
+- **Stage**: documentation
+- **Motivation / Decision**: avoid flaky tests by forbidding live network access.
+- **Next step**: audit tests for network mocking.
+
+## 2025-08-12  PR #27
+
+- **Summary**: Added tests for `normalize_author` case handling and trimmed login.
+- **Stage**: testing
+- **Motivation / Decision**: ensure author identities ignore blank login and
+  case; chose simple strip-and-lower to avoid storing placeholders.
+- **Next step**: audit other normalization helpers for similar whitespace bugs.
+
+## 2025-08-12  PR #28
+
+- **Summary**: Added unit tests for `flatten_commit` covering missing dates.
+- **Stage**: testing
+- **Motivation / Decision**: ensure commits without timestamps return `None`.
+- **Next step**: broaden commit test scenarios.
