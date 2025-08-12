@@ -322,6 +322,14 @@ to avoid polluting repo root.
 
 ## 2025-08-12  PR #38
 
+- **Summary**: Added tests for `normalize_author` with empty email cases.
+- **Stage**: testing
+- **Motivation / Decision**: ensure empty emails fall back to name or
+  "unknown" to keep identity stable.
+- **Next step**: review other normalizers for similar edge cases.
+
+## 2025-08-12  PR #39
+
 - **Summary**: Added test ensuring pipeline returns no rows and no DuckDB file
   when fixture JSON is not a list.
 - **Stage**: testing
@@ -329,7 +337,7 @@ to avoid polluting repo root.
   early exit keeps storage clean.
 - **Next step**: document fixture format expectations.
 
-## 2025-08-12  PR #39
+## 2025-08-12  PR #40
 
 - **Summary**: Guarded `flatten_commit` against `None` committers and unknown authors.
 - **Stage**: implementation
@@ -337,7 +345,7 @@ to avoid polluting repo root.
   default missing author data to "unknown".
 - **Next step**: audit other API fields for similar `None` checks.
 
-## 2025-08-12  PR #40
+## 2025-08-12  PR #41
 
 - **Summary**: Added test ensuring initial cursor value sets `since` and omits auth header; fixed default DuckDB path.
 - **Stage**: testing
