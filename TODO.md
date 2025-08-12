@@ -86,4 +86,6 @@ when token missing (2025-08-12)
 - [x] Increase coverage threshold to ≥ 90 % (2025-08-12)
 - [x] Extend `flatten_commit` tests for missing login and commit key (2025-08-12)
 - [x] Add test for pipeline default DuckDB path when `pipelines_dir` is omitted (2025-08-12)
+- [x] Add test verifying author date fallback when committer date is missing
+      (2025-08-12)
 - [ ] Log or surface skipped commits lacking timestamps (2025-08-12)
