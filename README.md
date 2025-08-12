@@ -76,6 +76,14 @@ Each row has `author_identity`, `commit_day`, and `commit_count`. Use
 results are stored in `gh_leaderboard.duckdb` with tables `commits`,
 `commits_flat`, and `leaderboard_daily`.
 
+## Linting
+
+Run all pre-commit hooks before committing:
+
+```bash
+pre-commit run --all-files
+```
+
 ## Tests
 
 Run unit and end-to-end tests:
