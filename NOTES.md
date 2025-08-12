@@ -173,3 +173,12 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: ensure conflict markers are caught while ignoring
   untracked files.
 - **Next step**: consider adding pre-commit hooks for conflict markers.
+
+## 2025-08-12  PR #20
+
+- **Summary**: Clarified conflict marker checks and replaced markers with
+  placeholders in AGENTS guide.
+- **Stage**: documentation
+- **Motivation / Decision**: prevent accidental markers and guide contributors
+  to use placeholder regex.
+- **Next step**: explore a pre-commit hook for conflict checks.
