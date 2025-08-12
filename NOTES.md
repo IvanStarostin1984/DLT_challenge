@@ -182,3 +182,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: prevent accidental markers and guide contributors
   to use placeholder regex.
 - **Next step**: explore a pre-commit hook for conflict checks.
+
+## 2025-08-12  PR #21
+
+- **Summary**: Routed Python linting through pre-commit and added its config.
+- **Stage**: maintenance
+- **Motivation / Decision**: unify black and ruff under pre-commit to match
+  CI tooling.
+- **Next step**: add markdownlint and actionlint to pre-commit.

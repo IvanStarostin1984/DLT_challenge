@@ -8,8 +8,7 @@ PYTEST_ARGS?=$(ARGS)
 lint: lint-python lint-markdown
 
 lint-python:
-	$(VENV)/bin/black .
-	$(VENV)/bin/ruff check .
+	$(VENV)/bin/pre-commit run --files $(shell git ls-files '*.py')
 
 lint-markdown:
 	npx --yes markdownlint-cli '**/*.md'

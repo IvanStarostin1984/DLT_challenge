@@ -41,7 +41,7 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
 ## 3 · Quality & automation
 
-- [ ] Add pre‑commit hooks (formatters, linters, markdownlint, actionlint)
+- [x] Add pre‑commit hooks for formatters and linters (2025-08-12)
 - [x] Enforce coverage threshold (≥ 80 % branch, exclude `/generated/**`)
 - [ ] Add linters for conflict markers, trailing spaces and NOTES ordering
 - [ ] Introduce dependabot / Renovate with the version‑pin policy from
@@ -70,3 +70,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Wrap lint and test commands in `AGENTS.md` code fence (2025-08-11)
 - [x] Replace `grep` with anchored `git grep` for conflict checks (2025-08-11)
 - [x] Revise conflict marker guidelines using placeholders in AGENTS.md (2025-08-12)
+- [ ] Integrate markdownlint and actionlint pre-commit hooks (2025-08-12)
