@@ -353,3 +353,11 @@ to avoid polluting repo root.
   empty and avoids sending tokens; ensure `pipeline.run` writes database to the
   current directory.
 - **Next step**: review other incremental scenarios.
+
+## 2025-08-12  PR #42
+
+- **Summary**: Added multi-day commit fixture and post-load grouping test.
+- **Stage**: testing
+- **Motivation / Decision**: verify leaderboard aggregates commits per day
+  for one author.
+- **Next step**: monitor for more grouping edge cases.
