@@ -182,3 +182,11 @@ Keep lines ≤ 80 chars and leave exactly **one blank line** between secti
 - **Motivation / Decision**: prevent accidental markers and guide contributors
   to use placeholder regex.
 - **Next step**: explore a pre-commit hook for conflict checks.
+
+## 2025-08-12  PR #21
+
+- **Summary**: Mentioned `pre-commit run` in contributor guide and README.
+- **Stage**: documentation
+- **Motivation / Decision**: align lint instructions with project tooling;
+  snippet aids new contributors.
+- **Next step**: add pre-commit hooks for automated checks.

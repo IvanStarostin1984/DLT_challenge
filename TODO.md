@@ -1,4 +1,4 @@
-# TODO – Road‑map  (last updated: 2025-08-11)
+# TODO – Road‑map  (last updated: 2025-08-12)
 
 > *Record only high‑level milestones here; break micro‑tasks out into Issues.*
 > **When you finish a task, tick it and append a short NOTE entry
@@ -70,3 +70,4 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [x] Wrap lint and test commands in `AGENTS.md` code fence (2025-08-11)
 - [x] Replace `grep` with anchored `git grep` for conflict checks (2025-08-11)
 - [x] Revise conflict marker guidelines using placeholders in AGENTS.md (2025-08-12)
+- [x] Document pre-commit usage in AGENTS and README (2025-08-12)

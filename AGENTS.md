@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.9 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.10 -->
 
 > **Read this file first** before opening a pull‑request.  
 > It defines the ground rules that keep humans, autonomous agents and
@@ -66,10 +66,11 @@ Studion 2022 on Win 11) to test manually.
 
 1. **Branch & PR flow** – fork → `feat/<topic>` → PR into `main` (one
    reviewer required).
-2. **Pre‑commit commands** (also run by CI):
+2. **Lint & test commands** (also run by CI):
    ```bash
-   make lint                  # all format / static‑analysis steps
-   make test [PYTEST_ARGS=...]# project’s unit-/integration tests
+   pre-commit run --all-files      # formatters and linters
+   make lint                       # same checks via Makefile
+   make test [PYTEST_ARGS=...]     # unit-/integration tests
    ```
 
    * `make test` fails when no tests are collected; ensure at least one exists.
