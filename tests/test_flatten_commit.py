@@ -31,6 +31,27 @@ def commit_missing_date() -> dict:
     }
 
 
+@pytest.fixture
+def commit_missing_login() -> dict:
+    return {
+        "sha": "no-login",
+        "author": None,
+        "commit": {
+            "author": {
+                "name": "Bob",
+                "email": "bob@example.com",
+                "date": "2024-01-02T10:00:00Z",
+            },
+            "committer": {"date": "2024-01-02T10:00:00Z"},
+        },
+    }
+
+
+@pytest.fixture
+def commit_missing_commit_key() -> dict:
+    return {"sha": "no-commit", "author": {"login": "alice"}}
+
+
 def test_flatten_commit_normal(normal_commit: dict) -> None:
     assert flatten_commit(normal_commit) == {
         "sha": "1",
@@ -42,3 +63,18 @@ def test_flatten_commit_normal(normal_commit: dict) -> None:
 
 def test_flatten_commit_missing_date(commit_missing_date: dict) -> None:
     assert flatten_commit(commit_missing_date) is None
+
+
+def test_flatten_commit_missing_login(commit_missing_login: dict) -> None:
+    assert flatten_commit(commit_missing_login) == {
+        "sha": "no-login",
+        "author_identity": "bob",
+        "commit_timestamp": "2024-01-02T10:00:00Z",
+        "commit_day": "2024-01-02",
+    }
+
+
+def test_flatten_commit_missing_commit_key(
+    commit_missing_commit_key: dict,
+) -> None:
+    assert flatten_commit(commit_missing_commit_key) is None
