@@ -319,3 +319,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: ensure leaderboard ignores commits missing
   timestamps.
 - **Next step**: surface skipped commits in future runs.
+
+## 2025-08-12  PR #38
+
+- **Summary**: Added tests for `normalize_author` with empty email cases.
+- **Stage**: testing
+- **Motivation / Decision**: ensure empty emails fall back to name or
+  "unknown" to keep identity stable.
+- **Next step**: review other normalizers for similar edge cases.

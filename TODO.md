@@ -91,3 +91,4 @@ when token missing (2025-08-12)
 - [x] Add test verifying author date fallback when committer date is missing
       (2025-08-12)
 - [ ] Log or surface skipped commits lacking timestamps (2025-08-12)
+- [x] Add tests for `normalize_author` handling blank email cases (2025-08-12)
