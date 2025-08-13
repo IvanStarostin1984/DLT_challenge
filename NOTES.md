@@ -452,6 +452,12 @@ to avoid polluting repo root.
 
 ## 2025-08-13  PR #55
 
+- **Summary**: Renamed offline pipeline test to include e2e tag and documented command.
+- **Stage**: tests, documentation
+- **Motivation / Decision**: allow selecting offline end-to-end test via `-k e2e`.
+
+## 2025-08-13  PR #56
+
 - **Summary**: Wrapped commit pagination to raise a helpful error on 403 and
   added tests and docs.
 - **Stage**: implementation
@@ -459,7 +465,7 @@ to avoid polluting repo root.
   chose RuntimeError for clear failure.
 - **Next step**: monitor other HTTP errors.
 
-## 2025-08-13  PR #56
+## 2025-08-13  PR #57
 
 - **Summary**: Ensure offline runs create empty commit tables and always call pipeline.
 - **Stage**: implementation

@@ -125,6 +125,12 @@ Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
 make test PYTEST_ARGS="--offline"
 ```
 
+Run just the offline end-to-end test:
+
+```bash
+pytest -q -k e2e --offline
+```
+
 ## Incremental loads
 
 The resource uses `commit.committer.date` as the cursor and falls back to
