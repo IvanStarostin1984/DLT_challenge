@@ -452,24 +452,30 @@ to avoid polluting repo root.
 
 ## 2025-08-13  PR #55
 
+- **Summary**: Updated docs to refer to `leaderboard.duckdb` file name.
+- **Stage**: documentation
+- **Motivation / Decision**: pipeline writes `leaderboard.duckdb`; README and specs mismatched.
+
+## 2025-08-13  PR #56
+
 - **Summary**: Added troubleshooting section to README for common errors.
 - **Stage**: documentation
 - **Motivation / Decision**: help users resolve rate limits, empty results,
   and offline use.
 
-## 2025-08-13  PR #56
+## 2025-08-13  PR #57
 
 - **Summary**: Added `.dlt/secrets.toml` to `.gitignore` and warned against committing secrets.
 - **Stage**: maintenance
 - **Motivation / Decision**: protect credentials by ignoring secret files and updating guidelines.
 
-## 2025-08-13  PR #57
+## 2025-08-13  PR #58
 
 - **Summary**: Renamed offline pipeline test to include e2e tag and documented command.
 - **Stage**: tests, documentation
 - **Motivation / Decision**: allow selecting offline end-to-end test via `-k e2e`.
 
-## 2025-08-13  PR #58
+## 2025-08-13  PR #59
 
 - **Summary**: Wrapped commit pagination to raise a helpful error on 403 and
   added tests and docs.
@@ -478,7 +484,7 @@ to avoid polluting repo root.
   chose RuntimeError for clear failure.
 - **Next step**: monitor other HTTP errors.
 
-## 2025-08-13  PR #59
+## 2025-08-13  PR #60
 
 - **Summary**: Ensure offline runs create empty commit tables and always call pipeline.
 - **Stage**: implementation
