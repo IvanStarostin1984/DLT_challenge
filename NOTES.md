@@ -525,3 +525,10 @@ to avoid polluting repo root.
 - **Motivation / Decision**: duplicate SHAs inflated commit counts; merging on
   `sha` keeps leaderboard accurate.
 - **Next step**: none.
+
+## 2025-08-13 PR #66
+
+- **Summary**: Added test confirming pipeline runs twice without extra rows.
+- **Stage**: testing
+- **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
+- **Next step**: none.
