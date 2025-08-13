@@ -131,6 +131,14 @@ The resource uses `commit.committer.date` as the cursor and falls back to
 `commit.author.date` when the committer date is missing. dlt stores the last
 cursor so pass `--since` on the next run.
 
+## Troubleshooting
+
+### HTTP 403 from GitHub
+
+`commits_raw` logs an error and raises `RuntimeError` when the API responds
+with 403. Check the `GITHUB_TOKEN`, ensure the repo is accessible, and retry
+after the rate limit resets.
+
 ## Design decisions
 
 * Local DuckDB keeps dependencies minimal.

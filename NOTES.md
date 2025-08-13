@@ -452,6 +452,15 @@ to avoid polluting repo root.
 
 ## 2025-08-13  PR #55
 
+- **Summary**: Wrapped commit pagination to raise a helpful error on 403 and
+  added tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: surface GitHub permission or rate-limit issues;
+  chose RuntimeError for clear failure.
+- **Next step**: monitor other HTTP errors.
+
+## 2025-08-13  PR #56
+
 - **Summary**: Ensure offline runs create empty commit tables and always call pipeline.
 - **Stage**: implementation
 - **Motivation / Decision**: avoid missing tables when fixture yields no commits; kept SQL flow intact.

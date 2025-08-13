@@ -1,6 +1,10 @@
 from typing import Any, Dict
 
 import pytest
+from dlt.sources.helpers.rest_client.client import (
+    HTTPError as RESTClientResponseError,
+)
+from dlt.extract.exceptions import ResourceExtractionError
 
 from src.gh_leaderboard import pipeline
 from src.gh_leaderboard.pipeline import github_commits_source
@@ -71,3 +75,20 @@ def test_client_base_url_and_per_page_default(
         "https://api.github.com/repos/owner/repo"
     )
     assert rest_client.last_instance.params["per_page"] == 100
+
+
+def test_commits_raw_403_raises(monkeypatch: pytest.MonkeyPatch) -> None:
+    class ErrorRESTClient(StubRESTClient):
+        def paginate(self, path: str, params: Dict[str, Any], paginator: Any):
+            from requests import Response
+
+            resp = Response()
+            resp.status_code = 403
+            raise RESTClientResponseError("Forbidden", response=resp)
+
+    monkeypatch.setattr(pipeline, "RESTClient", ErrorRESTClient)
+    commits = github_commits_source().resources["commits_raw"]
+    with pytest.raises(ResourceExtractionError) as excinfo:
+        list(commits())
+    assert isinstance(excinfo.value.__cause__, RuntimeError)
+    assert "GitHub API returned 403" in str(excinfo.value.__cause__)
