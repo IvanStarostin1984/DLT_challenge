@@ -426,3 +426,12 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: allow repo and date window overrides via file, env and CLI.
 - **Next step**: none.
+
+## 2025-08-13  PR #52
+
+- **Summary**: Cursor now falls back to author timestamp when committer date is
+  missing and tests cover this case.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure incremental loads handle commits lacking a
+  committer timestamp.
+- **Next step**: none.

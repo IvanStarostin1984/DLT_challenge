@@ -103,3 +103,5 @@ when token missing (2025-08-12)
 - [x] Create `leaderboard_latest` view and add tests (2025-08-13)
 - [x] Add CLI config loader for repo and date window (2025-08-13)
 - [x] Add integration test for CLI entry (2025-08-13)
+- [x] Ensure incremental cursor falls back to author date when committer date is
+      missing (2025-08-13)

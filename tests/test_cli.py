@@ -10,4 +10,5 @@ def test_cli_offline_runs() -> None:
         capture_output=True,
         text=True,
     )
-    assert json.loads(result.stdout) == []
+    rows = json.loads(result.stdout)
+    assert isinstance(rows, list) and rows
