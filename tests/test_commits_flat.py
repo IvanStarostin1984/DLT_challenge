@@ -28,12 +28,17 @@ def test_commits_flat(monkeypatch: pytest.MonkeyPatch) -> None:
                 "email": "alice@example.com",
             },
             "committer": {"date": "2024-01-01T10:00:00Z"},
+            "message": "Message head\nbody",
         },
     }
     assert list(commits_flat._pipe.gen(commit)) == [
         {
             "sha": "abc123",
             "author_identity": "alice",
+            "author_login": "alice",
+            "author_email": "alice@example.com",
+            "author_name": "Alice",
+            "message_short": "Message head",
             "commit_timestamp": "2024-01-01T10:00:00Z",
             "commit_day": "2024-01-01",
         }

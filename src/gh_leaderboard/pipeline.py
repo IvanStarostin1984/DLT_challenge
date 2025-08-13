@@ -56,9 +56,17 @@ def flatten_commit(commit: Any) -> Optional[Dict[str, Any]]:
     if not date:
         logger.info("commit missing timestamp: %s", commit.get("sha"))
         return None
+    message = commit_block.get("message")
+    message_short = (
+        message.splitlines()[0] if isinstance(message, str) and message else None
+    )
     return {
         "sha": commit.get("sha"),
         "author_identity": normalize_author(login, email, name),
+        "author_login": login,
+        "author_email": email,
+        "author_name": name,
+        "message_short": message_short,
         "commit_timestamp": date,
         "commit_day": date[:10],
     }

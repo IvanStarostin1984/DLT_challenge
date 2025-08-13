@@ -15,6 +15,7 @@ def normal_commit() -> dict:
                 "date": "2024-01-01T10:00:00Z",
             },
             "committer": {"date": "2024-01-01T10:00:00Z"},
+            "message": "Fix bug\n\nMore details",
         },
     }
 
@@ -27,6 +28,7 @@ def commit_missing_date() -> dict:
         "commit": {
             "author": {"name": "Alice", "email": "alice@example.com"},
             "committer": {},
+            "message": "No date",
         },
     }
 
@@ -43,6 +45,7 @@ def commit_missing_committer_date() -> dict:
                 "date": "2024-01-03T10:00:00Z",
             },
             "committer": {},
+            "message": "Commit message",
         },
     }
 
@@ -59,6 +62,7 @@ def commit_missing_login() -> dict:
                 "date": "2024-01-02T10:00:00Z",
             },
             "committer": {"date": "2024-01-02T10:00:00Z"},
+            "message": "Login missing",
         },
     }
 
@@ -72,6 +76,10 @@ def test_flatten_commit_normal(normal_commit: dict) -> None:
     assert flatten_commit(normal_commit) == {
         "sha": "1",
         "author_identity": "alice",
+        "author_login": "alice",
+        "author_email": "alice@example.com",
+        "author_name": "Alice",
+        "message_short": "Fix bug",
         "commit_timestamp": "2024-01-01T10:00:00Z",
         "commit_day": "2024-01-01",
     }
@@ -87,6 +95,10 @@ def test_flatten_commit_missing_committer_date(
     assert flatten_commit(commit_missing_committer_date) == {
         "sha": "no-committer-date",
         "author_identity": "alice",
+        "author_login": "alice",
+        "author_email": "alice@example.com",
+        "author_name": "Alice",
+        "message_short": "Commit message",
         "commit_timestamp": "2024-01-03T10:00:00Z",
         "commit_day": "2024-01-03",
     }
@@ -96,6 +108,10 @@ def test_flatten_commit_missing_login(commit_missing_login: dict) -> None:
     assert flatten_commit(commit_missing_login) == {
         "sha": "no-login",
         "author_identity": "bob",
+        "author_login": None,
+        "author_email": "bob@example.com",
+        "author_name": "Bob",
+        "message_short": "Login missing",
         "commit_timestamp": "2024-01-02T10:00:00Z",
         "commit_day": "2024-01-02",
     }

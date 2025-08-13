@@ -399,3 +399,10 @@ to avoid polluting repo root.
 - **Stage**: maintenance
 - **Motivation / Decision**: pinned versions v0.45.0 and v1.7.7 to meet TODO.
 - **Next step**: none.
+
+## 2025-08-13  PR #48
+
+- **Summary**: Exposed author metadata and short commit message in flattened rows.
+- **Stage**: implementation
+- **Motivation / Decision**: align `commits_flat` schema with spec for easier analysis.
+- **Next step**: none.
