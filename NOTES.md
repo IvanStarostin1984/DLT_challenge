@@ -449,3 +449,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Added `.dlt/secrets.toml` to `.gitignore` and warned against committing secrets.
+- **Stage**: maintenance
+- **Motivation / Decision**: protect credentials by ignoring secret files and updating guidelines.
+- **Next step**: none.

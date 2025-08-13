@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.18 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.19 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -227,5 +227,11 @@ Pin your dependencies
 * When CI tooling changes (new Action versions, new secrets, extra
   language runners) **update both** this guide **and** the workflow
   file in the **same PR**.
+
+## 7 · Security
+
+* Never commit secrets or credentials.
+* Keep secret files like `.dlt/secrets.toml` out of version control.
+* Scan commits locally for stray secrets before pushing.
 
 Happy shipping 🚀

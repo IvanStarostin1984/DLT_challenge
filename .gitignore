@@ -1,4 +1,5 @@
 .dlt/state*
+.dlt/secrets.toml
 *.duckdb
 .venv/
 __pycache__/
