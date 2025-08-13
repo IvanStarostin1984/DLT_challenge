@@ -107,6 +107,8 @@ when token missing (2025-08-12)
       missing (2025-08-13)
 - [x] Document `leaderboard_latest` view in README and examples (2025-08-13)
 - [x] Rename dataset to `github_leaderboard` across code and docs (2025-08-13)
+- [x] Document troubleshooting tips for common pipeline errors in README
+      (2025-08-13)
 - [x] Add `.dlt/secrets.toml` to `.gitignore` and warn against committing
       secrets (2025-08-13)
 - [x] Rename offline pipeline test with e2e tag and document run command (2025-08-13)
