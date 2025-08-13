@@ -511,3 +511,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: auto compute dates and load GitHub token securely.
 - **Next step**: pipe config token into pipeline.
+
+## 2025-08-13 PR #64
+
+- **Summary**: Renamed `.dlt` config section to `[gh]` and confirmed loader uses it.
+- **Stage**: implementation
+- **Motivation / Decision**: align config with module name for clarity.
+- **Next step**: none.
