@@ -105,3 +105,4 @@ when token missing (2025-08-12)
 - [x] Add integration test for CLI entry (2025-08-13)
 - [x] Ensure incremental cursor falls back to author date when committer date is
       missing (2025-08-13)
+- [x] Rename dataset to `github_leaderboard` across code and docs (2025-08-13)
