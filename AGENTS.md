@@ -193,6 +193,8 @@ jobs:
 * Run `python -m src.gh_leaderboard.pipeline` to load commits into DuckDB and
   execute `post_load.sql` producing tables `commits_raw`, `commits_flat`, and
   `leaderboard_daily`.
+* When the GitHub API responds with 403, log a clear message and raise a
+  `RuntimeError`; add tests to simulate this condition.
 
 Code quality:
 Clear, modular structure
