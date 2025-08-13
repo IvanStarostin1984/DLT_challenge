@@ -525,3 +525,10 @@ to avoid polluting repo root.
 - **Motivation / Decision**: duplicate SHAs inflated commit counts; merging on
   `sha` keeps leaderboard accurate.
 - **Next step**: none.
+
+## 2025-08-13 PR #66
+
+- **Summary**: Forwarded config token through pipeline and CLI, dropping env lookup.
+- **Stage**: implementation
+- **Motivation / Decision**: explicit parameters make auth headers predictable.
+- **Next step**: none.

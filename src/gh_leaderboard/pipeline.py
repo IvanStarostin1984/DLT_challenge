@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -90,6 +89,7 @@ def github_commits_source(
     branch: Optional[str] = None,
     since: Optional[str] = None,
     until: Optional[str] = None,
+    token: Optional[str] = None,
 ) -> Any:  # pragma: no cover - network source not tested offline
     """GitHub commits source with incremental pagination."""
 
@@ -97,7 +97,6 @@ def github_commits_source(
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    token = os.environ.get("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
@@ -163,6 +162,7 @@ def run(
     branch: Optional[str] = None,
     since: Optional[str] = None,
     until: Optional[str] = None,
+    token: Optional[str] = None,
     pipelines_dir: Optional[str | Path] = None,
 ) -> List[Dict[str, Any]]:
     """Run the dlt pipeline and return the leaderboard rows."""
@@ -207,7 +207,7 @@ def run(
         )
     else:
         source = github_commits_source(  # pragma: no cover - network call
-            repo=repo, branch=branch, since=since, until=until
+            repo=repo, branch=branch, since=since, until=until, token=token
         )
         pipeline.run(source)  # pragma: no cover - network call
 
@@ -249,8 +249,10 @@ if __name__ == "__main__":
     parser.add_argument("--branch", default=cfg.branch)
     parser.add_argument("--since", default=cfg.since)
     parser.add_argument("--until", default=cfg.until)
+    parser.add_argument("--token")
     parser.add_argument("--offline", action="store_true")
     args = parser.parse_args()
+    args.token = args.token or cfg.token
     print(
         json.dumps(
             run(
@@ -259,6 +261,7 @@ if __name__ == "__main__":
                 branch=args.branch,
                 since=args.since,
                 until=args.until,
+                token=args.token,
             ),
             indent=2,
         )

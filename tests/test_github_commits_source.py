@@ -8,6 +8,7 @@ from dlt.extract.exceptions import ResourceExtractionError
 
 from src.gh_leaderboard import pipeline
 from src.gh_leaderboard.pipeline import github_commits_source
+from src.gh_leaderboard.config import Settings
 
 
 class StubRESTClient:
@@ -41,11 +42,9 @@ def rest_client(monkeypatch: pytest.MonkeyPatch) -> type[StubRESTClient]:
     return StubRESTClient
 
 
-def test_authorization_header(
-    monkeypatch: pytest.MonkeyPatch, rest_client: type[StubRESTClient]
-) -> None:
-    monkeypatch.setenv("GITHUB_TOKEN", "t0k3n")
-    github_commits_source()
+def test_authorization_header(rest_client: type[StubRESTClient]) -> None:
+    cfg = Settings(repo="octocat/Hello-World", token="t0k3n")
+    github_commits_source(repo=cfg.repo, token=cfg.token)
     assert rest_client.last_instance.headers["Authorization"] == "Bearer t0k3n"
 
 

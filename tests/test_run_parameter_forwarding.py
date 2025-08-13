@@ -13,13 +13,14 @@ def test_run_parameter_forwarding(tmp_path: Path, monkeypatch: Any) -> None:
     captured: Dict[str, Any] = {}
 
     def fake_source(
-        *, repo: str, branch: str, since: str, until: str
+        *, repo: str, branch: str, since: str, until: str, token: str | None
     ) -> List[Dict[str, Any]]:
         captured["source"] = {
             "repo": repo,
             "branch": branch,
             "since": since,
             "until": until,
+            "token": token,
         }
         return []
 
@@ -62,12 +63,14 @@ def test_run_parameter_forwarding(tmp_path: Path, monkeypatch: Any) -> None:
     monkeypatch.setattr(pipeline, "github_commits_source", fake_source)
     monkeypatch.setattr(dlt, "pipeline", fake_pipeline)
 
+    token = "tok"
     rows = pipeline.run(
         offline=False,
         repo=repo,
         branch=branch,
         since=since,
         until=until,
+        token=token,
         pipelines_dir=tmp_path,
     )
 
@@ -76,6 +79,7 @@ def test_run_parameter_forwarding(tmp_path: Path, monkeypatch: Any) -> None:
         "branch": branch,
         "since": since,
         "until": until,
+        "token": token,
     }
     assert captured["pipeline"] == {
         "pipeline_name": "gh_leaderboard",
