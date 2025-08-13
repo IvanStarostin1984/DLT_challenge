@@ -74,7 +74,7 @@ with p.sql_client() as sql:
 Each row has `author_identity`, `commit_day`, and `commit_count`. Use
 `offline=True` to read the bundled fixture instead of hitting GitHub. When the
 fixture file is missing or malformed JSON the pipeline returns an empty list.
-The results are stored in `gh_leaderboard.duckdb` with tables `commits`,
+The results are stored in `gh_leaderboard.duckdb` with tables `commits_raw`,
 `commits_flat`, and `leaderboard_daily`.
 
 ## Linting

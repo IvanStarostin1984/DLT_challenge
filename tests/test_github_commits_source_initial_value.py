@@ -40,7 +40,7 @@ def test_cursor_initial_value_and_headers(monkeypatch: pytest.MonkeyPatch) -> No
     monkeypatch.setattr(pipeline, "RESTClient", StubRESTClient)
 
     source = github_commits_source()
-    commits = source.resources["commits"]
+    commits = source.resources["commits_raw"]
     list(commits())
     rest = StubRESTClient.last_instance
     assert rest is not None

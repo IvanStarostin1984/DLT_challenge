@@ -47,7 +47,7 @@ def test_authorization_header(
 
 def test_sha_and_until_params(rest_client: type[StubRESTClient]) -> None:
     source = github_commits_source(branch="main", until="2024-01-01")
-    commits = source.resources["commits"]
+    commits = source.resources["commits_raw"]
     list(commits())
     params = rest_client.last_instance.params
     assert params["sha"] == "main"
@@ -56,7 +56,7 @@ def test_sha_and_until_params(rest_client: type[StubRESTClient]) -> None:
 
 def test_incremental_adds_since(rest_client: type[StubRESTClient]) -> None:
     source = github_commits_source(since="2024-01-01")
-    commits = source.resources["commits"]
+    commits = source.resources["commits_raw"]
     list(commits())
     assert rest_client.last_instance.params["since"] == "2024-01-01"
 
@@ -65,7 +65,7 @@ def test_client_base_url_and_per_page_default(
     rest_client: type[StubRESTClient],
 ) -> None:
     source = github_commits_source(repo="owner/repo")
-    commits = source.resources["commits"]
+    commits = source.resources["commits_raw"]
     list(commits())
     assert rest_client.last_instance.base_url == (
         "https://api.github.com/repos/owner/repo"

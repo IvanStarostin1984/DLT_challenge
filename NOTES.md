@@ -385,7 +385,14 @@ to avoid polluting repo root.
 - **Motivation / Decision**: cover argument forwarding and remove network dependency for CI stability.
 - **Next step**: audit other normalization helpers for whitespace handling.
 
-## 2025-08-12  PR #46
+## 2025-08-13  PR #46
+
+- **Summary**: Renamed commits resource to `commits_raw` and updated tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: clarify raw vs flattened table names for consistency.
+- **Next step**: monitor downstream SQL for table name assumptions.
+
+## 2025-08-12  PR #47
 
 - **Summary**: Added markdownlint and actionlint hooks to pre-commit and
   reformatted a test.
