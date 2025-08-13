@@ -449,3 +449,11 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Added troubleshooting section to README for common errors.
+- **Stage**: documentation
+- **Motivation / Decision**: help users resolve rate limits, empty results,
+  and offline use.
+- **Next step**: none.

@@ -123,6 +123,12 @@ Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
 make test PYTEST_ARGS="--offline"
 ```
 
+## Troubleshooting
+
+* 403 or pagination stalls → set `GITHUB_TOKEN`; ensure `per_page=100`.
+* Empty results → adjust `--since/--until`; confirm branch.
+* Codex: no internet → use `--offline`.
+
 ## Incremental loads
 
 The resource uses `commit.committer.date` as the cursor and falls back to
