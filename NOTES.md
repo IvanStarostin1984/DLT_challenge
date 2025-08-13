@@ -490,3 +490,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: avoid missing tables when fixture yields no commits; kept SQL flow intact.
 - **Next step**: none.
+
+## 2025-08-13  PR #61
+
+- **Summary**: Documented full refresh workflow and updated AGENTS.
+- **Stage**: documentation
+- **Motivation / Decision**: allow rebuilding DuckDB tables and keep guidance in sync.
+- **Next step**: none.

@@ -89,9 +89,7 @@ fixture file is missing or malformed JSON the pipeline returns an empty list.
 The results are stored in `leaderboard.duckdb` with tables `commits_raw`,
 `commits_flat`, `leaderboard_daily`, and the `leaderboard_latest` view.
 Even when no commits are loaded, the `commits_raw` and `commits_flat` tables are
-created with zero rows. The results are stored in `gh_leaderboard.duckdb` with
-tables `commits_raw`, `commits_flat`, `leaderboard_daily`, and the
-`leaderboard_latest` view.
+created with zero rows.
 
 ## Offline workflow
 
@@ -127,12 +125,11 @@ Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
 make test PYTEST_ARGS="--offline"
 ```
 
-## Troubleshooting
+## Common issues
 
 * 403 or pagination stalls → set `GITHUB_TOKEN`; ensure `per_page=100`.
 * Empty results → adjust `--since/--until`; confirm branch.
 * Codex: no internet → use `--offline`.
-=======
 Run just the offline end-to-end test:
 
 ```bash
@@ -143,6 +140,15 @@ pytest -q -k e2e --offline
 The resource uses `commit.committer.date` as the cursor and falls back to
 `commit.author.date` when the committer date is missing. dlt stores the last
 cursor so pass `--since` on the next run.
+
+### Full refresh
+
+To rebuild the database, drop the DuckDB tables and rerun the pipeline with a
+far‑past `--since` date. This clears incremental state and reloads all commits.
+
+```bash
+python -m src.gh_leaderboard.pipeline --since "1970-01-01T00:00:00Z"
+```
 
 ## Troubleshooting
 

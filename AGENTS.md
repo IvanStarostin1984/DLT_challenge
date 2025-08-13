@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.19 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.20 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -195,6 +195,8 @@ jobs:
   `leaderboard_daily`.
 * When the GitHub API responds with 403, log a clear message and raise a
   `RuntimeError`; add tests to simulate this condition.
+* For a full refresh, drop DuckDB tables and rerun the pipeline with a far‑past
+  `--since` value to reload all commits.
 
 Code quality:
 Clear, modular structure

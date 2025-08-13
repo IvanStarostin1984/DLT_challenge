@@ -115,3 +115,5 @@ when token missing (2025-08-12)
 - [x] Rename offline pipeline test with e2e tag and document run command (2025-08-13)
 - [x] Handle GitHub API 403 errors with RuntimeError and tests (2025-08-13)
 - [x] Ensure pipeline creates empty commit tables when no commits are loaded (2025-08-13)
+
+- [x] Document full refresh workflow for DuckDB in README and AGENTS (2025-08-13)
