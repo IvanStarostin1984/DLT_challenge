@@ -199,7 +199,12 @@ def run(
             if row:
                 flat_rows.append(row)
         pipeline.run(commits, table_name="commits_raw")
-        pipeline.run(flat_rows, table_name="commits_flat")
+        pipeline.run(
+            flat_rows,
+            table_name="commits_flat",
+            primary_key="sha",
+            write_disposition="merge",
+        )
     else:
         source = github_commits_source(  # pragma: no cover - network call
             repo=repo, branch=branch, since=since, until=until

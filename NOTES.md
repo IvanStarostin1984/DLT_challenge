@@ -511,3 +511,11 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: auto compute dates and load GitHub token securely.
 - **Next step**: pipe config token into pipeline.
+
+## 2025-08-13 PR #64
+
+- **Summary**: Deduplicated commits in offline runs and tested SHA merge.
+- **Stage**: implementation
+- **Motivation / Decision**: duplicate SHAs inflated commit counts; merging on
+  `sha` keeps leaderboard accurate.
+- **Next step**: none.

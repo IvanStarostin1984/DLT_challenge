@@ -104,6 +104,12 @@ rows = pipeline.run(offline=True)
 
 Pass `fixture_path` to load a different JSON file.
 
+## Deduplication
+
+The pipeline merges commits sharing the same `sha`.
+Offline runs pass `primary_key="sha"` with `write_disposition="merge"` so
+duplicate rows do not inflate `leaderboard_daily` counts.
+
 ## Linting
 
 Run all pre-commit hooks before committing:
