@@ -449,3 +449,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Updated docs to refer to `leaderboard.duckdb` file name.
+- **Stage**: documentation
+- **Motivation / Decision**: pipeline writes `leaderboard.duckdb`; README and specs mismatched.
+- **Next step**: none.
