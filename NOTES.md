@@ -384,3 +384,11 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: cover argument forwarding and remove network dependency for CI stability.
 - **Next step**: audit other normalization helpers for whitespace handling.
+
+## 2025-08-12  PR #46
+
+- **Summary**: Added markdownlint and actionlint hooks to pre-commit and
+  reformatted a test.
+- **Stage**: maintenance
+- **Motivation / Decision**: pinned versions v0.45.0 and v1.7.7 to meet TODO.
+- **Next step**: none.
