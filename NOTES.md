@@ -399,3 +399,11 @@ to avoid polluting repo root.
 - **Stage**: maintenance
 - **Motivation / Decision**: pinned versions v0.45.0 and v1.7.7 to meet TODO.
 - **Next step**: none.
+
+## 2025-08-13  PR #48
+
+- **Summary**: Added `leaderboard_latest` view and tests covering last two days.
+- **Stage**: implementation
+- **Motivation / Decision**: expose recent activity and keep query simple by
+  limiting to two days.
+- **Next step**: none.
