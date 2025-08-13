@@ -493,12 +493,19 @@ to avoid polluting repo root.
 
 ## 2025-08-13  PR #61
 
+- **Summary**: Documented full refresh workflow and updated AGENTS.
+- **Stage**: documentation
+- **Motivation / Decision**: allow rebuilding DuckDB tables and keep guidance in sync.
+- **Next step**: none.
+
+## 2025-08-13  PR #62
+
 - **Summary**: Normalized commit timestamps to UTC and adjusted tests.
 - **Stage**: implementation
 - **Motivation / Decision**: ensure commit grouping is accurate across timezones.
 - **Next step**: none.
 
-## 2025-08-13 PR #62
+## 2025-08-13 PR #63
 
 - **Summary**: Added window_days defaults and token from secrets.
 - **Stage**: implementation
