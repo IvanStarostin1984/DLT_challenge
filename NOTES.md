@@ -532,3 +532,10 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: verify real GitHub fetch while preventing accidental network calls.
 - **Next step**: pass settings token through pipeline instead of env var.
+
+## 2025-08-13 PR #67
+
+- **Summary**: Added test confirming pipeline runs twice without extra rows.
+- **Stage**: testing
+- **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
+- **Next step**: none.
