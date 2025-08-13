@@ -49,6 +49,14 @@ It creates three tables:
 
 Set `GITHUB_TOKEN` to raise rate limits if needed.
 
+Defaults for repository, branch and date window come from `.dlt/config.toml`
+or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
+`GH_UNTIL_ISO`. Command line flags override these values:
+
+```bash
+python -m src.gh_leaderboard.pipeline --repo my/repo --offline
+```
+
 ## Usage
 
 ```python
