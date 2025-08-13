@@ -208,6 +208,8 @@ etc.
 Use of incremental loading
 Cursor must fall back to `commit.author.date` when the committer timestamp is
 missing; keep tests for this scenario.
+Normalize all timestamps to UTC in transformations and derive dates from
+that value.
 Correct handling of pagination
 Tests:
 One well-written unit test for an individual function or small component
