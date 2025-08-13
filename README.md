@@ -85,6 +85,18 @@ fixture file is missing or malformed JSON the pipeline returns an empty list.
 The results are stored in `gh_leaderboard.duckdb` with tables `commits_raw`,
 `commits_flat`, and `leaderboard_daily`.
 
+## Offline workflow
+
+Running offline loads the sample fixture at `fixtures/commits_sample.json`:
+
+```python
+from src.gh_leaderboard import pipeline
+
+rows = pipeline.run(offline=True)
+```
+
+Pass `fixture_path` to load a different JSON file.
+
 ## Linting
 
 Run all pre-commit hooks before committing:

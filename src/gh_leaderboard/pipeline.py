@@ -148,7 +148,10 @@ def run(
     )
 
     if offline:
-        path = Path(fixture_path or Path(__file__).with_name("commits_fixture.json"))
+        default_fixture = (
+            Path(__file__).resolve().parents[2] / "fixtures" / "commits_sample.json"
+        )
+        path = Path(fixture_path or default_fixture)
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (FileNotFoundError, json.JSONDecodeError):
