@@ -402,6 +402,13 @@ to avoid polluting repo root.
 
 ## 2025-08-13  PR #48
 
+- **Summary**: Added `leaderboard_latest` view and tests covering last two days.
+- **Stage**: implementation
+- **Motivation / Decision**: expose recent activity and keep query simple by
+  limiting to two days.
+
+## 2025-08-13  PR #49
+
 - **Summary**: Added config loader, `.dlt/config.toml`, CLI flags and tests.
 - **Stage**: implementation
 - **Motivation / Decision**: allow repo and date window overrides via file, env and CLI.
