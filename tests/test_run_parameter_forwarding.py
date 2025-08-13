@@ -25,7 +25,13 @@ def test_run_parameter_forwarding(tmp_path: Path, monkeypatch: Any) -> None:
 
     db_path = tmp_path / "leaderboard.duckdb"
 
-    def fake_pipeline(*, pipeline_name: str, destination: Any, dataset_name: str, pipelines_dir: str | None) -> Any:
+    def fake_pipeline(
+        *,
+        pipeline_name: str,
+        destination: Any,
+        dataset_name: str,
+        pipelines_dir: str | None
+    ) -> Any:
         captured["pipeline"] = {
             "pipeline_name": pipeline_name,
             "dataset_name": dataset_name,
