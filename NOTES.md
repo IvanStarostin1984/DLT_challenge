@@ -449,3 +449,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Ensure offline runs create empty commit tables and always call pipeline.
+- **Stage**: implementation
+- **Motivation / Decision**: avoid missing tables when fixture yields no commits; kept SQL flow intact.
+- **Next step**: none.
