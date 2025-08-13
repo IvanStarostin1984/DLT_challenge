@@ -36,4 +36,3 @@ def test_cursor_falls_back_to_author_date(
     assert [m.value for m in expr.find(commit_with_committer)][0] == (
         "2024-01-02T00:00:00Z"
     )
-

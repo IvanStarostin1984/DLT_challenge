@@ -72,7 +72,7 @@ rows = pipeline.run(
     until="2012-03-07T00:00:00Z",
 )
 p = dlt.pipeline(
-    "gh_leaderboard", destination="duckdb", dataset_name="gh_leaderboard"
+    "gh_leaderboard", destination="duckdb", dataset_name="github_leaderboard"
 )
 with p.sql_client() as sql:
     print(

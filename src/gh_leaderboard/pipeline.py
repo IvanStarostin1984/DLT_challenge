@@ -153,7 +153,7 @@ def run(
     pipeline = dlt.pipeline(
         pipeline_name="gh_leaderboard",
         destination=dlt.destinations.duckdb(str(db_path)),
-        dataset_name="gh_leaderboard",
+        dataset_name="github_leaderboard",
         pipelines_dir=str(pipelines_dir) if pipelines_dir else None,
     )
 

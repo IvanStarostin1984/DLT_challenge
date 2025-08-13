@@ -443,3 +443,9 @@ to avoid polluting repo root.
 - **Motivation / Decision**: clarify available tables and views for recent activity.
 - **Next step**: none.
 
+## 2025-08-13  PR #54
+
+- **Summary**: Renamed dataset to `github_leaderboard` and updated tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: align dataset name with specification.
+- **Next step**: none.
