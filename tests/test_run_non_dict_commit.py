@@ -14,6 +14,8 @@ def test_run_skips_non_dict_and_logs(
     data = [1, "a", {"sha": "s", "commit": {"author": {}, "committer": {}}}]
     fixture.write_text(json.dumps(data))
     with caplog.at_level(logging.INFO):
-        rows = pipeline.run(offline=True, fixture_path=str(fixture))
+        rows = pipeline.run(
+            offline=True, fixture_path=str(fixture), pipelines_dir=tmp_path
+        )
     assert rows == []
     assert "missing timestamp" in caplog.text
