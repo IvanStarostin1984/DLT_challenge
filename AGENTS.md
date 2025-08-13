@@ -78,15 +78,17 @@ Studion 2022 on Win 11) to test manually.
    * Pass flags to pytest via `PYTEST_ARGS`, e.g. `make test
      PYTEST_ARGS="--offline"`.
 
-   ```bash
-   pre-commit run --all-files
-   .venv/bin/pytest --cov=src --cov-fail-under=90
-   ```
+    ```bash
+    pre-commit run --all-files
+    .venv/bin/pytest --cov=src --cov-fail-under=90
+    ```
 
-   * Coverage excludes `tests/**` and `generated/**` via `.coveragerc`.
-   * `pytest` fails when no tests are collected; ensure at least one exists.
+    * Coverage excludes `tests/**` and `generated/**` via `.coveragerc`.
+    * `pytest` fails when no tests are collected; ensure at least one exists.
 
-   Markdown lint rules live in `.markdownlint.json` for now.
+    Markdown lint rules live in `.markdownlint.json`.
+    Pre-commit also runs `markdownlint` and `actionlint` to lint docs and
+    workflows.
 3. **Test collection** – `make test` must fail if no tests are collected.
 4. **Style rules** – keep code formatted (`black`, `prettier`,
    `dart format`, etc.) and Markdown lines ≤ 80 chars; exactly **one

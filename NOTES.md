@@ -391,3 +391,11 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: clarify raw vs flattened table names for consistency.
 - **Next step**: monitor downstream SQL for table name assumptions.
+
+## 2025-08-12  PR #47
+
+- **Summary**: Added markdownlint and actionlint hooks to pre-commit and
+  reformatted a test.
+- **Stage**: maintenance
+- **Motivation / Decision**: pinned versions v0.45.0 and v1.7.7 to meet TODO.
+- **Next step**: none.
