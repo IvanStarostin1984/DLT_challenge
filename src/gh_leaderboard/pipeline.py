@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -59,6 +60,14 @@ def flatten_commit(commit: Any) -> Optional[Dict[str, Any]]:
     if not date:
         logger.info("commit missing timestamp: %s", commit.get("sha"))
         return None
+    try:
+        dt = datetime.fromisoformat(date.replace("Z", "+00:00"))
+    except ValueError:
+        logger.info("commit has invalid timestamp: %s", commit.get("sha"))
+        return None
+    dt_utc = dt.astimezone(timezone.utc)
+    ts = dt_utc.isoformat()
+    day = dt_utc.date().isoformat()
     message = commit_block.get("message")
     message_short = (
         message.splitlines()[0] if isinstance(message, str) and message else None
@@ -70,8 +79,8 @@ def flatten_commit(commit: Any) -> Optional[Dict[str, Any]]:
         "author_email": email,
         "author_name": name,
         "message_short": message_short,
-        "commit_timestamp": date,
-        "commit_day": date[:10],
+        "commit_timestamp": ts,
+        "commit_day": day,
     }
 
 

@@ -18,6 +18,6 @@ def test_flatten_commit_missing_author_block_uses_unknown() -> None:
         "author_email": None,
         "author_name": None,
         "message_short": None,
-        "commit_timestamp": "2024-01-04T10:00:00Z",
+        "commit_timestamp": "2024-01-04T10:00:00+00:00",
         "commit_day": "2024-01-04",
     }

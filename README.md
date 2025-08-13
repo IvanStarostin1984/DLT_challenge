@@ -132,7 +132,7 @@ make test PYTEST_ARGS="--offline"
 * 403 or pagination stalls → set `GITHUB_TOKEN`; ensure `per_page=100`.
 * Empty results → adjust `--since/--until`; confirm branch.
 * Codex: no internet → use `--offline`.
-=======
+
 Run just the offline end-to-end test:
 
 ```bash
@@ -143,8 +143,6 @@ pytest -q -k e2e --offline
 The resource uses `commit.committer.date` as the cursor and falls back to
 `commit.author.date` when the committer date is missing. dlt stores the last
 cursor so pass `--since` on the next run.
-
-## Troubleshooting
 
 ### HTTP 403 from GitHub
 
