@@ -399,3 +399,10 @@ to avoid polluting repo root.
 - **Stage**: maintenance
 - **Motivation / Decision**: pinned versions v0.45.0 and v1.7.7 to meet TODO.
 - **Next step**: none.
+
+## 2025-08-13  PR #48
+
+- **Summary**: Added default commit fixture and offline path; updated docs and tests.
+- **Stage**: implementation
+- **Motivation / Decision**: allow offline runs without specifying fixture path.
+- **Next step**: broaden sample fixtures for complex scenarios.

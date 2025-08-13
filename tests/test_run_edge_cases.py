@@ -5,25 +5,13 @@ from src.gh_leaderboard import pipeline
 
 
 def test_offline_default_fixture(tmp_path: Path) -> None:
-    fixture_src = Path(__file__).parent / "fixtures" / "commits.json"
-    target = Path(pipeline.__file__).with_name("commits_fixture.json")
-    target.write_text(fixture_src.read_text(encoding="utf-8"), encoding="utf-8")
-    try:
-        rows = pipeline.run(offline=True, pipelines_dir=tmp_path)
-    finally:
-        if target.exists():
-            target.unlink()
+    rows = pipeline.run(offline=True, pipelines_dir=tmp_path)
     assert rows == [
         {
-            "author_identity": "alice",
+            "author_identity": "sample",
             "commit_day": "2024-01-01",
-            "commit_count": 2,
-        },
-        {
-            "author_identity": "bob",
-            "commit_day": "2024-01-02",
             "commit_count": 1,
-        },
+        }
     ]
 
 
