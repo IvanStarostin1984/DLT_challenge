@@ -164,18 +164,18 @@ def run(
         path = Path(fixture_path or default_fixture)
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
+            commits = (
+                [c for c in data if isinstance(c, dict)]
+                if isinstance(data, list)
+                else []
+            )
         except (FileNotFoundError, json.JSONDecodeError):
-            return []
-        commits: List[Dict[str, Any]] = (
-            [c for c in data if isinstance(c, dict)] if isinstance(data, list) else []
-        )
+            commits = []
         flat_rows: List[Dict[str, Any]] = []
         for c in commits:
             row = flatten_commit(c)
             if row:
                 flat_rows.append(row)
-        if not flat_rows:
-            return []
         pipeline.run(commits, table_name="commits_raw")
         pipeline.run(flat_rows, table_name="commits_flat")
     else:
@@ -186,6 +186,21 @@ def run(
 
     sql_path = Path(__file__).with_name("post_load.sql")
     with pipeline.sql_client() as sql:
+        sql.execute_sql("create table if not exists commits_raw (sha text)")
+        sql.execute_sql(
+            """
+            create table if not exists commits_flat (
+                sha text,
+                author_identity text,
+                author_login text,
+                author_email text,
+                author_name text,
+                message_short text,
+                commit_timestamp text,
+                commit_day text
+            )
+            """
+        )
         sql.execute_sql(sql_path.read_text())
         rows = sql.execute_sql(
             "select author_identity, commit_day, commit_count from "
