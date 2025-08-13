@@ -449,3 +449,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Renamed offline pipeline test to include e2e tag and documented command.
+- **Stage**: tests, documentation
+- **Motivation / Decision**: allow selecting offline end-to-end test via `-k e2e`.
+- **Next step**: none.

@@ -5,7 +5,7 @@ import dlt
 from src.gh_leaderboard import pipeline
 
 
-def test_pipeline_offline(tmp_path: Path) -> None:
+def test_e2e_pipeline_offline(tmp_path: Path) -> None:
     fixture = Path(__file__).parent / "fixtures" / "commits.json"
     rows = pipeline.run(offline=True, fixture_path=fixture, pipelines_dir=tmp_path)
     assert rows == [
