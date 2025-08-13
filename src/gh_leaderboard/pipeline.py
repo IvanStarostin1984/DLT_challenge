@@ -93,11 +93,11 @@ def github_commits_source(
     )
 
     @dlt.resource(
-        name="commits",
+        name="commits_raw",
         primary_key="sha",
         write_disposition="append",
     )
-    def commits(
+    def commits_raw(
         cursor=dlt.sources.incremental("commit.committer.date", initial_value=since),
     ):
         page_params = params.copy()
@@ -111,7 +111,7 @@ def github_commits_source(
             yield from page
 
     @dlt.transformer(
-        data_from=commits,
+        data_from=commits_raw,
         name="commits_flat",
         primary_key="sha",
         write_disposition="append",
@@ -121,7 +121,7 @@ def github_commits_source(
         if row:
             yield row
 
-    return commits, commits_flat
+    return commits_raw, commits_flat
 
 
 def run(
@@ -163,7 +163,7 @@ def run(
                 flat_rows.append(row)
         if not flat_rows:
             return []
-        pipeline.run(commits, table_name="commits")
+        pipeline.run(commits, table_name="commits_raw")
         pipeline.run(flat_rows, table_name="commits_flat")
     else:
         source = github_commits_source(  # pragma: no cover - network call
