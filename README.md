@@ -49,6 +49,14 @@ It creates three tables:
 
 Set `GITHUB_TOKEN` to raise rate limits if needed.
 
+Defaults for repository, branch and date window come from `.dlt/config.toml`
+or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
+`GH_UNTIL_ISO`. Command line flags override these values:
+
+```bash
+python -m src.gh_leaderboard.pipeline --repo my/repo --offline
+```
+
 ## Usage
 
 ```python
@@ -76,6 +84,18 @@ Each row has `author_identity`, `commit_day`, and `commit_count`. Use
 fixture file is missing or malformed JSON the pipeline returns an empty list.
 The results are stored in `gh_leaderboard.duckdb` with tables `commits_raw`,
 `commits_flat`, and `leaderboard_daily`.
+
+## Offline workflow
+
+Running offline loads the sample fixture at `fixtures/commits_sample.json`:
+
+```python
+from src.gh_leaderboard import pipeline
+
+rows = pipeline.run(offline=True)
+```
+
+Pass `fixture_path` to load a different JSON file.
 
 ## Linting
 

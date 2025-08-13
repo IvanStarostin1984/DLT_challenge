@@ -405,4 +405,24 @@ to avoid polluting repo root.
 - **Summary**: Exposed author metadata and short commit message in flattened rows.
 - **Stage**: implementation
 - **Motivation / Decision**: align `commits_flat` schema with spec for easier analysis.
+
+## 2025-08-13  PR #49
+
+- **Summary**: Added default commit fixture and offline path; updated docs and tests.
+- **Stage**: implementation
+- **Motivation / Decision**: allow offline runs without specifying fixture path.
+- **Next step**: broaden sample fixtures for complex scenarios.
+
+## 2025-08-13  PR #50
+
+- **Summary**: Added `leaderboard_latest` view and tests covering last two days.
+- **Stage**: implementation
+- **Motivation / Decision**: expose recent activity and keep query simple by
+  limiting to two days.
+
+## 2025-08-13  PR #51
+
+- **Summary**: Added config loader, `.dlt/config.toml`, CLI flags and tests.
+- **Stage**: implementation
+- **Motivation / Decision**: allow repo and date window overrides via file, env and CLI.
 - **Next step**: none.

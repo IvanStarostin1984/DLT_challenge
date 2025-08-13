@@ -156,7 +156,10 @@ def run(
     )
 
     if offline:
-        path = Path(fixture_path or Path(__file__).with_name("commits_fixture.json"))
+        default_fixture = (
+            Path(__file__).resolve().parents[2] / "fixtures" / "commits_sample.json"
+        )
+        path = Path(fixture_path or default_fixture)
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (FileNotFoundError, json.JSONDecodeError):
@@ -189,3 +192,30 @@ def run(
     return [
         dict(zip(["author_identity", "commit_day", "commit_count"], r)) for r in rows
     ]
+
+
+if __name__ == "__main__":
+    import argparse
+
+    from .config import load_config
+
+    cfg = load_config()
+    parser = argparse.ArgumentParser("GitHub commit leaderboard")
+    parser.add_argument("--repo", default=cfg.repo)
+    parser.add_argument("--branch", default=cfg.branch)
+    parser.add_argument("--since", default=cfg.since)
+    parser.add_argument("--until", default=cfg.until)
+    parser.add_argument("--offline", action="store_true")
+    args = parser.parse_args()
+    print(
+        json.dumps(
+            run(
+                offline=args.offline,
+                repo=args.repo,
+                branch=args.branch,
+                since=args.since,
+                until=args.until,
+            ),
+            indent=2,
+        )
+    )
