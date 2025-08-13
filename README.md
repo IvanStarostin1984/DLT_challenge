@@ -132,6 +132,13 @@ Forward extra flags with `PYTEST_ARGS`. For example, skip network tests:
 make test PYTEST_ARGS="--offline"
 ```
 
+The live pipeline test needs a `GITHUB_TOKEN`. Run it explicitly with the
+`live` marker:
+
+```bash
+GITHUB_TOKEN=... pytest -m live tests/test_pipeline.py
+```
+
 ## Common issues
 
 * 403 or pagination stalls → set `GITHUB_TOKEN`; ensure `per_page=100`.
