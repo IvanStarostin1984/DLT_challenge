@@ -497,3 +497,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: ensure commit grouping is accurate across timezones.
 - **Next step**: none.
+
+## 2025-08-13 PR #62
+
+- **Summary**: Added window_days defaults and token from secrets.
+- **Stage**: implementation
+- **Motivation / Decision**: auto compute dates and load GitHub token securely.
+- **Next step**: pipe config token into pipeline.

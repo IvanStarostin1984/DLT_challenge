@@ -50,10 +50,11 @@ It creates three tables and one view:
        print(sql.execute_sql("select * from leaderboard_latest"))
    ```
 
-Set `GITHUB_TOKEN` to raise rate limits if needed.
+Set `GITHUB_TOKEN` or add `[github].token` to `.dlt/secrets.toml` to raise rate
+limits if needed.
 
-Defaults for repository, branch and date window come from `.dlt/config.toml`
-or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
+Defaults for repository, branch and date window come from `[gh]` in
+`.dlt/config.toml` or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
 `GH_UNTIL_ISO`. Command line flags override these values:
 
 ```bash
