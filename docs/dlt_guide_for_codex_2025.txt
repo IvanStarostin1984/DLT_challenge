@@ -359,7 +359,7 @@ def events_to_leaderboard(event):
 
 # Pipeline runner
 if __name__ == "__main__":
-    pipeline = dlt.pipeline("gh_leaderboard", destination="duckdb", dataset_name="github_ds")
+    pipeline = dlt.pipeline("gh_leaderboard", destination="duckdb", dataset_name="github_leaderboard")
     # Pipe operator connects resource → transformer; we load only the derived table here
     pipeline.run((repo_events | events_to_leaderboard).with_resources("daily_leaderboard"))
 
