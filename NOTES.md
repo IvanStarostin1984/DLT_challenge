@@ -517,4 +517,11 @@ to avoid polluting repo root.
 - **Summary**: Renamed `.dlt` config section to `[gh]` and confirmed loader uses it.
 - **Stage**: implementation
 - **Motivation / Decision**: align config with module name for clarity.
+
+## 2025-08-13 PR #65
+
+- **Summary**: Deduplicated commits in offline runs and tested SHA merge.
+- **Stage**: implementation
+- **Motivation / Decision**: duplicate SHAs inflated commit counts; merging on
+  `sha` keeps leaderboard accurate.
 - **Next step**: none.
