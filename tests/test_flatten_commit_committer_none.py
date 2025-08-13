@@ -14,6 +14,10 @@ def test_flatten_commit_missing_author_block_uses_unknown() -> None:
     assert flatten_commit(commit) == {
         "sha": "2",
         "author_identity": "unknown",
+        "author_login": None,
+        "author_email": None,
+        "author_name": None,
+        "message_short": None,
         "commit_timestamp": "2024-01-04T10:00:00Z",
         "commit_day": "2024-01-04",
     }
