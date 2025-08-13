@@ -491,7 +491,14 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing tables when fixture yields no commits; kept SQL flow intact.
 - **Next step**: none.
 
-## 2025-08-13 PR #61
+## 2025-08-13  PR #61
+
+- **Summary**: Normalized commit timestamps to UTC and adjusted tests.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure commit grouping is accurate across timezones.
+- **Next step**: none.
+
+## 2025-08-13 PR #62
 
 - **Summary**: Added window_days defaults and token from secrets.
 - **Stage**: implementation

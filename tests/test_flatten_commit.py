@@ -80,7 +80,7 @@ def test_flatten_commit_normal(normal_commit: dict) -> None:
         "author_email": "alice@example.com",
         "author_name": "Alice",
         "message_short": "Fix bug",
-        "commit_timestamp": "2024-01-01T10:00:00Z",
+        "commit_timestamp": "2024-01-01T10:00:00+00:00",
         "commit_day": "2024-01-01",
     }
 
@@ -99,7 +99,7 @@ def test_flatten_commit_missing_committer_date(
         "author_email": "alice@example.com",
         "author_name": "Alice",
         "message_short": "Commit message",
-        "commit_timestamp": "2024-01-03T10:00:00Z",
+        "commit_timestamp": "2024-01-03T10:00:00+00:00",
         "commit_day": "2024-01-03",
     }
 
@@ -112,7 +112,7 @@ def test_flatten_commit_missing_login(commit_missing_login: dict) -> None:
         "author_email": "bob@example.com",
         "author_name": "Bob",
         "message_short": "Login missing",
-        "commit_timestamp": "2024-01-02T10:00:00Z",
+        "commit_timestamp": "2024-01-02T10:00:00+00:00",
         "commit_day": "2024-01-02",
     }
 
@@ -121,3 +121,29 @@ def test_flatten_commit_missing_commit_key(
     commit_missing_commit_key: dict,
 ) -> None:
     assert flatten_commit(commit_missing_commit_key) is None
+
+
+def test_flatten_commit_non_utc_offset() -> None:
+    commit = {
+        "sha": "offset",
+        "author": {"login": "alice"},
+        "commit": {
+            "author": {
+                "name": "Alice",
+                "email": "alice@example.com",
+                "date": "2024-01-05T02:30:00+05:00",
+            },
+            "committer": {"date": "2024-01-05T02:30:00+05:00"},
+            "message": "Timezone test",
+        },
+    }
+    assert flatten_commit(commit) == {
+        "sha": "offset",
+        "author_identity": "alice",
+        "author_login": "alice",
+        "author_email": "alice@example.com",
+        "author_name": "Alice",
+        "message_short": "Timezone test",
+        "commit_timestamp": "2024-01-04T21:30:00+00:00",
+        "commit_day": "2024-01-04",
+    }

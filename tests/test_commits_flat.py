@@ -39,7 +39,7 @@ def test_commits_flat(monkeypatch: pytest.MonkeyPatch) -> None:
             "author_email": "alice@example.com",
             "author_name": "Alice",
             "message_short": "Message head",
-            "commit_timestamp": "2024-01-01T10:00:00Z",
+            "commit_timestamp": "2024-01-01T10:00:00+00:00",
             "commit_day": "2024-01-01",
         }
     ]
