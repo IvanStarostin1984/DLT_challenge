@@ -1,3 +1,4 @@
+# Ignore local state, database, virtual environment, and cache files
 .dlt/state*
 *.duckdb
 .venv/

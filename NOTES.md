@@ -426,3 +426,11 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: allow repo and date window overrides via file, env and CLI.
 - **Next step**: none.
+
+## 2025-08-13  PR #52
+
+- **Summary**: Ignored DLT state, DuckDB, venv and caches in `.gitignore`.
+- **Stage**: maintenance
+- **Motivation / Decision**: keep temporary artifacts out of version control and
+  avoid state leakage in CLI test.
+- **Next step**: none.
