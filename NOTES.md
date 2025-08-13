@@ -435,3 +435,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: ensure incremental loads handle commits lacking a
   committer timestamp.
 - **Next step**: none.
+
+## 2025-08-13  PR #53
+
+- **Summary**: Documented `leaderboard_latest` view and updated inspection examples.
+- **Stage**: documentation
+- **Motivation / Decision**: clarify available tables and views for recent activity.
+- **Next step**: none.
+
