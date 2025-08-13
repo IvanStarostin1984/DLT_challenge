@@ -230,4 +230,10 @@ Pin your dependencies
   language runners) **update both** this guide **and** the workflow
   file in the **same PR**.
 
+## 7 · Security
+
+* Never commit secrets or credentials.
+* Keep secret files like `.dlt/secrets.toml` out of version control.
+* Scan commits locally for stray secrets before pushing.
+
 Happy shipping 🚀
