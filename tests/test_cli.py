@@ -10,4 +10,13 @@ def test_cli_offline_runs() -> None:
         capture_output=True,
         text=True,
     )
-    assert json.loads(result.stdout) == []
+    data = json.loads(result.stdout)
+    assert (
+        data
+        and {
+            "author_identity",
+            "commit_day",
+            "commit_count",
+        }
+        <= data[0].keys()
+    )

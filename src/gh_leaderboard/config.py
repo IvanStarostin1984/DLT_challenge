@@ -34,7 +34,7 @@ def load_config(path: str | Path = Path(".dlt/config.toml")) -> Settings:
             data = tomllib.loads(path.read_text(encoding="utf-8"))
         except (OSError, tomllib.TOMLDecodeError):
             data = {}
-    defaults = data.get("gh_leaderboard", {}) if isinstance(data, dict) else {}
+    defaults = data.get("github_leaderboard", {}) if isinstance(data, dict) else {}
     return Settings(
         repo=os.environ.get("GH_REPO", defaults.get("repo", "octocat/Hello-World")),
         branch=os.environ.get("GH_BRANCH", defaults.get("branch")),

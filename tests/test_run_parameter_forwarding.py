@@ -79,7 +79,7 @@ def test_run_parameter_forwarding(tmp_path: Path, monkeypatch: Any) -> None:
     }
     assert captured["pipeline"] == {
         "pipeline_name": "gh_leaderboard",
-        "dataset_name": "gh_leaderboard",
+        "dataset_name": "github_leaderboard",
         "pipelines_dir": str(tmp_path),
     }
     assert db_path.exists()

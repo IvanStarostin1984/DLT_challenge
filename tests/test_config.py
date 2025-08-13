@@ -8,7 +8,7 @@ def _write_config(tmp_path: Path) -> Path:
     cfg_dir.mkdir()
     cfg_file = cfg_dir / "config.toml"
     cfg_file.write_text(
-        """[gh_leaderboard]
+        """[github_leaderboard]
 repo="r1"
 branch="b1"
 since="2024-01-01T00:00:00Z"

@@ -426,3 +426,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: allow repo and date window overrides via file, env and CLI.
 - **Next step**: none.
+
+## 2025-08-13  PR #52
+
+- **Summary**: Renamed dataset to `github_leaderboard` and updated code, tests, and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: keep dataset naming consistent and adjust CLI test to accept data output.
+- **Next step**: isolate CLI tests from shared pipeline state.

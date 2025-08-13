@@ -23,7 +23,7 @@ def test_pipeline_offline(tmp_path: Path) -> None:
     p = dlt.pipeline(
         "gh_leaderboard",
         destination=dlt.destinations.duckdb(str(tmp_path / "leaderboard.duckdb")),
-        dataset_name="gh_leaderboard",
+        dataset_name="github_leaderboard",
         pipelines_dir=str(tmp_path),
     )
     with p.sql_client() as sql:

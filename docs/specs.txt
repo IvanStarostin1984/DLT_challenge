@@ -247,7 +247,7 @@ Run the offline E2E test:
 css
 Copy
 pytest -q -k e2e --offline
-Query the DuckDB file produced (e.g., gh_leaderboard.duckdb) to show leaderboard_daily.
+Query the DuckDB file produced (e.g., leaderboard.duckdb) to show leaderboard_daily.
 
  B) Local (Windows 11 PowerShell)
 powershell
