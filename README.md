@@ -121,8 +121,9 @@ make test PYTEST_ARGS="--offline"
 
 ## Incremental loads
 
-The resource uses `commit.committer.date` as the cursor and falls back to the
-author date. dlt stores the last cursor so pass `--since` on the next run.
+The resource uses `commit.committer.date` as the cursor and falls back to
+`commit.author.date` when the committer date is missing. dlt stores the last
+cursor so pass `--since` on the next run.
 
 ## Design decisions
 

@@ -106,7 +106,9 @@ def github_commits_source(
         write_disposition="append",
     )
     def commits_raw(
-        cursor=dlt.sources.incremental("commit.committer.date", initial_value=since),
+        cursor=dlt.sources.incremental(
+            "commit['committer','author'].date", initial_value=since
+        ),
     ):
         page_params = params.copy()
         if cursor.last_value:

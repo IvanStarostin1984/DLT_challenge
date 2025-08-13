@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.17 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.18 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -202,6 +202,8 @@ dlt usage:
 Proper usage of dlt entities, such as sources, resources, transformers,
 etc.
 Use of incremental loading
+Cursor must fall back to `commit.author.date` when the committer timestamp is
+missing; keep tests for this scenario.
 Correct handling of pagination
 Tests:
 One well-written unit test for an individual function or small component
