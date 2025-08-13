@@ -17,3 +17,11 @@
 - Hitting API rate limits reports a clear error and exits.
 - Missing author info falls back to email or name fields.
 - An empty time window still creates empty output tables.
+
+## Testing
+
+Run the offline end-to-end check:
+
+```bash
+pytest -q -k e2e --offline
+```
