@@ -50,10 +50,11 @@ It creates three tables and one view:
        print(sql.execute_sql("select * from leaderboard_latest"))
    ```
 
-Set `GITHUB_TOKEN` to raise rate limits if needed.
+Set `GITHUB_TOKEN` or add `[github].token` to `.dlt/secrets.toml` to raise rate
+limits if needed.
 
-Defaults for repository, branch and date window come from `.dlt/config.toml`
-or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
+Defaults for repository, branch and date window come from `[gh]` in
+`.dlt/config.toml` or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
 `GH_UNTIL_ISO`. Command line flags override these values:
 
 ```bash
@@ -132,7 +133,6 @@ make test PYTEST_ARGS="--offline"
 * 403 or pagination stalls → set `GITHUB_TOKEN`; ensure `per_page=100`.
 * Empty results → adjust `--since/--until`; confirm branch.
 * Codex: no internet → use `--offline`.
-=======
 Run just the offline end-to-end test:
 
 ```bash
@@ -144,7 +144,7 @@ The resource uses `commit.committer.date` as the cursor and falls back to
 `commit.author.date` when the committer date is missing. dlt stores the last
 cursor so pass `--since` on the next run.
 
-## Troubleshooting
+## Troubleshooting details
 
 ### HTTP 403 from GitHub
 
