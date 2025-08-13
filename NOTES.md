@@ -531,4 +531,17 @@ to avoid polluting repo root.
 - **Summary**: Forwarded config token through pipeline and CLI, dropping env lookup.
 - **Stage**: implementation
 - **Motivation / Decision**: explicit parameters make auth headers predictable.
+
+## 2025-08-13  PR #67
+
+- **Summary**: Added live pipeline test requiring `GITHUB_TOKEN` and documented run instructions.
+- **Stage**: testing
+- **Motivation / Decision**: verify real GitHub fetch while preventing accidental network calls.
+- **Next step**: pass settings token through pipeline instead of env var.
+
+## 2025-08-13 PR #68
+
+- **Summary**: Added test confirming pipeline runs twice without extra rows.
+- **Stage**: testing
+- **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
 - **Next step**: none.

@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.20 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.21 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -183,6 +183,8 @@ jobs:
 * Keep Markdown lines ≤ 80 chars to improve diff readability (tables
   may exceed if unavoidable).
 * Tests should avoid real network calls; mock requests or use offline fixtures.
+* Live pipeline tests carry `@pytest.mark.live` and skip without
+  `GITHUB_TOKEN`; run them with `pytest -m live`.
 * Guard against `None` when traversing nested API responses.
 * Validate external API responses and skip or log malformed records.
 
