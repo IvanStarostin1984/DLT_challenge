@@ -7,11 +7,12 @@ See [docs/specs.txt](docs/specs.txt) for the master specification and
 [docs/acceptance_criteria.md](docs/acceptance_criteria.md) for goals and
 edge cases.
 
-It creates three tables:
+It creates three tables and one view:
 
 * `commits_raw`
 * `commits_flat`
 * `leaderboard_daily`
+* `leaderboard_latest` – view of the last 1–2 days
 
 ## Quick start (Windows PowerShell)
 
@@ -28,6 +29,7 @@ It creates three tables:
    p = dlt.pipeline("gh_leaderboard")
    with p.sql_client() as sql:
        print(sql.execute_sql("select * from leaderboard_daily"))
+       print(sql.execute_sql("select * from leaderboard_latest"))
    ```
 
 ## Quick start (Linux / macOS / WSL)
@@ -45,6 +47,7 @@ It creates three tables:
    p = dlt.pipeline("gh_leaderboard")
    with p.sql_client() as sql:
        print(sql.execute_sql("select * from leaderboard_daily"))
+       print(sql.execute_sql("select * from leaderboard_latest"))
    ```
 
 Set `GITHUB_TOKEN` to raise rate limits if needed.
@@ -77,13 +80,14 @@ with p.sql_client() as sql:
             "select * from leaderboard_daily order by author_identity"
         )
     )
+    print(sql.execute_sql("select * from leaderboard_latest"))
 ```
 
 Each row has `author_identity`, `commit_day`, and `commit_count`. Use
 `offline=True` to read the bundled fixture instead of hitting GitHub. When the
 fixture file is missing or malformed JSON the pipeline returns an empty list.
 The results are stored in `gh_leaderboard.duckdb` with tables `commits_raw`,
-`commits_flat`, and `leaderboard_daily`.
+`commits_flat`, `leaderboard_daily`, and the `leaderboard_latest` view.
 
 ## Offline workflow
 
