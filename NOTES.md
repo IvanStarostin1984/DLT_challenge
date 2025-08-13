@@ -449,3 +449,12 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: align dataset name with specification.
 - **Next step**: none.
+
+## 2025-08-13  PR #55
+
+- **Summary**: Wrapped commit pagination to raise a helpful error on 403 and
+  added tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: surface GitHub permission or rate-limit issues;
+  chose RuntimeError for clear failure.
+- **Next step**: monitor other HTTP errors.

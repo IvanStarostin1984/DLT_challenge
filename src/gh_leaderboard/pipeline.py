@@ -10,6 +10,9 @@ from typing import Any, Dict, List, Optional
 
 import dlt
 from dlt.sources.helpers.rest_client import RESTClient
+from dlt.sources.helpers.rest_client.client import (
+    HTTPError as RESTClientResponseError,
+)
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 
 logger = logging.getLogger(__name__)
@@ -115,10 +118,20 @@ def github_commits_source(
             page_params["since"] = cursor.last_value
         elif cursor.initial_value:
             page_params["since"] = cursor.initial_value
-        for page in client.paginate(
-            "/commits", params=page_params, paginator=HeaderLinkPaginator()
-        ):
-            yield from page
+        try:
+            for page in client.paginate(
+                "/commits", params=page_params, paginator=HeaderLinkPaginator()
+            ):
+                yield from page
+        except RESTClientResponseError as exc:  # pragma: no cover - network error
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            if status == 403:
+                logger.error(
+                    "GitHub API returned 403 for %s; check token or repo permissions",
+                    repo,
+                )
+                raise RuntimeError("GitHub API returned 403 Forbidden") from exc
+            raise
 
     @dlt.transformer(
         data_from=commits_raw,
