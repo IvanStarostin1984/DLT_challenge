@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -17,6 +18,14 @@ from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 from tenacity import Retrying, retry_if_exception, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
+
+
+def repo_arg(value: str) -> str:
+    """Return repo if value is ``owner/name`` else raise an error."""
+    parts = value.split("/")
+    if len(parts) != 2 or not all(parts):
+        raise argparse.ArgumentTypeError("--repo must be owner/name")
+    return value
 
 
 def _overlap(ts: str, seconds: int = 60) -> str:
@@ -189,6 +198,8 @@ def run(
 ) -> List[Dict[str, Any]]:
     """Run the dlt pipeline and return the leaderboard rows."""
 
+    repo_arg(repo)
+
     db_path = (
         Path(pipelines_dir) / "leaderboard.duckdb"
         if pipelines_dir
@@ -272,7 +283,7 @@ if __name__ == "__main__":
 
     cfg = load_config()
     parser = argparse.ArgumentParser("GitHub commit leaderboard")
-    parser.add_argument("--repo", default=cfg.repo)
+    parser.add_argument("--repo", default=cfg.repo, type=repo_arg)
     parser.add_argument("--branch", default=cfg.branch)
     parser.add_argument("--since", default=cfg.since)
     parser.add_argument("--until", default=cfg.until)

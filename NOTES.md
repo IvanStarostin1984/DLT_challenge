@@ -622,3 +622,11 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: added `--repo` format validation and tests for good/bad values.
+- **Stage**: implementation
+- **Motivation / Decision**: fail fast when repo lacks owner/name; argparse type
+  check keeps CLI messages simple.
+- **Next step**: none.
