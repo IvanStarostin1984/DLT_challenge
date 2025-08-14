@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.21 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.22 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -192,6 +192,8 @@ jobs:
 
 * Any work involving dlt must consult `docs/dlt_guide_for_codex_2025.txt` for
   pipeline, resource, incremental-loading and pagination practices.
+* dlt resources or transformers with a primary key must set
+  `write_disposition="merge"` to keep loads idempotent.
 * Run `python -m src.gh_leaderboard.pipeline` to load commits into DuckDB and
   execute `post_load.sql` producing tables `commits_raw`, `commits_flat`, and
   `leaderboard_daily`.

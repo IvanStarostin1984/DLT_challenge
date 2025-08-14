@@ -552,4 +552,16 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: Ensure repeated online runs avoid duplicate rows;
   reused SQL join from offline test for validation.
+
+## 2025-08-14 PR #70
+
+- **Summary**: Documented merge `write_disposition` for primary-key dlt resources.
+- **Stage**: documentation
+- **Motivation / Decision**: keeps repeated loads idempotent; added rule in AGENTS.
+
+## 2025-08-13 PR #71
+
+- **Summary**: Merged online commit rows by SHA and verified idempotent run.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent duplicate commits when API returns same data.
 - **Next step**: none.
