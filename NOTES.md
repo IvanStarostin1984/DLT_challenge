@@ -545,3 +545,11 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
 - **Next step**: none.
+
+## 2025-08-13 PR #69
+
+- **Summary**: Added online idempotency test using stubbed RESTClient.
+- **Stage**: testing
+- **Motivation / Decision**: Ensure repeated online runs avoid duplicate rows;
+  reused SQL join from offline test for validation.
+- **Next step**: none.
