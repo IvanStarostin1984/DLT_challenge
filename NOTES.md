@@ -545,3 +545,10 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
 - **Next step**: none.
+
+## 2025-08-14 PR #69
+
+- **Summary**: Documented merge `write_disposition` for primary-key dlt resources.
+- **Stage**: documentation
+- **Motivation / Decision**: keeps repeated loads idempotent; added rule in AGENTS.
+- **Next step**: none.
