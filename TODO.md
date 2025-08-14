@@ -36,7 +36,8 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 - [ ] Add full doc build (Sphinx / JSDoc / dart‑doc as applicable)
 - [ ] Integrate secret‑detection helper step in CI (`has_token` pattern)
 - [ ] Extend CI matrix for all runtimes (Python, Node, Dart, Rust, …)
-- [ ] Add Actionlint + markdown‑link‑check jobs and pin their versions
+- [x] Add Actionlint job and pin markdownlint-cli version
+- [ ] Add markdown-link-check job and pin its version
 - [ ] Publish docs to GitHub Pages when `GH_PAGES_TOKEN` is present
 
 ## 3 · Quality & automation
@@ -133,3 +134,4 @@ when token missing (2025-08-12)
 - [ ] Surface richer metrics and dashboards (2025-08-14)
 - [ ] Schedule pipeline runs via cron or GitHub Actions (2025-08-14)
 - [x] Overlap incremental cursor by 60s and update tests (2025-08-14)
+- [x] Deduplicate `commits_raw` by SHA and test row count stability (2025-08-14)

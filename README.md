@@ -107,8 +107,10 @@ Pass `fixture_path` to load a different JSON file.
 ## Deduplication
 
 The pipeline merges commits sharing the same `sha`.
-Offline runs pass `primary_key="sha"` with `write_disposition="merge"` so
-duplicate rows do not inflate `leaderboard_daily` counts.
+Both `commits_raw` and `commits_flat` set `primary_key="sha"` and
+`write_disposition="merge"`, so reruns keep their row counts stable.
+Offline runs call `pipeline.run` with these settings to avoid inflated
+`leaderboard_daily` counts.
 
 ## Linting
 
