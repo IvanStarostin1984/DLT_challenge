@@ -622,3 +622,10 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: Added AGENTS rule to assert paginator type in REST client tests.
+- **Stage**: documentation
+- **Motivation / Decision**: ensures tests catch mismatched pagination drivers.
+- **Next step**: audit existing tests for paginator assertions.

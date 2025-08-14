@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.23 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.24 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -235,6 +235,7 @@ Tests:
 One well-written unit test for an individual function or small component
 One comprehensive test that runs your dlt pipeline end to end (you
 decide which invariants must hold and why)
+REST client unit tests assert the paginator type (e.g. `HeaderLinkPaginator`).
 Documentation:
 A README.md that explains how to set up, run, and test the project
 A short design decisions section (why this API, how you chose
