@@ -10,7 +10,6 @@ import pytest
 from src.gh_leaderboard import pipeline
 
 
-
 def test_pipeline_online_idempotent(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -22,9 +21,7 @@ def test_pipeline_online_idempotent(
             self.base_url = base_url
             self.headers = headers
 
-        def paginate(
-            self, path: str, params: Dict[str, Any], paginator: Any
-        ) -> Any:
+        def paginate(self, path: str, params: Dict[str, Any], paginator: Any) -> Any:
             yield commits
 
     monkeypatch.setattr(pipeline, "RESTClient", StubRESTClient)

@@ -565,3 +565,11 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: prevent duplicate commits when API returns same data.
 - **Next step**: none.
+
+## 2025-08-14 PR #72
+
+- **Summary**: Added 1-minute overlap for incremental cursor and updated tests.
+- **Stage**: implementation
+- **Motivation / Decision**: avoid missing commits near page boundaries;
+  updated tests to assert overlapped `since` values.
+- **Next step**: none.
