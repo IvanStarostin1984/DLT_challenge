@@ -581,7 +581,14 @@ to avoid polluting repo root.
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
 
-## 2025-08-14 PR #74
+## 2025-08-14  PR #74
+
+- **Summary**: Clarified idempotent re-runs and 60-second overlap edge case.
+- **Stage**: documentation
+- **Motivation / Decision**: document pipeline dedup and boundary commit handling.
+- **Next step**: none.
+
+## 2025-08-14 PR #75
 
 - **Summary**: Gated link-check on `has_pages_token` and documented
   `has_token` pattern in AGENTS.
@@ -590,7 +597,7 @@ to avoid polluting repo root.
   keeping guidance in sync with CI.
 - **Next step**: publish docs to GitHub Pages when token is available.
 
-## 2025-08-14 PR #75
+## 2025-08-14 PR #76
 
 - **Summary**: Added actionlint job and pinned markdownlint-cli in CI.
 - **Stage**: implementation
@@ -598,7 +605,7 @@ to avoid polluting repo root.
   deterministic.
 - **Next step**: add markdown-link-check job with pinned version.
 
-## 2025-08-14 PR #76
+## 2025-08-14 PR #77
 
 - **Summary**: Deduplicated `commits_raw` by SHA and updated tests and docs.
 - **Stage**: implementation
@@ -606,7 +613,7 @@ to avoid polluting repo root.
   `sha` aligns with dlt guidelines.
 - **Next step**: none.
 
-## 2025-08-14 PR #77
+## 2025-08-14 PR #78
 
 - **Summary**: Added retry with exponential backoff for rate-limited API
   requests and tests for 403/429 responses.
