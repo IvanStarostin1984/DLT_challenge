@@ -3,6 +3,11 @@
 This project is a small [dlt](https://dlthub.com/) pipeline that loads recent
 GitHub commits into DuckDB and builds a daily leaderboard of contributors.
 
+## Requirements
+
+* Python ≥ 3.10
+* DuckDB ≥ 1.3.2
+
 See [docs/specs.txt](docs/specs.txt) for the master specification and
 [docs/acceptance_criteria.md](docs/acceptance_criteria.md) for goals and
 edge cases.
@@ -50,15 +55,49 @@ It creates three tables and one view:
        print(sql.execute_sql("select * from leaderboard_latest"))
    ```
 
-Set `GITHUB_TOKEN` or add `[github].token` to `.dlt/secrets.toml` to raise rate
-limits if needed.
+### Personal access token
+
+In GitHub, create a token with `repo` and `read:user` scopes under
+Settings → Developer settings → Personal access tokens.
+
+```bash
+export GITHUB_TOKEN=...
+```
+
+### Commands
+
+* Offline run
+
+  ```bash
+  python -m src.gh_leaderboard.pipeline --offline
+  ```
+
+* Online run
+
+  ```bash
+  python -m src.gh_leaderboard.pipeline
+  ```
+
+* Tests
+
+  ```bash
+  pre-commit run --all-files
+  make test
+  ```
+
+* CI bootstrap
+
+  ```bash
+  ./.codex/setup.sh
+  ```
 
 Defaults for repository, branch and date window come from `[gh]` in
 `.dlt/config.toml` or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
-`GH_UNTIL_ISO`. Command line flags override these values:
+`GH_UNTIL_ISO`. Command line flags override these values. The `--repo` flag must
+use `owner/name` format:
 
 ```bash
-python -m src.gh_leaderboard.pipeline --repo my/repo --offline
+python -m src.gh_leaderboard.pipeline --repo octocat/Hello-World --offline
 ```
 
 ## Usage
@@ -152,6 +191,22 @@ Run just the offline end-to-end test:
 ```bash
 pytest -q -k e2e --offline
 ```
+
+## Rate limit playbook
+
+GitHub resets API limits roughly once an hour. If a run fails with 403,
+wait for the reset and rerun:
+
+```bash
+python -m src.gh_leaderboard.pipeline
+```
+
+Check the reset time with:
+
+```bash
+curl -I https://api.github.com/rate_limit
+```
+
 ## Incremental loads
 
 The resource uses `commit.committer.date` as the cursor and falls back to
