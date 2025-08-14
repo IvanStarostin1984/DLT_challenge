@@ -580,3 +580,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing commits near page boundaries;
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
+
+## 2025-08-14 PR #74
+
+- **Summary**: Deduplicated `commits_raw` by SHA and updated tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: keep raw commit table constant on rerun; merge on
+  `sha` aligns with dlt guidelines.
+- **Next step**: none.

@@ -120,7 +120,7 @@ def github_commits_source(
     @dlt.resource(
         name="commits_raw",
         primary_key="sha",
-        write_disposition="append",
+        write_disposition="merge",
     )
     def commits_raw(
         cursor=dlt.sources.incremental(
@@ -204,7 +204,12 @@ def run(
             row = flatten_commit(c)
             if row:
                 flat_rows.append(row)
-        pipeline.run(commits, table_name="commits_raw")
+        pipeline.run(
+            commits,
+            table_name="commits_raw",
+            primary_key="sha",
+            write_disposition="merge",
+        )
         pipeline.run(
             flat_rows,
             table_name="commits_flat",
