@@ -32,8 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          npx --yes markdownlint-cli '**/*.md'
-          git grep -nE '^<<<<<<< |^=======|^>>>>>>>' -- && exit 1 || echo "No conflict markers"
+          npm install markdownlint-cli@0.45.0
+          npx markdownlint-cli '**/*.md'
+          git grep -nE '^<{7}|^={7}|^>{7}' -- && exit 1 || echo "No conflict markers"
 
   link-check:
     needs: [changes]
@@ -44,6 +45,12 @@ jobs:
       - uses: lycheeverse/lychee-action@v1
         with:
           args: --verbose .
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rhysd/actionlint@v1
 
   test:
     needs: [changes]
