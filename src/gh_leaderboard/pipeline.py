@@ -14,6 +14,7 @@ from dlt.sources.helpers.rest_client.client import (
     HTTPError as RESTClientResponseError,
 )
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
+from tenacity import Retrying, retry_if_exception, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +121,7 @@ def github_commits_source(
     @dlt.resource(
         name="commits_raw",
         primary_key="sha",
-        write_disposition="append",
+        write_disposition="merge",
     )
     def commits_raw(
         cursor=dlt.sources.incremental(
@@ -132,11 +133,26 @@ def github_commits_source(
             page_params["since"] = _overlap(cursor.last_value)
         elif cursor.initial_value:
             page_params["since"] = _overlap(cursor.initial_value)
+
+        def _should_retry(exc: Exception) -> bool:
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            return isinstance(exc, RESTClientResponseError) and status in (403, 429)
+
+        retryer = Retrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(min=1, max=8),
+            retry=retry_if_exception(lambda e: _should_retry(e)),
+            reraise=True,
+        )
         try:
-            for page in client.paginate(
-                "/commits", params=page_params, paginator=HeaderLinkPaginator()
-            ):
-                yield from page
+            for attempt in retryer:
+                with attempt:
+                    for page in client.paginate(
+                        "/commits",
+                        params=page_params,
+                        paginator=HeaderLinkPaginator(),
+                    ):
+                        yield from page
         except RESTClientResponseError as exc:  # pragma: no cover - network error
             status = getattr(getattr(exc, "response", None), "status_code", None)
             if status == 403:
@@ -204,7 +220,12 @@ def run(
             row = flatten_commit(c)
             if row:
                 flat_rows.append(row)
-        pipeline.run(commits, table_name="commits_raw")
+        pipeline.run(
+            commits,
+            table_name="commits_raw",
+            primary_key="sha",
+            write_disposition="merge",
+        )
         pipeline.run(
             flat_rows,
             table_name="commits_flat",

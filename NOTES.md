@@ -589,3 +589,29 @@ to avoid polluting repo root.
 - **Motivation / Decision**: let forks skip secret-dependent steps while
   keeping guidance in sync with CI.
 - **Next step**: publish docs to GitHub Pages when token is available.
+
+## 2025-08-14 PR #75
+
+- **Summary**: Added actionlint job and pinned markdownlint-cli in CI.
+- **Stage**: implementation
+- **Motivation / Decision**: keep workflow linting and markdown checks
+  deterministic.
+- **Next step**: add markdown-link-check job with pinned version.
+
+## 2025-08-14 PR #76
+
+- **Summary**: Deduplicated `commits_raw` by SHA and updated tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: keep raw commit table constant on rerun; merge on
+  `sha` aligns with dlt guidelines.
+- **Next step**: none.
+
+## 2025-08-14 PR #77
+
+- **Summary**: Added retry with exponential backoff for rate-limited API
+  requests and tests for 403/429 responses.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent transient GitHub rate limits from failing
+  pipeline runs; chose tenacity for concise retry logic and patched tests to
+  simulate rate limits.
+- **Next step**: explore alternative destinations like BigQuery or Snowflake.
