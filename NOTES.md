@@ -545,3 +545,10 @@ to avoid polluting repo root.
 - **Stage**: testing
 - **Motivation / Decision**: ensure pipeline is idempotent to prevent duplicates.
 - **Next step**: none.
+
+## 2025-08-13 PR #69
+
+- **Summary**: Merged online commit rows by SHA and verified idempotent run.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent duplicate commits when API returns same data.
+- **Next step**: none.

@@ -145,7 +145,7 @@ def github_commits_source(
         data_from=commits_raw,
         name="commits_flat",
         primary_key="sha",
-        write_disposition="append",
+        write_disposition="merge",
     )
     def commits_flat(commit: Dict[str, Any]):
         row = flatten_commit(commit)
