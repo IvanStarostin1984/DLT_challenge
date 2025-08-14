@@ -123,6 +123,7 @@ when token missing (2025-08-12)
 - [x] Deduplicate commits by SHA when loading commits_flat (2025-08-13)
 - [x] Add live pipeline test with closed window and README instructions (2025-08-13)
 - [x] Add test ensuring pipeline idempotent when re-run with same data (2025-08-13)
+- [x] Add online pipeline idempotency test using RESTClient stub (2025-08-13)
 - [x] Document `write_disposition="merge"` requirement for primary-key dlt
       resources (2025-08-14)
 - [x] Ensure online pipeline deduplicates commits by SHA via merge (2025-08-13)
