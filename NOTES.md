@@ -622,3 +622,12 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: Updated README with requirements, token steps, run commands,
+  and a rate-limit playbook.
+- **Stage**: documentation
+- **Motivation / Decision**: guide new users and show how to recover after
+  GitHub resets limits.
+- **Next step**: none.
