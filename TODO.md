@@ -127,3 +127,8 @@ when token missing (2025-08-12)
 - [x] Document `write_disposition="merge"` requirement for primary-key dlt
       resources (2025-08-14)
 - [x] Ensure online pipeline deduplicates commits by SHA via merge (2025-08-13)
+- [x] Add safety overlap and merge for idempotency (2025-08-14)
+- [ ] Implement retry/backoff for GitHub rate limits (2025-08-14)
+- [ ] Support BigQuery or Snowflake destinations (2025-08-14)
+- [ ] Surface richer metrics and dashboards (2025-08-14)
+- [ ] Schedule pipeline runs via cron or GitHub Actions (2025-08-14)

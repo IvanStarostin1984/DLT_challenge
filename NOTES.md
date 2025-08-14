@@ -565,3 +565,10 @@ to avoid polluting repo root.
 - **Stage**: implementation
 - **Motivation / Decision**: prevent duplicate commits when API returns same data.
 - **Next step**: none.
+
+## 2025-08-14 PR #72
+
+- **Summary**: Clarified design decisions and noted future enhancements.
+- **Stage**: documentation
+- **Motivation / Decision**: explain API choice and record pending roadmap.
+- **Next step**: add retry logic and scheduling per TODO.
