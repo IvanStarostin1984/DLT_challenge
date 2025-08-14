@@ -11,12 +11,14 @@
 - All commit pages are fetched for the requested window.
 - `leaderboard_daily` reflects the commit totals per author.
 - A rerun with `--since` only processes new commits.
+- Pipeline is idempotent under re-runs and overlapping windows (dedup by SHA).
 
 ## Edge cases
 
 - Hitting API rate limits reports a clear error and exits.
 - Missing author info falls back to email or name fields.
 - An empty time window still creates empty output tables.
+- Boundary commit at last cursor timestamp isn't missed with 60-second overlap.
 
 ## Testing
 

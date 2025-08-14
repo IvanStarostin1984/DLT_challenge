@@ -580,3 +580,10 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing commits near page boundaries;
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
+
+## 2025-08-14  PR #74
+
+- **Summary**: Clarified idempotent re-runs and 60-second overlap edge case.
+- **Stage**: documentation
+- **Motivation / Decision**: document pipeline dedup and boundary commit handling.
+- **Next step**: none.
