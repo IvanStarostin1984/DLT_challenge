@@ -580,3 +580,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing commits near page boundaries;
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
+
+## 2025-08-14 PR #74
+
+- **Summary**: Added actionlint job and pinned markdownlint-cli in CI.
+- **Stage**: implementation
+- **Motivation / Decision**: keep workflow linting and markdown checks
+  deterministic.
+- **Next step**: add markdown-link-check job with pinned version.
