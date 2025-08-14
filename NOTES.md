@@ -583,6 +583,14 @@ to avoid polluting repo root.
 
 ## 2025-08-14 PR #74
 
+- **Summary**: Deduplicated `commits_raw` by SHA and updated tests and docs.
+- **Stage**: implementation
+- **Motivation / Decision**: keep raw commit table constant on rerun; merge on
+  `sha` aligns with dlt guidelines.
+- **Next step**: none.
+
+## 2025-08-14 PR #75
+
 - **Summary**: Added retry with exponential backoff for rate-limited API
   requests and tests for 403/429 responses.
 - **Stage**: implementation
