@@ -55,10 +55,11 @@ limits if needed.
 
 Defaults for repository, branch and date window come from `[gh]` in
 `.dlt/config.toml` or environment variables `GH_REPO`, `GH_BRANCH`, `GH_SINCE_ISO`,
-`GH_UNTIL_ISO`. Command line flags override these values:
+`GH_UNTIL_ISO`. Command line flags override these values. The `--repo` flag must
+use `owner/name` format:
 
 ```bash
-python -m src.gh_leaderboard.pipeline --repo my/repo --offline
+python -m src.gh_leaderboard.pipeline --repo octocat/Hello-World --offline
 ```
 
 ## Usage
