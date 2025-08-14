@@ -46,6 +46,6 @@ def test_cursor_last_value_and_headers(monkeypatch: pytest.MonkeyPatch) -> None:
     list(commits())
     rest = StubRESTClient.last_instance
     assert rest is not None
-    assert rest.params["since"] == "2024-02-02T00:00:00Z"
+    assert rest.params["since"] == "2024-02-01T23:59:00Z"
     assert "Authorization" not in rest.headers
     assert isinstance(rest.paginator, HeaderLinkPaginator)

@@ -127,3 +127,4 @@ when token missing (2025-08-12)
 - [x] Document `write_disposition="merge"` requirement for primary-key dlt
       resources (2025-08-14)
 - [x] Ensure online pipeline deduplicates commits by SHA via merge (2025-08-13)
+- [x] Overlap incremental cursor by 60s and update tests (2025-08-14)

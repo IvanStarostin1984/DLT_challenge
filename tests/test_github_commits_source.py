@@ -58,10 +58,10 @@ def test_sha_and_until_params(rest_client: type[StubRESTClient]) -> None:
 
 
 def test_incremental_adds_since(rest_client: type[StubRESTClient]) -> None:
-    source = github_commits_source(since="2024-01-01")
+    source = github_commits_source(since="2024-01-01T00:00:00Z")
     commits = source.resources["commits_raw"]
     list(commits())
-    assert rest_client.last_instance.params["since"] == "2024-01-01"
+    assert rest_client.last_instance.params["since"] == "2023-12-31T23:59:00Z"
 
 
 def test_client_base_url_and_per_page_default(
