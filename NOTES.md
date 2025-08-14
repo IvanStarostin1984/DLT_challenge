@@ -625,6 +625,13 @@ to avoid polluting repo root.
 
 ## 2025-08-14 PR #79
 
+- **Summary**: Added AGENTS rule to assert paginator type in REST client tests.
+- **Stage**: documentation
+- **Motivation / Decision**: ensures tests catch mismatched pagination drivers.
+- **Next step**: audit existing tests for paginator assertions.
+
+## 2025-08-14 PR #80
+
 - **Summary**: Captured paginator in REST client stub and added test verifying
   the commits source uses `HeaderLinkPaginator`.
 - **Stage**: implementation
@@ -632,7 +639,7 @@ to avoid polluting repo root.
   pagination behaviour without real network calls.
 - **Next step**: none.
 
-## 2025-08-14 PR #80
+## 2025-08-14 PR #81
 
 - **Summary**: Updated README with requirements, token steps, run commands,
   and a rate-limit playbook.
@@ -641,7 +648,7 @@ to avoid polluting repo root.
   GitHub resets limits.
 - **Next step**: none.
 
-## 2025-08-14 PR #81
+## 2025-08-14 PR #82
 
 - **Summary**: Retried 502/503/504 and network timeouts with jittered backoff and
   added tests.
@@ -650,7 +657,7 @@ to avoid polluting repo root.
   GitHub API.
 - **Next step**: expose retry metrics and make backoff configurable.
 
-## 2025-08-15 PR #82
+## 2025-08-15 PR #83
 
 - **Summary**: Added repo format validator and enforced it in run() and CLI.
 - **Stage**: implementation
