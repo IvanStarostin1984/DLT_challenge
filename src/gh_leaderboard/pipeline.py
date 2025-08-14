@@ -136,7 +136,9 @@ def github_commits_source(
 
         def _should_retry(exc: Exception) -> bool:
             status = getattr(getattr(exc, "response", None), "status_code", None)
-            return isinstance(exc, RESTClientResponseError) and status in (403, 429)
+            return isinstance(exc, RESTClientResponseError) and (
+                status in (403, 429) or (status is not None and 500 <= status < 600)
+            )
 
         retryer = Retrying(
             stop=stop_after_attempt(3),

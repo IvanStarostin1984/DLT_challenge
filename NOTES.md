@@ -622,3 +622,11 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: Added retry support for GitHub 5xx errors and a 502→success test.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure transient server errors are retried; chose to
+  treat 5xx as retryable and added a stubbed test for 502 to confirm behavior.
+- **Next step**: none.

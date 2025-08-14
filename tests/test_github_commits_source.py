@@ -91,3 +91,25 @@ def test_commits_raw_403_raises(monkeypatch: pytest.MonkeyPatch) -> None:
         list(commits())
     assert isinstance(excinfo.value.__cause__, RuntimeError)
     assert "GitHub API returned 403" in str(excinfo.value.__cause__)
+
+
+def test_commits_raw_retries_on_502_then_succeeds(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class FlakyRESTClient(StubRESTClient):
+        call_count = 0
+
+        def paginate(self, path: str, params: Dict[str, Any], paginator: Any):
+            FlakyRESTClient.call_count += 1
+            if FlakyRESTClient.call_count == 1:
+                from requests import Response
+
+                resp = Response()
+                resp.status_code = 502
+                raise RESTClientResponseError("Bad Gateway", response=resp)
+            yield []
+
+    monkeypatch.setattr(pipeline, "RESTClient", FlakyRESTClient)
+    commits = github_commits_source().resources["commits_raw"]
+    list(commits())
+    assert FlakyRESTClient.call_count >= 2
