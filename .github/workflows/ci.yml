@@ -37,8 +37,9 @@ jobs:
           git grep -nE '^<{7}|^={7}|^>{7}' -- && exit 1 || echo "No conflict markers"
 
   link-check:
-    needs: [changes]
-    if: needs.changes.outputs.md_only == 'true'
+    needs: [changes, secret-check]
+    if: needs.changes.outputs.md_only == 'true' &&
+      needs.secret-check.outputs.has_pages_token == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

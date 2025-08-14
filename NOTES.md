@@ -583,13 +583,22 @@ to avoid polluting repo root.
 
 ## 2025-08-14 PR #74
 
+- **Summary**: Gated link-check on `has_pages_token` and documented
+  `has_token` pattern in AGENTS.
+- **Stage**: documentation
+- **Motivation / Decision**: let forks skip secret-dependent steps while
+  keeping guidance in sync with CI.
+- **Next step**: publish docs to GitHub Pages when token is available.
+
+## 2025-08-14 PR #75
+
 - **Summary**: Added actionlint job and pinned markdownlint-cli in CI.
 - **Stage**: implementation
 - **Motivation / Decision**: keep workflow linting and markdown checks
   deterministic.
 - **Next step**: add markdown-link-check job with pinned version.
 
-## 2025-08-14 PR #75
+## 2025-08-14 PR #76
 
 - **Summary**: Deduplicated `commits_raw` by SHA and updated tests and docs.
 - **Stage**: implementation
@@ -597,7 +606,7 @@ to avoid polluting repo root.
   `sha` aligns with dlt guidelines.
 - **Next step**: none.
 
-## 2025-08-14 PR #76
+## 2025-08-14 PR #77
 
 - **Summary**: Added retry with exponential backoff for rate-limited API
   requests and tests for 403/429 responses.

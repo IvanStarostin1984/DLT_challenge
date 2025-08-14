@@ -172,6 +172,11 @@ jobs:
 
 * **Docs‑only changes** run in seconds (`lint-docs`).
 * **Code changes** run full lint + tests (`test`).
+* Jobs needing `GH_PAGES_TOKEN` must depend on `secret-check` and use
+  `if: needs.secret-check.outputs.has_pages_token == 'true'` to skip safely
+  on forks (the `has_token` pattern).
+* Add job matrices (multi‑language), action‑lint, or deployment later—
+  guardrails above already catch the 90 % most common issues.
 * `lint-docs` installs `markdownlint-cli@0.45.0` before running.
 * `actionlint` job lints workflows with `rhysd/actionlint@v1`.
 * Add job matrices (multi‑language) or deployment later—guardrails
