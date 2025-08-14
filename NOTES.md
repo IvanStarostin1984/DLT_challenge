@@ -568,6 +568,13 @@ to avoid polluting repo root.
 
 ## 2025-08-14 PR #72
 
+- **Summary**: Clarified design decisions and noted future enhancements.
+- **Stage**: documentation
+- **Motivation / Decision**: explain API choice and record pending roadmap.
+- **Next step**: add retry logic and scheduling per TODO.
+
+## 2025-08-14 PR #73
+
 - **Summary**: Added 1-minute overlap for incremental cursor and updated tests.
 - **Stage**: implementation
 - **Motivation / Decision**: avoid missing commits near page boundaries;

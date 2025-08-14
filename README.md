@@ -175,7 +175,15 @@ after the rate limit resets.
 
 ## Design decisions
 
-* Local DuckDB keeps dependencies minimal.
-* Link header pagination walks through commit pages.
-* The cursor uses commit times to enable incremental syncs.
-* Author identity falls back from login to email to name.
+### Why GitHub API
+
+GitHub's REST API is stable, well documented, and Link headers simplify
+pagination. Rate limits are predictable, and commit timestamps enable
+incremental loads with daily rollups.
+
+### What next with more time
+
+Safety overlap and merge already keep loads idempotent. With more time we
+would add retry with backoff for rate limits, target BigQuery or
+Snowflake, surface richer metrics and dashboards, and schedule runs via
+cron or GitHub Actions.
