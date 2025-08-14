@@ -622,3 +622,12 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: Captured paginator in REST client stub and added test verifying
+  the commits source uses `HeaderLinkPaginator`.
+- **Stage**: implementation
+- **Motivation / Decision**: storing the paginator lets tests assert correct
+  pagination behaviour without real network calls.
+- **Next step**: none.
