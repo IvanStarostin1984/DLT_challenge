@@ -625,6 +625,15 @@ to avoid polluting repo root.
 
 ## 2025-08-14 PR #79
 
+- **Summary**: Updated README with requirements, token steps, run commands,
+  and a rate-limit playbook.
+- **Stage**: documentation
+- **Motivation / Decision**: guide new users and show how to recover after
+  GitHub resets limits.
+- **Next step**: none.
+
+## 2025-08-14 PR #80
+
 - **Summary**: Retried 502/503/504 and network timeouts with jittered backoff and
   added tests.
 - **Stage**: implementation
@@ -632,7 +641,7 @@ to avoid polluting repo root.
   GitHub API.
 - **Next step**: expose retry metrics and make backoff configurable.
 
-## 2025-08-15 PR #80
+## 2025-08-15 PR #81
 
 - **Summary**: Added repo format validator and enforced it in run() and CLI.
 - **Stage**: implementation
