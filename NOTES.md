@@ -580,3 +580,13 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing commits near page boundaries;
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
+
+## 2025-08-14 PR #74
+
+- **Summary**: Added retry with exponential backoff for rate-limited API
+  requests and tests for 403/429 responses.
+- **Stage**: implementation
+- **Motivation / Decision**: prevent transient GitHub rate limits from failing
+  pipeline runs; chose tenacity for concise retry logic and patched tests to
+  simulate rate limits.
+- **Next step**: explore alternative destinations like BigQuery or Snowflake.
