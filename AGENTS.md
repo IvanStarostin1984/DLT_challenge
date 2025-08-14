@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.22 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.23 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -147,9 +147,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          npx --yes markdownlint-cli '**/*.md'
+          npm install markdownlint-cli@0.45.0
+          npx markdownlint-cli '**/*.md'
           git grep -nE '^<{7}|^={7}|^>{7}' -- && exit 1 || \
             echo "No conflict markers"
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rhysd/actionlint@v1
 
   test:
     needs: [changes]
@@ -165,8 +172,15 @@ jobs:
 
 * **Docs‑only changes** run in seconds (`lint-docs`).
 * **Code changes** run full lint + tests (`test`).
+* Jobs needing `GH_PAGES_TOKEN` must depend on `secret-check` and use
+  `if: needs.secret-check.outputs.has_pages_token == 'true'` to skip safely
+  on forks (the `has_token` pattern).
 * Add job matrices (multi‑language), action‑lint, or deployment later—
   guardrails above already catch the 90 % most common issues.
+* `lint-docs` installs `markdownlint-cli@0.45.0` before running.
+* `actionlint` job lints workflows with `rhysd/actionlint@v1`.
+* Add job matrices (multi‑language) or deployment later—guardrails
+  above already catch the 90 % most common issues.
 
 ---
 
@@ -197,8 +211,10 @@ jobs:
 * Run `python -m src.gh_leaderboard.pipeline` to load commits into DuckDB and
   execute `post_load.sql` producing tables `commits_raw`, `commits_flat`, and
   `leaderboard_daily`.
-* When the GitHub API responds with 403, log a clear message and raise a
-  `RuntimeError`; add tests to simulate this condition.
+* When the GitHub API responds with 403 or 429, retry requests with
+  exponential backoff up to three times. After retries fail, log a clear
+  message and raise a `RuntimeError` for 403; add tests to simulate this
+  condition.
 * For a full refresh, drop DuckDB tables and rerun the pipeline with a far‑past
   `--since` value to reload all commits.
 

@@ -1,4 +1,4 @@
-# TODO – Road‑map  (last updated: 2025-08-12)
+# TODO – Road‑map  (last updated: 2025-08-14)
 
 > *Record only high‑level milestones here; break micro‑tasks out into Issues.*
 > **When you finish a task, tick it and append a short NOTE entry
@@ -34,9 +34,10 @@ Repeat the five‑bullet block below for every MVP feature A, B, C, …
 
 - [x] Write README quick‑start (clone → setup → test)
 - [ ] Add full doc build (Sphinx / JSDoc / dart‑doc as applicable)
-- [ ] Integrate secret‑detection helper step in CI (`has_token` pattern)
+- [x] Integrate secret‑detection helper step in CI (`has_token` pattern)
 - [ ] Extend CI matrix for all runtimes (Python, Node, Dart, Rust, …)
-- [ ] Add Actionlint + markdown‑link‑check jobs and pin their versions
+- [x] Add Actionlint job and pin markdownlint-cli version
+- [ ] Add markdown-link-check job and pin its version
 - [ ] Publish docs to GitHub Pages when `GH_PAGES_TOKEN` is present
 
 ## 3 · Quality & automation
@@ -128,9 +129,10 @@ when token missing (2025-08-12)
       resources (2025-08-14)
 - [x] Ensure online pipeline deduplicates commits by SHA via merge (2025-08-13)
 - [x] Add safety overlap and merge for idempotency (2025-08-14)
-- [ ] Implement retry/backoff for GitHub rate limits (2025-08-14)
+- [x] Implement retry/backoff for GitHub rate limits (2025-08-14)
 - [ ] Support BigQuery or Snowflake destinations (2025-08-14)
 - [ ] Surface richer metrics and dashboards (2025-08-14)
 - [ ] Schedule pipeline runs via cron or GitHub Actions (2025-08-14)
 - [x] Overlap incremental cursor by 60s and update tests (2025-08-14)
 - [x] Clarify idempotent reruns and 60s cursor overlap in docs (2025-08-14)
+- [x] Deduplicate `commits_raw` by SHA and test row count stability (2025-08-14)
