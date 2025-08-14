@@ -623,7 +623,16 @@ to avoid polluting repo root.
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
 
-## 2025-08-15 PR #79
+## 2025-08-14 PR #79
+
+- **Summary**: Retried 502/503/504 and network timeouts with jittered backoff and
+  added tests.
+- **Stage**: implementation
+- **Motivation / Decision**: avoid transient failures; jitter evens out load on
+  GitHub API.
+- **Next step**: expose retry metrics and make backoff configurable.
+
+## 2025-08-15 PR #80
 
 - **Summary**: Added repo format validator and enforced it in run() and CLI.
 - **Stage**: implementation
