@@ -4,6 +4,7 @@ import pytest
 from dlt.sources.helpers.rest_client.client import (
     HTTPError as RESTClientResponseError,
 )
+from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 from dlt.extract.exceptions import ResourceExtractionError
 
 from src.gh_leaderboard import pipeline
@@ -18,11 +19,18 @@ class StubRESTClient:
         self.base_url = base_url
         self.headers = headers
         self.params: Dict[str, Any] = {}
+        self.paginator: HeaderLinkPaginator | None = None
         StubRESTClient.last_instance = self
 
-    def paginate(self, path: str, params: Dict[str, Any], paginator: Any):
+    def paginate(
+        self,
+        path: str,
+        params: Dict[str, Any],
+        paginator: HeaderLinkPaginator,
+    ) -> Any:
         self.path = path
         self.params = params
+        self.paginator = paginator
         yield []
 
 
@@ -76,9 +84,18 @@ def test_client_base_url_and_per_page_default(
     assert rest_client.last_instance.params["per_page"] == 100
 
 
+def test_paginator_type(rest_client: type[StubRESTClient]) -> None:
+    source = github_commits_source()
+    commits = source.resources["commits_raw"]
+    list(commits())
+    assert isinstance(rest_client.last_instance.paginator, HeaderLinkPaginator)
+
+
 def test_commits_raw_403_raises(monkeypatch: pytest.MonkeyPatch) -> None:
     class ErrorRESTClient(StubRESTClient):
-        def paginate(self, path: str, params: Dict[str, Any], paginator: Any):
+        def paginate(
+            self, path: str, params: Dict[str, Any], paginator: HeaderLinkPaginator
+        ) -> Any:
             from requests import Response
 
             resp = Response()
@@ -91,3 +108,27 @@ def test_commits_raw_403_raises(monkeypatch: pytest.MonkeyPatch) -> None:
         list(commits())
     assert isinstance(excinfo.value.__cause__, RuntimeError)
     assert "GitHub API returned 403" in str(excinfo.value.__cause__)
+
+
+def test_commits_raw_retries_on_502(monkeypatch: pytest.MonkeyPatch) -> None:
+    class FlakyRESTClient(StubRESTClient):
+        def __init__(self, base_url: str, headers: Dict[str, Any]) -> None:
+            super().__init__(base_url, headers)
+            self.calls = 0
+
+        def paginate(self, path: str, params: Dict[str, Any], paginator: Any):
+            from requests import Response
+
+            self.path = path
+            self.params = params
+            self.calls += 1
+            if self.calls == 1:
+                resp = Response()
+                resp.status_code = 502
+                raise RESTClientResponseError("Bad Gateway", response=resp)
+            yield []
+
+    monkeypatch.setattr(pipeline, "RESTClient", FlakyRESTClient)
+    commits = github_commits_source().resources["commits_raw"]
+    list(commits())
+    assert FlakyRESTClient.last_instance.calls >= 2

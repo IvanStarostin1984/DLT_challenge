@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -14,9 +15,28 @@ from dlt.sources.helpers.rest_client.client import (
     HTTPError as RESTClientResponseError,
 )
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
-from tenacity import Retrying, retry_if_exception, stop_after_attempt, wait_exponential
+from requests.exceptions import ConnectionError as RequestsConnectionError, Timeout
+from tenacity import (
+    Retrying,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
 logger = logging.getLogger(__name__)
+
+
+class RepoFormatError(argparse.ArgumentTypeError, ValueError):
+    """Raised when a repo string is not in owner/name format."""
+
+
+def validate_repo(repo: str) -> str:
+    """Ensure the repo string uses owner/name format."""
+
+    parts = repo.split("/")
+    if len(parts) != 2 or not parts[0] or not parts[1]:
+        raise RepoFormatError("repo must be in owner/name format")
+    return repo
 
 
 def _overlap(ts: str, seconds: int = 60) -> str:
@@ -136,11 +156,19 @@ def github_commits_source(
 
         def _should_retry(exc: Exception) -> bool:
             status = getattr(getattr(exc, "response", None), "status_code", None)
-            return isinstance(exc, RESTClientResponseError) and status in (403, 429)
+            if isinstance(exc, RESTClientResponseError) and status in (
+                403,
+                429,
+                502,
+                503,
+                504,
+            ):
+                return True
+            return isinstance(exc, (Timeout, RequestsConnectionError))
 
         retryer = Retrying(
             stop=stop_after_attempt(3),
-            wait=wait_exponential(min=1, max=8),
+            wait=wait_exponential_jitter(initial=1, max=8),
             retry=retry_if_exception(lambda e: _should_retry(e)),
             reraise=True,
         )
@@ -188,6 +216,8 @@ def run(
     pipelines_dir: Optional[str | Path] = None,
 ) -> List[Dict[str, Any]]:
     """Run the dlt pipeline and return the leaderboard rows."""
+
+    validate_repo(repo)
 
     db_path = (
         Path(pipelines_dir) / "leaderboard.duckdb"
@@ -266,13 +296,11 @@ def run(
 
 
 if __name__ == "__main__":
-    import argparse
-
     from .config import load_config
 
     cfg = load_config()
     parser = argparse.ArgumentParser("GitHub commit leaderboard")
-    parser.add_argument("--repo", default=cfg.repo)
+    parser.add_argument("--repo", default=cfg.repo, type=validate_repo)
     parser.add_argument("--branch", default=cfg.branch)
     parser.add_argument("--since", default=cfg.since)
     parser.add_argument("--until", default=cfg.until)

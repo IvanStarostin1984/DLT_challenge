@@ -629,3 +629,38 @@ to avoid polluting repo root.
 - **Stage**: documentation
 - **Motivation / Decision**: ensures tests catch mismatched pagination drivers.
 - **Next step**: audit existing tests for paginator assertions.
+
+## 2025-08-14 PR #80
+
+- **Summary**: Captured paginator in REST client stub and added test verifying
+  the commits source uses `HeaderLinkPaginator`.
+- **Stage**: implementation
+- **Motivation / Decision**: storing the paginator lets tests assert correct
+  pagination behaviour without real network calls.
+- **Next step**: none.
+
+## 2025-08-14 PR #81
+
+- **Summary**: Updated README with requirements, token steps, run commands,
+  and a rate-limit playbook.
+- **Stage**: documentation
+- **Motivation / Decision**: guide new users and show how to recover after
+  GitHub resets limits.
+- **Next step**: none.
+
+## 2025-08-14 PR #82
+
+- **Summary**: Retried 502/503/504 and network timeouts with jittered backoff and
+  added tests.
+- **Stage**: implementation
+- **Motivation / Decision**: avoid transient failures; jitter evens out load on
+  GitHub API.
+- **Next step**: expose retry metrics and make backoff configurable.
+
+## 2025-08-15 PR #83
+
+- **Summary**: Added repo format validator and enforced it in run() and CLI.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure users pass `owner/name` repos; chose
+  central helper to fail fast in code and on the command line.
+- **Next step**: none
