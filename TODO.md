@@ -136,6 +136,7 @@ when token missing (2025-08-12)
 - [x] Overlap incremental cursor by 60s and update tests (2025-08-14)
 - [x] Clarify idempotent reruns and 60s cursor overlap in docs (2025-08-14)
 - [x] Deduplicate `commits_raw` by SHA and test row count stability (2025-08-14)
+- [x] Capture paginator in REST client stub and test its type (2025-08-14)
 - [x] Document requirements, token setup, run commands and rate-limit playbook
       in README (2025-08-14)
 - [x] Retry 502/503/504 and network timeouts with jittered backoff (2025-08-14)
