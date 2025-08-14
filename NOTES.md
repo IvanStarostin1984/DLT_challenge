@@ -631,3 +631,11 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid transient failures; jitter evens out load on
   GitHub API.
 - **Next step**: expose retry metrics and make backoff configurable.
+
+## 2025-08-15 PR #80
+
+- **Summary**: Added repo format validator and enforced it in run() and CLI.
+- **Stage**: implementation
+- **Motivation / Decision**: ensure users pass `owner/name` repos; chose
+  central helper to fail fast in code and on the command line.
+- **Next step**: none
