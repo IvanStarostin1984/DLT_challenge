@@ -171,8 +171,9 @@ python -m src.gh_leaderboard.pipeline --since "1970-01-01T00:00:00Z"
 
 ### HTTP 403 from GitHub
 
-`commits_raw` logs an error and raises `RuntimeError` when the API responds
-with 403. Check the `GITHUB_TOKEN`, ensure the repo is accessible, and retry
+`commits_raw` retries requests when GitHub returns 403 or 429 and backs off
+exponentially. After three attempts it logs an error and raises `RuntimeError`
+for 403. Check the `GITHUB_TOKEN`, ensure the repo is accessible, and retry
 after the rate limit resets.
 
 ## Design decisions
@@ -186,6 +187,5 @@ incremental loads with daily rollups.
 ### What next with more time
 
 Safety overlap and merge already keep loads idempotent. With more time we
-would add retry with backoff for rate limits, target BigQuery or
-Snowflake, surface richer metrics and dashboards, and schedule runs via
-cron or GitHub Actions.
+would target BigQuery or Snowflake, surface richer metrics and dashboards,
+and schedule runs via cron or GitHub Actions.
