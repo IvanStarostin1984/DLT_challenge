@@ -44,5 +44,5 @@ def test_cursor_initial_value_and_headers(monkeypatch: pytest.MonkeyPatch) -> No
     list(commits())
     rest = StubRESTClient.last_instance
     assert rest is not None
-    assert rest.params["since"] == "2024-01-01T00:00:00Z"
+    assert rest.params["since"] == "2023-12-31T23:59:00Z"
     assert "Authorization" not in rest.headers

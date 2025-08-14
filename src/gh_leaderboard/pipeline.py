@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -16,6 +16,12 @@ from dlt.sources.helpers.rest_client.client import (
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 
 logger = logging.getLogger(__name__)
+
+
+def _overlap(ts: str, seconds: int = 60) -> str:
+    dt = datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
+    dt -= timedelta(seconds=seconds)
+    return dt.isoformat().replace("+00:00", "Z")
 
 
 def normalize_author(
@@ -123,9 +129,9 @@ def github_commits_source(
     ):
         page_params = params.copy()
         if cursor.last_value:
-            page_params["since"] = cursor.last_value
+            page_params["since"] = _overlap(cursor.last_value)
         elif cursor.initial_value:
-            page_params["since"] = cursor.initial_value
+            page_params["since"] = _overlap(cursor.initial_value)
         try:
             for page in client.paginate(
                 "/commits", params=page_params, paginator=HeaderLinkPaginator()
