@@ -622,3 +622,12 @@ to avoid polluting repo root.
   pipeline runs; chose tenacity for concise retry logic and patched tests to
   simulate rate limits.
 - **Next step**: explore alternative destinations like BigQuery or Snowflake.
+
+## 2025-08-14 PR #79
+
+- **Summary**: Retried 502/503/504 and network timeouts with jittered backoff and
+  added tests.
+- **Stage**: implementation
+- **Motivation / Decision**: avoid transient failures; jitter evens out load on
+  GitHub API.
+- **Next step**: expose retry metrics and make backoff configurable.

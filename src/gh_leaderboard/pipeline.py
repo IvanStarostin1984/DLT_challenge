@@ -14,7 +14,13 @@ from dlt.sources.helpers.rest_client.client import (
     HTTPError as RESTClientResponseError,
 )
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
-from tenacity import Retrying, retry_if_exception, stop_after_attempt, wait_exponential
+from requests.exceptions import ConnectionError as RequestsConnectionError, Timeout
+from tenacity import (
+    Retrying,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -136,11 +142,19 @@ def github_commits_source(
 
         def _should_retry(exc: Exception) -> bool:
             status = getattr(getattr(exc, "response", None), "status_code", None)
-            return isinstance(exc, RESTClientResponseError) and status in (403, 429)
+            if isinstance(exc, RESTClientResponseError) and status in (
+                403,
+                429,
+                502,
+                503,
+                504,
+            ):
+                return True
+            return isinstance(exc, (Timeout, RequestsConnectionError))
 
         retryer = Retrying(
             stop=stop_after_attempt(3),
-            wait=wait_exponential(min=1, max=8),
+            wait=wait_exponential_jitter(initial=1, max=8),
             retry=retry_if_exception(lambda e: _should_retry(e)),
             reraise=True,
         )
