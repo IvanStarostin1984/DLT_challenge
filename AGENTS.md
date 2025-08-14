@@ -1,4 +1,4 @@
-# Contributor & CI Guide  <!-- AGENTS.md v1.22 -->
+# Contributor & CI Guide  <!-- AGENTS.md v1.23 -->
 
 > **Read this file first** before opening a pull‑request.
 > It defines the ground rules that keep humans, autonomous agents and
@@ -165,6 +165,9 @@ jobs:
 
 * **Docs‑only changes** run in seconds (`lint-docs`).
 * **Code changes** run full lint + tests (`test`).
+* Jobs needing `GH_PAGES_TOKEN` must depend on `secret-check` and use
+  `if: needs.secret-check.outputs.has_pages_token == 'true'` to skip safely
+  on forks (the `has_token` pattern).
 * Add job matrices (multi‑language), action‑lint, or deployment later—
   guardrails above already catch the 90 % most common issues.
 

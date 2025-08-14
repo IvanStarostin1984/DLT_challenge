@@ -580,3 +580,12 @@ to avoid polluting repo root.
 - **Motivation / Decision**: avoid missing commits near page boundaries;
   updated tests to assert overlapped `since` values.
 - **Next step**: none.
+
+## 2025-08-14 PR #74
+
+- **Summary**: Gated link-check on `has_pages_token` and documented
+  `has_token` pattern in AGENTS.
+- **Stage**: documentation
+- **Motivation / Decision**: let forks skip secret-dependent steps while
+  keeping guidance in sync with CI.
+- **Next step**: publish docs to GitHub Pages when token is available.
